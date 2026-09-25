@@ -18,7 +18,6 @@
 html,body{margin:0;width:100%;height:100%;background:#06111c;color:#fff;font-family:monospace;overflow:hidden;}
 body{
   padding:10px;display:flex;justify-content:center;align-items:center;
-  /* Атмосферный индустриальный фон с офисом и минивеном */
   background: linear-gradient(rgba(6, 17, 28, 0.65), rgba(6, 17, 28, 0.85)), 
               url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80') no-repeat center center;
   background-size: cover;
@@ -70,19 +69,24 @@ body{
 .stat-label { color: #a1c4fd; }
 .stat-value { font-weight: bold; color: var(--title-col); }
 
-.menu-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; margin: 5px 0; z-index: 2; }
+.menu-actions { display: flex; flex-direction: column; gap: 8px; width: 100%; margin: 5px 0; z-index: 2; }
 .menu-btn {
   width: 100%; background: linear-gradient(135deg, rgba(74,144,226,0.3), rgba(18,48,80,0.8));
-  border: 2px solid var(--accent-col); border-radius: 10px; padding: 12px;
-  color: #fff; font-family: monospace; font-size: 13px; font-weight: bold;
+  border: 2px solid var(--accent-col); border-radius: 10px; padding: 10px;
+  color: #fff; font-family: monospace; font-size: 12px; font-weight: bold;
   cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
   transition: transform 0.1s;
 }
 .menu-btn:active { transform: scale(0.97); }
 .menu-btn.primary {
   background: linear-gradient(135deg, rgba(255,213,44,0.35), rgba(211,158,0,0.85));
-  border-color: var(--title-col); color: var(--title-col); font-size: 15px;
+  border-color: var(--title-col); color: var(--title-col); font-size: 14px;
   box-shadow: 0 0 20px rgba(255,213,44,0.4);
+}
+.menu-btn.collection {
+  background: linear-gradient(135deg, rgba(155, 89, 182, 0.35), rgba(142, 68, 173, 0.85));
+  border-color: #9b59b6; color: #f39c12; font-size: 13px;
+  box-shadow: 0 0 15px rgba(155, 89, 182, 0.4);
 }
 .menu-footer { font-size: 9px; color: rgba(161, 196, 253, 0.6); z-index: 2; }
 </style>
@@ -118,6 +122,7 @@ body{
 
   <div class="menu-actions">
     <a href="game.html" class="menu-btn primary" id="btnPlay">⚡ РАБОТАТЬ</a>
+    <a href="collection.html" class="menu-btn collection" id="btnCollection">💎 КОЛЛЕКЦИЯ РОСКОШИ</a>
   </div>
 
   <div class="menu-footer">eckert electro corporation v1.0</div>
@@ -136,6 +141,7 @@ const menuLang = {
     capital: "Капитал:",
     energyStat: "Энергобаланс:",
     play: "⚡ РАБОТАТЬ",
+    collection: "💎 КОЛЛЕКЦИЯ РОСКОШИ",
     soundOn: "🔊 ЗВУК ВКЛ",
     soundOff: "🔇 ЗВУК ВЫКЛ"
   },
@@ -144,6 +150,7 @@ const menuLang = {
     capital: "Kapital:",
     energyStat: "Energiebilanz:",
     play: "⚡ ARBEITEN",
+    collection: "💎 LUXUS-KOLLEKTION",
     soundOn: "🔊 TON AN",
     soundOff: "🔇 TON AUS"
   }
@@ -167,10 +174,10 @@ function updateMenuUI() {
   document.getElementById('lblCapital').textContent = t.capital;
   document.getElementById('lblEnergyStat').textContent = t.energyStat;
   document.getElementById('btnPlay').textContent = t.play;
+  document.getElementById('btnCollection').textContent = t.collection;
   document.getElementById('langBtn').textContent = currentLang === "ru" ? "🇩🇪 DE" : "🇷🇺 RU";
   document.getElementById('soundBtn').textContent = soundEnabled ? t.soundOn : t.soundOff;
 
-  // Подтягиваем данные из localStorage последней рабочей версии
   let savedMoney = Number(localStorage.getItem("zeitarbeitMoney") || 0);
   let savedEnergy = Number(localStorage.getItem("zeitarbeitEnergy") || 0);
   
