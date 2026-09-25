@@ -82,7 +82,7 @@ body{
   display: grid; grid-template-columns: 1fr 1fr; gap: 6px; z-index: 2; flex-shrink: 0;
 }
 
-/* КАРТОЧКА ПРОФИЛЯ В ПРЯМОУГОЛЬНОЙ РАМКЕ */
+/* ПРЯМОУГОЛЬНАЯ КАРТОЧКА ПРОФИЛЯ */
 .profile-card {
   background: var(--glass-bg); border: 1.5px solid var(--border-col); border-radius: 10px;
   padding: 6px; cursor: pointer; transition: transform 0.1s; display: flex; flex-direction: column;
@@ -97,7 +97,7 @@ body{
 .profile-name { font-size: 9px; font-weight: 900; color: #facc15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .profile-sub { font-size: 6px; color: var(--text-sub); }
 
-/* ВИДЖЕТ МИНИ-ЧАТА В ПРЯМОУГОЛЬНОЙ РАМКЕ */
+/* ПРЯМОУГОЛЬНЫЙ ВИДЖЕТ МИНИ-ЧАТА */
 .chat-preview-card {
   background: var(--glass-bg); border: 1.5px solid var(--border-col); border-radius: 10px;
   padding: 6px; cursor: pointer; transition: transform 0.1s; display: flex; flex-direction: column;
@@ -211,7 +211,7 @@ body{
     <div class="chat-preview-card" onclick="openFullChat()">
       <div class="chat-preview-header">
         <span id="chatWidgetTitle">💬 Глобальный</span>
-        <span class="badge">3</span>
+        <span class="badge" id="chatCountBadge">3</span>
       </div>
       <div class="chat-mini-list" id="miniChatContainer"></div>
     </div>
@@ -341,7 +341,7 @@ class GlobalChatModule {
     try { return JSON.parse(localStorage.getItem(this.storageKey)) || []; } catch (e) { return []; }
   }
 
-  getRecentMessages(count = 2) {
+  getRecentMessages(count = 3) {
     return this.getMessages().slice(-count).reverse();
   }
 
@@ -461,7 +461,7 @@ function applyTheme() {
 }
 
 function updateMiniChatWidget() {
-  const recent = window.GlobalChat.getRecentMessages(2);
+  const recent = window.GlobalChat.getRecentMessages(3);
   let html = "";
   if (recent.length === 0) {
     html = `<div class="chat-mini-msg">Нет сообщений...</div>`;
@@ -471,6 +471,7 @@ function updateMiniChatWidget() {
     });
   }
   document.getElementById('miniChatContainer').innerHTML = html;
+  document.getElementById('chatCountBadge').textContent = window.GlobalChat.getMessages().length;
 }
 
 function openFullChat() {
@@ -526,6 +527,4 @@ function updateMenuUI() {
   document.getElementById('lblCapital').textContent = t.capital;
   document.getElementById('lblEnergyStat').textContent = t.energyStat;
   document.getElementById('btnPlay').textContent = t.play;
-  document.getElementById('btnLottery').textContent = t.lottery;
-  document.getElementById('btnCollection').textContent = t.collection;
-  d
+  document.getElementById('btnLottery
