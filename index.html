@@ -65,7 +65,7 @@ body{
 }
 .ctrl-btn:active { opacity: 0.7; }
 
-/* КАРТОЧКА ПРОФИЛЯ С АВАТАРОМ (ССЫЛКА НА avatar.html) */
+/* КАРТОЧКА ПРОФИЛЯ (ПЕРЕХОД НА avatar.html) */
 .profile-card {
   display: flex; align-items: center; gap: 8px; background: var(--glass-bg);
   border: 1.5px solid var(--border-col); border-radius: 9px; padding: 6px 9px;
@@ -177,7 +177,7 @@ body{
     </div>
   </div>
 
-  <!-- ВИДЖЕТ МИНИ-ЧАТА (последние 3 сообщения) -->
+  <!-- ВИДЖЕТ МИНИ-ЧАТА -->
   <div class="chat-preview-card" onclick="openFullChat()">
     <div class="chat-preview-header">
       <span id="chatWidgetTitle">💬 Глобальный чат</span>
@@ -219,7 +219,6 @@ body{
 const tg = window.Telegram.WebApp; 
 if (tg && tg.ready) { tg.ready(); tg.expand(); }
 
-// --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ АВАТАРА ДЛЯ ЧАТА ---
 function getSavedAvatarString() {
   try {
     let saved = JSON.parse(localStorage.getItem("tube_empire_avatar_config"));
@@ -240,12 +239,11 @@ function getSavedAvatarString() {
   }
 }
 
-// --- МОДУЛЬ ГЛОБАЛЬНОГО ЧАТА ---
 class GlobalChatModule {
   constructor() {
     this.storageKey = "tube_empire_global_chat";
     this.cooldownKey = "tube_empire_chat_cooldown";
-    this.cooldownTime = 10 * 60 * 1000; // 10 минут
+    this.cooldownTime = 10 * 60 * 1000;
     
     if (!localStorage.getItem(this.storageKey)) {
       const initialMessages = [
@@ -300,7 +298,6 @@ class GlobalChatModule {
 }
 
 window.GlobalChat = new GlobalChatModule();
-// ---------------------------------------------------
 
 let soundEnabled = localStorage.getItem("freezzzSound") !== "false";
 let currentLang = localStorage.getItem("freezzzLang") || "ru";
@@ -308,7 +305,6 @@ let currentTheme = localStorage.getItem("freezzzTheme") || "dark";
 
 const menuLang = {
   ru: {
-    subtitle: "Симулятор видеоблогера",
     capital: "Баланс:",
     energyStat: "Просмотры:",
     play: "🔴 ЗАПИСАТЬ РОЛИК",
@@ -325,13 +321,12 @@ const menuLang = {
     sendBtn: "ОТПРАВИТЬ",
     closeBtn: "ЗАКРЫТЬ",
     profileSub: "Нажмите для настройки профиля ⚙️",
-    placeholder: "Написать в чат (макс. 150 симв.)...",
+    placeholder: "Написать в чат...",
     cooldownInfo: "Отправка сообщений доступна раз в 10 минут.",
     waitCooldown: "⏳ Подождите: ",
     playerName: "Вы (TUBE EMPIRE)"
   },
   de: {
-    subtitle: "Blogger Tycoon Simulator",
     capital: "Guthaben:",
     energyStat: "Aufrufe:",
     play: "🔴 VIDEO AUFNEHMEN",
@@ -444,7 +439,6 @@ function sendChatMessage() {
 
 function updateMenuUI() {
   let t = menuLang[currentLang];
-  document.getElementById('subtitleTxt').textContent = t.subtitle;
   document.getElementById('lblCapital').textContent = t.capital;
   document.getElementById('lblEnergyStat').textContent = t.energyStat;
   document.getElementById('btnPlay').textContent = t.play;
