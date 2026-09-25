@@ -3,85 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>eckert electro — Галерея трофеев</title>
+<title>Tube Empire — Зал Наград</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root {
-  --bg-grad: linear-gradient(135deg, #09192b 0%, #112d4e 50%, #06111c 100%);
-  --portal-bg: rgba(10, 22, 38, 0.96);
+  --portal-bg: rgba(20, 10, 10, 0.96);
   --border-col: rgba(46, 204, 113, 0.5);
   --accent-col: #2ecc71;
   --title-col: #ffd52c;
-  --btn-bg: rgba(18, 48, 80, 0.9);
+  --btn-bg: rgba(40, 15, 15, 0.9);
   --glass-bg: rgba(255, 255, 255, 0.04);
+  --success-col: #2ecc71;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:#06111c;color:#fff;font-family:monospace;overflow:hidden;}
+html,body{margin:0;width:100%;height:100%;background:#0a0505;color:#fff;font-family:monospace;overflow:hidden;}
 body{
   padding:4px;display:flex;justify-content:center;align-items:center;
-  background: var(--bg-grad); position: fixed; inset: 0;
+  background: linear-gradient(135deg, #140a0a 0%, #2b1111 50%, #0a0505 100%);
+  position: fixed; inset: 0;
 }
 .portal{
   width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
   text-align: center; display: flex; flex-direction: column; justify-content: space-between;
   padding: 6px; z-index: 10;
   background: var(--portal-bg); border: 2px solid var(--border-col);
-  border-radius: 16px; box-shadow: 0 0 30px rgba(0, 0, 0, 0.85);
+  border-radius: 14px; box-shadow: 0 0 25px rgba(46, 204, 113, 0.25);
   position: relative;
 }
-
-/* ШАПКА */
 .game-ui-header { 
   display: flex; justify-content: space-between; align-items: center; 
   padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); 
   border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 10.5px; 
 }
-.header-left { display: flex; gap: 4px; align-items: center; }
-
 .back-btn {
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
-  padding: 3px 5px; border-radius: 5px; text-decoration: none; font-weight: bold;
-  cursor: pointer; font-size: 8px; letter-spacing: -0.5px;
+  padding: 3px 5px; border-radius: 5px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
 }
-.back-btn:active { transform: scale(0.95); }
-
-.lang-btn {
-  background: rgba(46, 204, 113, 0.3); border: 1px solid var(--accent-col); color: #fff;
-  padding: 3px 5px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 9px;
-}
-
-/* СТАТИСТИКА КОЛЛЕКЦИОНЕРА */
 .gallery-stats {
   background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px;
   padding: 5px; text-align: center; width: 100%; flex-shrink: 0;
 }
-.stats-title { font-size: 7.5px; color: #a1c4fd; text-transform: uppercase; font-weight: bold; }
-.stats-val { font-size: 13px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 6px rgba(255,213,44,0.5); }
-
-/* СЕТКА 4x5 ДЛЯ ТРОФЕЕВ */
 .gallery-grid {
   flex-grow: 1; width: 100%; display: grid; 
-  grid-template-columns: repeat(4, 1fr); 
-  grid-template-rows: repeat(5, 1fr); 
+  grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(5, 1fr); 
   gap: 4px; overflow-y: auto; padding: 2px 0;
 }
-
 .gallery-tile {
-  background: rgba(18, 48, 80, 0.6); border: 1px dashed rgba(255, 255, 255, 0.15);
+  background: rgba(40, 15, 15, 0.6); border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: 8px; display: flex; flex-direction: column; align-items: center;
   justify-content: center; padding: 2px; position: relative;
 }
 .gallery-tile.unlocked {
-  background: rgba(46, 204, 113, 0.18); border: 1px solid var(--success-col);
-  cursor: pointer; transition: transform 0.1s ease;
+  background: rgba(46, 204, 113, 0.18); border: 1px solid var(--success-col); cursor: pointer;
 }
-.gallery-tile.unlocked:active { transform: scale(0.94); }
-
 .tile-icon { font-size: 22px; margin-bottom: 1px; }
-.tile-name { font-size: 7px; color: #fff; font-weight: bold; text-align: center; line-height: 1.1; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tile-name { font-size: 7px; color: #fff; font-weight: bold; text-align: center; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .tile-locked { font-size: 16px; opacity: 0.3; }
 
-/* Модальное окно просмотра трофея */
 .modal-overlay {
   position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
   display: flex; align-items: center; justify-content: center; z-index: 100; padding: 20px;
@@ -89,17 +67,9 @@ body{
 }
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 .modal-content {
-  background: #0d233a; border: 2px solid var(--success-col); border-radius: 12px;
+  background: var(--portal-bg); border: 2px solid var(--success-col); border-radius: 12px;
   padding: 16px; text-align: center; width: 100%; max-width: 300px;
   display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 25px rgba(46,204,113,0.4);
-}
-.modal-icon { font-size: 40px; }
-.modal-title { font-size: 13px; font-weight: bold; color: var(--title-col); }
-.modal-desc { font-size: 9px; color: #a1c4fd; }
-.modal-status { font-size: 10px; color: var(--success-col); font-weight: bold; }
-.modal-close {
-  background: rgba(217, 30, 30, 0.8); border: 1px solid #ff4d4d; color: #fff;
-  border-radius: 6px; padding: 6px; font-weight: bold; cursor: pointer; font-size: 10px; margin-top: 4px;
 }
 </style>
 </head>
@@ -107,30 +77,25 @@ body{
 
 <div class="portal">
   <div class="game-ui-header">
-    <div class="header-left">
-      <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
-    </div>
-    <div id="licenseTxt" style="color:var(--success-col); font-weight:bold; font-size: 10px;">🖼️ ГАЛЕРЕЯ ТРОФЕЕВ</div>
+    <a href="game.html" class="back-btn" id="menuBtnTxt">⬅ НАЗАД</a>
+    <div style="color:var(--success-col); font-weight:bold; font-size: 10px;" id="galleryTitle">🏆 ЗАЛ НАГРАД</div>
   </div>
 
   <div class="gallery-stats">
-    <div class="stats-title" id="statsTitle">Собрано предметов</div>
-    <div class="stats-val" id="statsVal">0 / 20</div>
+    <div style="font-size: 7.5px; color: #ff8888; text-transform: uppercase;">Получено наград</div>
+    <div style="font-size: 13px; font-weight: bold; color: var(--title-col);" id="statsVal">0 / 20</div>
   </div>
 
-  <!-- Сетка трофеев 4x5 -->
   <div class="gallery-grid" id="galleryGrid"></div>
 </div>
 
-<!-- Модальное окно трофея -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
   <div class="modal-content" onclick="event.stopPropagation()">
-    <div class="modal-icon" id="modalIcon">🏆</div>
-    <div class="modal-title" id="modalTitle">Название</div>
-    <div class="modal-desc" id="modalDesc">Описание</div>
-    <div class="modal-status" id="modalStatus">✔ КОЛЛЕКЦИОННЫЙ ПРЕДМЕТ</div>
-    <button class="modal-close" onclick="closeModal()">ЗАКРЫТЬ</button>
+    <div id="modalIcon" style="font-size: 40px;">🏆</div>
+    <div id="modalTitle" style="font-size: 13px; font-weight: bold; color: var(--title-col);">Название</div>
+    <div id="modalDesc" style="font-size: 9px; color: #ff8888;">Описание</div>
+    <div style="font-size: 10px; color: var(--success-col); font-weight: bold;">✔ ТРОФЕЙ РАЗБЛОКИРОВАН</div>
+    <button class="back-btn" style="width:100%; padding:6px; background:#333; margin-top:4px;" onclick="closeModal()">ЗАКРЫТЬ</button>
   </div>
 </div>
 
@@ -138,153 +103,91 @@ body{
 const tg = window.Telegram.WebApp; 
 if (tg && tg.ready) { tg.ready(); tg.expand(); }
 
-let soundEnabled = localStorage.getItem("freezzzSound") !== "false";
 let currentLang = localStorage.getItem("freezzzLang") || "ru";
 
 const langData = {
   ru: {
-    menu: "⬅ МЕНЮ",
-    title: "🖼️ ГАЛЕРЕЯ ТРОФЕЕВ",
-    stats: "Собрано предметов",
-    statusText: "✔ В КОЛЛЕКЦИИ КОНЦЕРНА",
-    lockedText: "🔒 Заблокировано (купите в Магазине)",
+    menu: "⬅ НАЗАД", title: "🏆 ЗАЛ НАГРАД",
     items: [
-      { name: "Самокат", desc: "Корпоративный премиум-транспорт", icon: "🛴" },
-      { name: "Часы", desc: "Швейцарские смарт-часы из золота", icon: "⌚" },
-      { name: "Смартфон", desc: "Крипто-смартфон ручной сборки", icon: "📱" },
-      { name: "Электробайк", desc: "Гоночный байк (Limited Edition)", icon: "🏍️" },
-      { name: "Апартаменты", desc: "Элитное жилье в центре Штутгарта", icon: "🏢" },
-      { name: "Суперкар", desc: "Электромобиль 0-100 за 2.1 сек", icon: "🏎️" },
-      { name: "Эко-яхта", desc: "Солнечная яхта (20 метров)", icon: "🛥️" },
-      { name: "Пентхаус", desc: "Панорамный вид на Берлин", icon: "🌇" },
-      { name: "Авиа-электро", desc: "Частный электро-самолет", icon: "🛩️" },
-      { name: "Замок", desc: "Историческая резиденция в Баварии", icon: "🏰" },
-      { name: "Остров", desc: "Частный остров с солнечной АЭС", icon: "🏝️" },
-      { name: "Формула-E", desc: "Собственная гоночная команда", icon: "🏁" },
-      { name: "Спутник", desc: "Личный орбитальный спутник связи", icon: "🛰️" },
-      { name: "NFT Галерея", desc: "Коллекция цифрового искусства", icon: "🖼️" },
-      { name: "Гига-яхта", desc: "Плавучий дворец миллиардера", icon: "🛳️" },
-      { name: "Небоскреб", desc: "Главный офис-штаб концерна", icon: "🏙️" },
-      { name: "Космос", desc: "Туристический билет на орбиту", icon: "🚀" },
-      { name: "Эко-курорт", desc: "Личный пятизвездочный курорт", icon: "🏖️" },
-      { name: "Пакет акций", desc: "Контроль над энергосетями ЕС", icon: "📈" },
-      { name: "Монумент", desc: "Золотая статуя «Монополист»", icon: "🗿" }
+      { name: "Кольцевая лампа", desc: "Базовый свет для влогов", icon: "💡" },
+      { name: "Микрофон Shure", desc: "Студийный звук голоса", icon: "🎙️" },
+      { name: "Камера 4K", desc: "Четкая картинка без шумов", icon: "📷" },
+      { name: "Стрим-ПК (RTX 4090)", desc: "Мощный сетап для игр", icon: "🖥️" },
+      { name: "Студия в Москве/Берлине", desc: "Собственное помещение", icon: "🏢" },
+      { name: "Электрокар Tesla", desc: "Быстрый транспорт для съемок", icon: "🏎️" },
+      { name: "Яхта для роликов", desc: "Контент прямо с моря", icon: "🛥️" },
+      { name: "Пентхаус блогера", desc: "Панорама на город", icon: "🌇" },
+      { name: "Частный джет", desc: "Перелеты на коллабы в США", icon: "✈️" },
+      { name: "Замок-студия", desc: "Эпические съемки в Европе", icon: "🏰" },
+      { name: "Остров для челленджей", desc: "100 человек на острове", icon: "🏝️" },
+      { name: "Киберспортивый клуб", desc: "Собственная eSports команда", icon: "🎮" },
+      { name: "Медиа-спутник", desc: "Связь со зрителями из космоса", icon: "🛰️" },
+      { name: "NFT Галерея", desc: "Цифровой арт-кабинет", icon: "🖼️" },
+      { name: "Мега-яхта", desc: "Плавучая съемочная база", icon: "🛳️" },
+      { name: "Небоскреб MCN", desc: "Штаб-квартира медиа-сети", icon: "🏙️" },
+      { name: "Билет в космос", desc: "Стрим с орбиты Земли", icon: "🚀" },
+      { name: "Эко-курорт", desc: "Отдых команды после съемок", icon: "🏖️" },
+      { name: "Пакет акций YouTube", desc: "Влияние на алгоритмы хостинга", icon: "📈" },
+      { name: "Золотая кнопка", desc: "Главный символ блогерской славы", icon: "🏆" }
     ]
   },
   de: {
-    menu: "⬅ MENÜ",
-    title: "🖼️ TROPHÄEN-GALERIE",
-    stats: "Gesammelte Gegenstände",
-    statusText: "✔ IN DER KONZERN-SAMMLUNG",
-    lockedText: "🔒 Gesperrt (im Shop kaufen)",
+    menu: "⬅ ZURÜCK", title: "🏆 TROPHÄENRAUM",
     items: [
-      { name: "E-Scooter", desc: "Corporate Premium-Transport", icon: "🛴" },
-      { name: "Smartwatch", desc: "Schweizer Gold-Smartwatch", icon: "⌚" },
-      { name: "Smartphone", desc: "Handgefertigtes Krypto-Phone", icon: "📱" },
-      { name: "E-Bike", desc: "Racing-Bike (Limited Edition)", icon: "🏍️" },
-      { name: "Apartment", desc: "Luxuswohnung in Stuttgart", icon: "🏢" },
-      { name: "Supercar", desc: "Elektrischer Sportwagen", icon: "🏎️" },
-      { name: "Eco-Yacht", desc: "Solar-Yacht (20 Meter)", icon: "🛥️" },
-      { name: "Penthouse", desc: "Panoramablick in Berlin", icon: "🌇" },
-      { name: "Privatjet", desc: "Elektrisches Flugzeug", icon: "🛩️" },
-      { name: "Schloss", desc: "Historische Residenz in Bayern", icon: "🏰" },
-      { name: "Privatinsel", desc: "Insel mit Solarkraftwerk", icon: "🏝️" },
-      { name: "Formel-E", desc: "Ein eigenes Racing-Team", icon: "🏁" },
-      { name: "Satellit", desc: "Kommunikationssatellit", icon: "🛰️" },
-      { name: "NFT Art", desc: "Digitale Kunstsammlung", icon: "🖼️" },
-      { name: "Giga-Yacht", desc: "Schwimmender Palast", icon: "🛳️" },
-      { name: "Wolkenkratzer", desc: "Konzern-Hauptsitz", icon: "🏙️" },
-      { name: "Weltraum", desc: "Touristenticket in den Orbit", icon: "🚀" },
-      { name: "Resort", desc: "Persönliches 5-Sterne-Resort", icon: "🏖️" },
-      { name: "Aktienpaket", desc: "Kontrolle über EU-Stromnetz", icon: "📈" },
-      { name: "Monolith", desc: "Goldene Statue „Monopolist“", icon: "🗿" }
+      { name: "Ringleuchte", desc: "Basis-Licht für Vlogs", icon: "💡" },
+      { name: "Studio-Mikro", desc: "Perfekter Sound", icon: "🎙️" },
+      { name: "4K Kamera", desc: "Kristallklares Bild", icon: "📷" },
+      { name: "Streaming-PC", desc: "High-End Setup", icon: "🖥️" },
+      { name: "Creator Studio", desc: "Eigener Arbeitsraum", icon: "🏢" },
+      { name: "Tesla Model S", desc: "Für Outdoor-Vlogs", icon: "🏎️" },
+      { name: "Creator Yacht", desc: "Insel-Vlogs am Meer", icon: "🛥️" },
+      { name: "Penthouse", desc: "Blick über die Stadt", icon: "🌇" },
+      { name: "Privatjet", desc: "Flug zu Collabs", icon: "✈️" },
+      { name: "Schloss-Studio", desc: "Epische Drehs in Europa", icon: "🏰" },
+      { name: "Challenge-Insel", desc: "100 Leute auf der Insel", icon: "🏝️" },
+      { name: "eSports Team", desc: "Eigenes Gaming-Team", icon: "🎮" },
+      { name: "Mediensatellit", desc: "Live-Stream aus dem All", icon: "🛰️" },
+      { name: "NFT Galerie", desc: "Digitaler Kunst-Raum", icon: "🖼️" },
+      { name: "Giga-Yacht", desc: "Schwimmende Basis", icon: "🛳️" },
+      { name: "MCN Wolkenkratzer", desc: "Hauptsitz des Netzwerks", icon: "🏙️" },
+      { name: "Weltraumflug", desc: "Stream aus dem Orbit", icon: "🚀" },
+      { name: "Luxus-Resort", desc: "Team-Wellness", icon: "🏖️" },
+      { name: "YouTube Aktien", desc: "Einfluss auf den Algorithmus", icon: "📈" },
+      { name: "Golden Play Button", desc: "Der Heilige Gral", icon: "🏆" }
     ]
   }
 };
 
-let luxuryIds = [
-  'lux_1', 'lux_2', 'lux_3', 'lux_4', 'lux_5',
-  'lux_6', 'lux_7', 'lux_8', 'lux_9', 'lux_10',
-  'lux_11', 'lux_12', 'lux_13', 'lux_14', 'lux_15',
-  'lux_16', 'lux_17', 'lux_18', 'lux_19', 'lux_20'
-];
-
-let audioCtx = null;
-function playSound(freq, type='sine', duration=0.1) {
-  if (!soundEnabled) return;
-  try {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    let osc = audioCtx.createOscillator();
-    let gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
-  } catch(e) {}
-}
-
-function toggleLanguage() {
-  currentLang = currentLang === "ru" ? "de" : "ru";
-  localStorage.setItem("freezzzLang", currentLang);
-  updateGalleryUI();
-}
+let luxuryIds = Array.from({length: 20}, (_, i) => `lux_${i+1}`);
 
 function openModal(index) {
   let isUnlocked = localStorage.getItem(luxuryIds[index]) === "true";
+  if (!isUnlocked) return;
   let localized = langData[currentLang].items[index];
-  let t = langData[currentLang];
-
-  document.getElementById('modalIcon').textContent = isUnlocked ? localized.icon : "🔒";
+  document.getElementById('modalIcon').textContent = localized.icon;
   document.getElementById('modalTitle').textContent = localized.name;
-  document.getElementById('modalDesc').textContent = isUnlocked ? localized.desc : t.lockedText;
-  document.getElementById('modalStatus').textContent = isUnlocked ? t.statusText : t.lockedText;
-  document.getElementById('modalStatus').style.color = isUnlocked ? "var(--success-col)" : "#e74c3c";
-
+  document.getElementById('modalDesc').textContent = localized.desc;
   document.getElementById('modalOverlay').classList.add('active');
-  playSound(isUnlocked ? 600 : 200, 'sine', 0.08);
 }
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('active');
-}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
 
 function updateGalleryUI() {
-  let t = langData[currentLang];
+  let t = langData[currentLang], unlockedCount = 0, gridHtml = "";
   document.getElementById('menuBtnTxt').textContent = t.menu;
-  document.getElementById('licenseTxt').textContent = t.title;
-  document.getElementById('statsTitle').textContent = t.stats;
-  document.getElementById('langBtn').textContent = currentLang === "ru" ? "🇩🇪 DE" : "🇷🇺 RU";
-
-  let unlockedCount = 0;
-  let gridHtml = "";
+  document.getElementById('galleryTitle').textContent = t.title;
 
   luxuryIds.forEach((id, idx) => {
-    let isUnlocked = localStorage.getItem(id) === "true";
-    let localized = t.items[idx];
-
+    let isUnlocked = localStorage.getItem(id) === "true", localized = t.items[idx];
     if (isUnlocked) unlockedCount++;
-
     gridHtml += `
       <div class="gallery-tile ${isUnlocked ? 'unlocked' : ''}" onclick="openModal(${idx})">
-        ${isUnlocked ? `
-          <div class="tile-icon">${localized.icon}</div>
-          <div class="tile-name">${localized.name}</div>
-        ` : `
-          <div class="tile-locked">🔒</div>
-        `}
+        ${isUnlocked ? `<div class="tile-icon">${localized.icon}</div><div class="tile-name">${localized.name}</div>` : `<div class="tile-locked">🔒</div>`}
       </div>
     `;
   });
-
   document.getElementById('statsVal').textContent = `${unlockedCount} / 20`;
   document.getElementById('galleryGrid').innerHTML = gridHtml;
 }
-
 updateGalleryUI();
 </script>
 </body>
