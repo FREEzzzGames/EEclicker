@@ -31,28 +31,30 @@ body{
   position: relative;
 }
 
-/* ШАПКА */
+/* ШАПКА С ДОБАВЛЕННОЙ КНОПКОЙ КОЛЛЕКЦИИ */
 .game-ui-header { 
   display: flex; justify-content: space-between; align-items: center; 
   padding: 5px 8px; background: var(--btn-bg); border: 1px solid var(--border-col); 
   border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 11px; 
 }
-.header-left { display: flex; gap: 6px; align-items: center; }
+.header-left { display: flex; gap: 5px; align-items: center; }
 
-/* КРАСНАЯ КНОПКА ВОЗВРАТА */
 .back-btn {
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
-  padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold;
+  padding: 3px 5px; border-radius: 6px; text-decoration: none; font-weight: bold;
   cursor: pointer; font-size: 8px; letter-spacing: -0.5px;
-  transition: transform 0.1s;
 }
 .back-btn:active { transform: scale(0.95); background: rgba(180, 20, 20, 1); }
 
-.lang-btn {
+.lang-btn, .col-btn {
   background: rgba(74, 144, 226, 0.25); border: 1px solid var(--accent-col); color: #fff;
-  padding: 3px 7px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 10px;
+  padding: 3px 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 9.5px;
+  text-decoration: none; display: flex; align-items: center; justify-content: center;
 }
-.lang-btn:active { background: rgba(74, 144, 226, 0.5); }
+.col-btn {
+  background: rgba(155, 89, 182, 0.3); border-color: #9b59b6; color: #f39c12;
+}
+.lang-btn:active, .col-btn:active { background: rgba(74, 144, 226, 0.5); }
 
 /* КОМПОЗИЦИЯ ИГРОВОГО ЭКРАНА */
 .clicker-body {
@@ -68,9 +70,8 @@ body{
 }
 .res-title { font-size: 7.5px; color: #a1c4fd; text-transform: uppercase; font-weight: bold; }
 .res-val { font-size: 15px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 8px rgba(255,213,44,0.5); margin-top: 1px; }
-.res-sub { font-size: 7.5px; color: var(--accent-col); margin-top: 1px; }
+.res-sub { font-size: 7.5px; color: #a1c4fd; margin-top: 1px; }
 
-/* ЭФФЕКТ МОЛНИЙ */
 @keyframes electricSpark {
   0% { text-shadow: 0 0 4px #20e8ff, 0 0 8px #20e8ff; color: #6bc5ff; }
   50% { text-shadow: 0 0 10px #ffffff, 0 0 18px #20e8ff; color: #ffffff; }
@@ -111,7 +112,7 @@ body{
   height: 100%; background: linear-gradient(90deg, #4a90e2, #ffd52c); width: 0%; transition: width 0.2s ease;
 }
 
-/* УМЕНЬШЕННАЯ ОБЛАСТЬ КНОПКИ ГЕНЕРАЦИИ */
+/* КНОПКА ГЕНЕРАЦИИ */
 .click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 1px 0; }
 .click-target {
   width: 72px; height: 72px; background: radial-gradient(circle at 35% 35%, #ffd52c, #d39e00);
@@ -121,7 +122,7 @@ body{
 }
 .click-target:active { transform: scale(0.88); background: radial-gradient(circle at 35% 35%, #e0b800, #997500); }
 
-/* ЭРГОНОМИЧНЫЙ СПИСОК (АПГРЕЙДЫ И ЖИЛЬЕ) */
+/* СПИСОК АПГРЕЙДОВ */
 .upgrades-list { 
   width: 100%; display: flex; flex-direction: column; gap: 5px; 
   max-height: 150px; overflow-y: auto; padding-right: 2px; 
@@ -138,14 +139,12 @@ body{
 .upgrade-cost { color: #6bc5ff; font-weight: bold; font-size: 8.5px; }
 .upgrade-count { font-size: 10.5px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 3px 6px; border-radius: 5px; border: 1px solid var(--border-col); }
 
-/* КАРТОЧКА ЖИЛЬЯ (СПЕЦИАЛЬНЫЙ СТИЛЬ) */
 .upgrade-card.housing {
   border-color: var(--housing-col);
   background: rgba(52, 152, 219, 0.15);
 }
 .upgrade-card.housing .upgrade-name { color: #5dade2; }
 
-/* АНИМАЦИЯ ЦИФР */
 @keyframes floatUp {
   0% { transform: translateY(0) scale(1); opacity: 1; }
   100% { transform: translateY(-35px) scale(1.2); opacity: 0; }
@@ -162,6 +161,7 @@ body{
   <div class="game-ui-header">
     <div class="header-left">
       <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
+      <a href="collection.html" class="col-btn">💎</a>
       <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
     </div>
     <div id="licenseTxt" style="color:var(--title-col); font-weight:bold; font-size: 10px;">⚡ ECKERT ELECTRO</div>
@@ -273,7 +273,6 @@ function updateLanguageUI() {
 let money = Number(localStorage.getItem("zeitarbeitMoney") || 0);
 let totalEnergyMWh = Number(localStorage.getItem("zeitarbeitEnergy") || 0);
 
-// Инициализация структуры апгрейдов, жилья и работников
 let upgrades = [
   { id: 'wagon', cost: 100, housingSlots: 3, count: Number(localStorage.getItem("up_wagon") || 0), mult: 1.25, type: 'housing' },
   { id: 'dorm', cost: 800, housingSlots: 10, count: Number(localStorage.getItem("up_dorm") || 0), mult: 1.30, type: 'housing' },
@@ -310,20 +309,13 @@ function haptic(style='light') {
   }
 }
 
-// Подсчет общего жилья (слотов) и занятых мест
 function getHousingStats() {
   let totalSlots = 0;
   let usedSlots = 0;
-
   upgrades.forEach(up => {
-    if (up.type === 'housing') {
-      totalSlots += up.count * up.housingSlots;
-    }
-    if (up.type === 'worker') {
-      usedSlots += up.count;
-    }
+    if (up.type === 'housing') totalSlots += up.count * up.housingSlots;
+    if (up.type === 'worker') usedSlots += up.count;
   });
-
   return { totalSlots, usedSlots };
 }
 
@@ -360,7 +352,6 @@ function buyUpgrade(index) {
   let up = upgrades[index];
   let housing = getHousingStats();
 
-  // Проверка: если это работник, проверяем наличие свободных слотов жилья
   if (up.type === 'worker') {
     let freeSlots = housing.totalSlots - housing.usedSlots;
     if (freeSlots <= 0) {
