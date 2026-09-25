@@ -13,59 +13,62 @@
   --accent-col: #4a90e2;
   --title-col: #ffd52c;
   --btn-bg: rgba(18, 48, 80, 0.9);
-  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg: rgba(255, 255, 255, 0.03);
   --housing-col: #3498db;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{margin:0;width:100%;height:100%;background:#06111c;color:#fff;font-family:monospace;overflow:hidden;}
 body{
-  padding:6px;display:flex;justify-content:center;align-items:center;
+  padding:4px;display:flex;justify-content:center;align-items:center;
   background: var(--bg-grad); position: fixed; inset: 0;
 }
 .portal{
   width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
   text-align: center; display: flex; flex-direction: column; justify-content: space-between;
-  padding: 8px; z-index: 10;
+  padding: 6px; z-index: 10;
   background: var(--portal-bg); border: 2px solid var(--border-col);
-  border-radius: 16px; box-shadow: 0 0 30px rgba(0, 0, 0, 0.85);
+  border-radius: 14px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.85);
   position: relative;
 }
 
+/* ОПТИМИЗИРОВАННАЯ ШАПКА */
 .game-ui-header { 
   display: flex; justify-content: space-between; align-items: center; 
-  padding: 5px 8px; background: var(--btn-bg); border: 1px solid var(--border-col); 
-  border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 11px; 
+  padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); 
+  border-radius: 6px; width: 100%; flex-shrink: 0; font-size: 10px; 
 }
-.header-left { display: flex; gap: 4px; align-items: center; }
+.header-left { display: flex; gap: 3px; align-items: center; }
 
 .back-btn {
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
-  padding: 3px 5px; border-radius: 6px; text-decoration: none; font-weight: bold;
-  cursor: pointer; font-size: 8px; letter-spacing: -0.5px;
+  padding: 2px 4px; border-radius: 4px; text-decoration: none; font-weight: bold;
+  cursor: pointer; font-size: 7.5px; letter-spacing: -0.5px;
 }
-.back-btn:active { transform: scale(0.95); background: rgba(180, 20, 20, 1); }
+.back-btn:active { transform: scale(0.95); }
 
 .shop-link-btn, .gallery-link-btn, .lang-btn {
   background: rgba(74, 144, 226, 0.25); border: 1px solid var(--accent-col); color: #fff;
-  padding: 3px 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 9px;
+  padding: 2px 5px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 8.5px;
   text-decoration: none; display: flex; align-items: center; justify-content: center;
 }
 .shop-link-btn { background: rgba(155, 89, 182, 0.3); border-color: #9b59b6; color: #f39c12; }
 .gallery-link-btn { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; color: #2ecc71; }
 
+/* КОМПАКТНОЕ ИГРОВОЕ ПОЛЕ */
 .clicker-body {
   flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
-  padding: 2px 0; width: 100%; gap: 6px; overflow: hidden;
+  padding: 2px 0; width: 100%; gap: 4px; overflow: hidden;
 }
 
-.resources-container { display: flex; gap: 6px; width: 100%; }
+/* РЕСУРСЫ С ПЛОТНЫМ БАЛАНСОМ */
+.resources-container { display: flex; gap: 4px; width: 100%; }
 .res-box {
-  flex: 1; background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px;
-  padding: 5px; text-align: center;
+  flex: 1; background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 6px;
+  padding: 4px; text-align: center;
 }
-.res-title { font-size: 7.5px; color: #a1c4fd; text-transform: uppercase; font-weight: bold; }
-.res-val { font-size: 15px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 8px rgba(255,213,44,0.5); margin-top: 1px; }
-.res-sub { font-size: 7.5px; color: #a1c4fd; margin-top: 1px; }
+.res-title { font-size: 7px; color: #a1c4fd; text-transform: uppercase; font-weight: bold; }
+.res-val { font-size: 14px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 6px rgba(255,213,44,0.4); margin-top: 1px; }
+.res-sub { font-size: 7px; color: #a1c4fd; margin-top: 1px; }
 
 @keyframes electricSpark {
   0% { text-shadow: 0 0 4px #20e8ff, 0 0 8px #20e8ff; color: #6bc5ff; }
@@ -74,13 +77,14 @@ body{
 }
 .energy-lightning { animation: electricSpark 1.2s infinite ease-in-out; }
 
+/* ТРУБА ПОТОКА */
 .money-pipe {
-  width: 100%; height: 8px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(74, 144, 226, 0.3);
-  border-radius: 4px; position: relative; overflow: hidden;
+  width: 100%; height: 6px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(74, 144, 226, 0.3);
+  border-radius: 3px; position: relative; overflow: hidden;
 }
 .money-flow {
   position: absolute; top: 0; left: -100%; width: 200%; height: 100%;
-  background: repeating-linear-gradient(90deg, transparent, transparent 8px, #ffd52c 8px, #ffd52c 14px, #ffffff 14px, #ffffff 18px);
+  background: repeating-linear-gradient(90deg, transparent, transparent 6px, #ffd52c 6px, #ffd52c 12px, #ffffff 12px, #ffffff 16px);
   opacity: 0.75;
   animation: flowMoney 1.5s linear infinite;
 }
@@ -91,43 +95,45 @@ body{
 
 .sell-energy-btn {
   width: 100%; background: linear-gradient(135deg, rgba(255,213,44,0.2), rgba(74,144,226,0.2));
-  border: 1px solid var(--title-col); border-radius: 6px; padding: 6px; color: var(--title-col);
-  font-family: monospace; font-size: 9.5px; font-weight: bold; cursor: pointer; text-align: center;
-  transition: transform 0.1s; box-shadow: 0 0 6px rgba(255,213,44,0.15);
+  border: 1px solid var(--title-col); border-radius: 6px; padding: 5px; color: var(--title-col);
+  font-family: monospace; font-size: 9px; font-weight: bold; cursor: pointer; text-align: center;
+  transition: transform 0.1s; box-shadow: 0 0 5px rgba(255,213,44,0.15);
 }
 .sell-energy-btn:active { transform: scale(0.97); }
 
 .progress-bar-container {
-  width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
+  width: 100%; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
 }
 .progress-bar-fill {
   height: 100%; background: linear-gradient(90deg, #4a90e2, #ffd52c); width: 0%; transition: width 0.2s ease;
 }
 
-.click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 1px 0; }
+/* ЦЕНТРАЛЬНАЯ КНОПКА ГЕНЕРАЦИИ */
+.click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; margin: 0; }
 .click-target {
-  width: 72px; height: 72px; background: radial-gradient(circle at 35% 35%, #ffd52c, #d39e00);
-  border: 3px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-  font-size: 34px; cursor: pointer; box-shadow: 0 0 15px rgba(255,213,44,0.4); transition: transform 0.08s ease;
+  width: 62px; height: 62px; background: radial-gradient(circle at 35% 35%, #ffd52c, #d39e00);
+  border: 2.5px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+  font-size: 28px; cursor: pointer; box-shadow: 0 0 12px rgba(255,213,44,0.4); transition: transform 0.08s ease;
   user-select: none; z-index: 40; touch-action: manipulation;
 }
 .click-target:active { transform: scale(0.88); background: radial-gradient(circle at 35% 35%, #e0b800, #997500); }
 
+/* РАСШИРЕННЫЙ СПИСОК АПГРЕЙДОВ (БОЛЬШЕ ПРОСТРАНСТВА) */
 .upgrades-list { 
-  width: 100%; display: flex; flex-direction: column; gap: 5px; 
-  max-height: 150px; overflow-y: auto; padding-right: 2px; 
+  width: 100%; display: flex; flex-direction: column; gap: 4px; 
+  max-height: 190px; overflow-y: auto; padding-right: 2px; 
 }
 .upgrade-card {
   display: flex; justify-content: space-between; align-items: center; background: rgba(18, 48, 80, 0.85);
-  border: 1px solid var(--border-col); border-radius: 8px; padding: 6px 9px; font-size: 10px; text-align: left; cursor: pointer;
-  transition: all 0.12s ease; position: relative; min-height: 44px;
+  border: 1px solid var(--border-col); border-radius: 6px; padding: 5px 8px; font-size: 9.5px; text-align: left; cursor: pointer;
+  transition: all 0.12s ease; position: relative; min-height: 40px;
 }
 .upgrade-card:active { transform: scale(0.98); background: var(--btn-bg); }
 .upgrade-info { display: flex; flex-direction: column; gap: 1px; }
-.upgrade-name { color: var(--title-col); font-weight: bold; font-size: 10px; }
-.upgrade-desc { font-size: 7.5px; color: #a1c4fd; }
-.upgrade-cost { color: #6bc5ff; font-weight: bold; font-size: 8.5px; }
-.upgrade-count { font-size: 10.5px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 3px 6px; border-radius: 5px; border: 1px solid var(--border-col); }
+.upgrade-name { color: var(--title-col); font-weight: bold; font-size: 9.5px; }
+.upgrade-desc { font-size: 7px; color: #a1c4fd; }
+.upgrade-cost { color: #6bc5ff; font-weight: bold; font-size: 8px; }
+.upgrade-count { font-size: 10px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 2px 5px; border-radius: 4px; border: 1px solid var(--border-col); }
 
 .upgrade-card.housing {
   border-color: var(--housing-col);
@@ -137,11 +143,11 @@ body{
 
 @keyframes floatUp {
   0% { transform: translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateY(-35px) scale(1.2); opacity: 0; }
+  100% { transform: translateY(-30px) scale(1.15); opacity: 0; }
 }
 .floating-text {
-  position: fixed; color: #ffd52c; font-size: 14px; font-weight: bold; pointer-events: none; z-index: 99999;
-  animation: floatUp 0.4s ease-out forwards; text-shadow: 0 0 5px rgba(0,0,0,0.9);
+  position: fixed; color: #ffd52c; font-size: 13px; font-weight: bold; pointer-events: none; z-index: 99999;
+  animation: floatUp 0.35s ease-out forwards; text-shadow: 0 0 4px rgba(0,0,0,0.9);
 }
 </style>
 </head>
@@ -155,7 +161,7 @@ body{
       <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🖼️ Галерея</a>
       <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
     </div>
-    <div id="licenseTxt" style="color:var(--title-col); font-weight:bold; font-size: 9px;">⚡ ECKERT</div>
+    <div id="licenseTxt" style="color:var(--title-col); font-weight:bold; font-size: 8.5px;">⚡ ECKERT</div>
   </div>
 
   <div class="clicker-body">
@@ -168,7 +174,7 @@ body{
       <div class="res-box">
         <div class="res-title" id="resEnergyTitle">Энергия (МВт)</div>
         <div class="res-val energy-lightning" id="energyTxt">0.0 МВт</div>
-        <div class="res-sub" id="housingSubTxt">Слоты: 0/0</div>
+        <div class="res-sub" id="housingSubTxt">Жилье: 0/0</div>
       </div>
     </div>
 
@@ -184,7 +190,7 @@ body{
 
     <div class="click-target-container">
       <div class="click-target" onclick="clickEnergy(event)">⚡</div>
-      <div style="font-size: 7.5px; color: #a1c4fd;" id="tapHintTxt">Тапай для подачи напряжения!</div>
+      <div style="font-size: 7px; color: #a1c4fd;" id="tapHintTxt">Тапай для подачи напряжения!</div>
     </div>
 
     <div class="upgrades-list" id="upgradesList"></div>
@@ -329,7 +335,7 @@ function clickEnergy(e) {
   pop.style.left = (e.clientX - 15) + "px";
   pop.style.top = (e.clientY - 25) + "px";
   document.body.appendChild(pop);
-  setTimeout(() => pop.remove(), 400);
+  setTimeout(() => pop.remove(), 350);
 }
 
 function sellEnergy() {
@@ -437,8 +443,8 @@ function updateUI() {
   });
   
   document.getElementById('upgradesList').innerHTML = listHtml;
-  localStorage.setItem("zeitarheitMoney", money);
-  localStorage.setItem("zeitarheitEnergy", totalEnergyMWh);
+  localStorage.setItem("zeitarbeitMoney", money);
+  localStorage.setItem("zeitarbeitEnergy", totalEnergyMWh);
 }
 
 setInterval(() => {
@@ -451,8 +457,8 @@ setInterval(() => {
 }, 100);
 
 setInterval(() => {
-  localStorage.setItem("zeitarheitMoney", money);
-  localStorage.setItem("zeitarheitEnergy", totalEnergyMWh);
+  localStorage.setItem("zeitarbeitMoney", money);
+  localStorage.setItem("zeitarbeitEnergy", totalEnergyMWh);
 }, 5000);
 
 updateLanguageUI();
