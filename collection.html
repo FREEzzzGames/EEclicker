@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>eckert electro — Коллекция роскоши</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root {
+  --bg-grad: linear-gradient(135deg, #09192b 0%, #112d4e 50%, #06111c 100%);
+  --portal-bg: rgba(10, 22, 38, 0.96);
+  --border-col: rgba(155, 89, 182, 0.5);
+  --accent-col: #9b59b6;
+  --title-col: #ffd52c;
+  --btn-bg: rgba(18, 48, 80, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --success-col: #2ecc71;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;width:100%;height:100%;background:#06111c;color:#fff;font-family:monospace;overflow:hidden;}
+body{
+  padding:6px;display:flex;justify-content:center;align-items:center;
+  background: var(--bg-grad); position: fixed; inset: 0;
+}
+.portal{
+  width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
+  text-align: center; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 8px; z-index: 10;
+  background: var(--portal-bg); border: 2px solid var(--border-col);
+  border-radius: 16px; box-shadow: 0 0 30px rgba(0, 0, 0, 0.85);
+  position: relative;
+}
+
+/* ШАПКА */
+.game-ui-header { 
+  display: flex; justify-content: space-between; align-items: center; 
+  padding: 5px 8px; background: var(--btn-bg); border: 1px solid var(--border-col); 
+  border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 11px; 
+}
+.header-left { display: flex; gap: 5px; align-items: center; }
+
+.back-btn {
+  background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
+  padding: 3px 5px; border-radius: 6px; text-decoration: none; font-weight: bold;
+  cursor: pointer; font-size: 8px; letter-spacing: -0.5px;
+}
+.back-btn:active { transform: scale(0.95); background: rgba(180, 20, 20, 1); }
+
+.lang-btn {
+  background: rgba(155, 89, 182, 0.3); border: 1px solid var(--accent-col); color: #fff;
+  padding: 3px 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 9.5px;
+}
+.lang-btn:active { background: rgba(155, 89, 182, 0.6); }
+
+/* БАЛАНС В КОЛЛЕКЦИИ */
+.collection-budget {
+  background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px;
+  padding: 6px; text-align: center; width: 100%; flex-shrink: 0;
+}
+.budget-title { font-size: 7.5px; color: #a1c4fd; text-transform: uppercase; font-weight: bold; }
+.budget-val { font-size: 16px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 8px rgba(255,213,44,0.5); margin-top: 1px; }
+
+/* СПИСОК ПРЕДМЕТОВ РОСКОШИ */
+.luxury-list {
+  flex-grow: 1; width: 100%; display: flex; flex-direction: column; gap: 6px; 
+  overflow-y: auto; padding-right: 2px; margin: 4px 0;
+}
+.luxury-card {
+  display: flex; justify-content: space-between; align-items: center; background: rgba(18, 48, 80, 0.85);
+  border: 1px solid var(--border-col); border-radius: 8px; padding: 7px 10px; font-size: 10px; text-align: left; cursor: pointer;
+  transition: all 0.12s ease; position: relative; min-height: 48px;
+}
+.luxury-card:active { transform: scale(0.98); background: var(--btn-bg); }
+.luxury-info { display: flex; flex-direction: column; gap: 1px; max-width: 250px; }
+.luxury-name { color: var(--title-col); font-weight: bold; font-size: 10px; }
+.luxury-desc { font-size: 7.5px; color: #a1c4fd; }
+.luxury-cost { color: #6bc5ff; font-weight: bold; font-size: 9px; margin-top: 2px; }
+
+.luxury-action {
+  font-size: 10px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.6); 
+  padding: 5px 8px; border-radius: 6px; border: 1px solid var(--border-col); text-align: center; min-width: 65px;
+}
+.luxury-card.owned {
+  border-color: var(--success-col);
+  background: rgba(46, 204, 113, 0.15);
+  cursor: default;
+}
+.luxury-card.owned .luxury-name { color: var(--success-col); }
+.luxury-card.owned .luxury-action { color: var(--success-col); border-color: var(--success-col); }
+</style>
+</head>
+<body>
+
+<div class="portal">
+  <div class="game-ui-header">
+    <div class="header-left">
+      <a href="game.html" class="back-btn" id="menuBtnTxt">⬅ НАЗАД</a>
+      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
+    </div>
+    <div id="licenseTxt" style="color:var(--title-col); font-weight:bold; font-size: 10px;">💎 КОЛЛЕКЦИЯ РОСКОШИ</div>
+  </div>
+
+  <div class="collection-budget">
+    <div class="budget-title" id="budgetLabel">Доступный капитал (€)</div>
+    <div class="budget-val" id="collectionMoneyVal">0.00 €</div>
+  </div>
+
+  <div class="luxury-list" id="luxuryList"></div>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp; 
+if (tg && tg.ready) { tg.ready(); tg.expand(); }
+
+let soundEnabled = localStorage.getItem("freezzzSound") !== "false";
+let currentLang = localStorage.getItem("freezzzLang") || "ru";
+
+const langData = {
+  ru: {
+    menu: "⬅ НАЗАД",
+    title: "💎 КОЛЛЕКЦИЯ РОСКОШИ",
+    budget: "Доступный капитал (€)",
+    buy: "КУПИТЬ",
+    owned: "✔ ЕСТЬ",
+    items: [
+      { name: "1. Электросамокат Executive", desc: "Корпоративный премиум-транспорт" },
+      { name: "2. Швейцарские смарт-часы (Золото)", desc: "Эксклюзивный аксессуар" },
+      { name: "3. Крипто-смартфон ручной сборки", desc: "Защищенный гаджет высшей лиги" },
+      { name: "4. Гоночный электробайк (Limited)", desc: "Мощность и экологичность" },
+      { name: "5. Апартаменты в Штутгарте", desc: "Элитная недвижимость в центре" },
+      { name: "6. Электрический суперкар", desc: "0-100 км/ч за 2.1 секунды" },
+      { name: "7. Солнечная эко-яхта (20м)", desc: "Морские прогулки без выбросов" },
+      { name: "8. Пентхаус в Берлине", desc: "Панорамный вид на столицу" },
+      { name: "9. Частный электро-самолет", desc: "Авиация нового поколения" },
+      { name: "10. Старинный замок в Баварии", desc: "Историческое владение с эко-ремонтом" },
+      { name: "11. Частный остров с солнечной АЭС", desc: "Полная энергетическая автономия" },
+      { name: "12. Парк гоночных болидов Формулы-E", desc: "Собственная профессиональная команда" },
+      { name: "13. Личный спутник связи", desc: "Космический актив на орбите Земли" },
+      { name: "14. Коллекция цифрового искусства", desc: "Редкие шедевры мировой крипто-галереи" },
+      { name: "15. Мега-яхта класса «Гига»", desc: "Плавучий дворец миллиардера" },
+      { name: "16. Небоскреб-штаб-квартира концерна", desc: "Главный деловой символ империи" },
+      { name: "17. Космический туристический билет", desc: "Полет за пределы атмосферы" },
+      { name: "18. Островной эко-курорт класса люкс", desc: "Личный пятизвездочный курорт" },
+      { name: "19. Пакет акций энергосети Европы", desc: "Контроль над энергорынкаими ЕС" },
+      { name: "20. Золотая статуя «Монополист»", desc: "Величайший памятник абсолютного успеха" }
+    ]
+  },
+  de: {
+    menu: "⬅ ZURÜCK",
+    title: "💎 LUXUS-KOLLEKTION",
+    budget: "Verfügbares Kapital (€)",
+    buy: "KAUFEN",
+    owned: "✔ BESITZ",
+    items: [
+      { name: "1. Executive E-Scooter", desc: "Corporate Premium-Transport" },
+      { name: "2. Schweizer Smartwatch (Gold)", desc: "Exklusives Accessoire" },
+      { name: "3. Handgefertigtes Krypto-Smartphone", desc: "Sicheres High-End-Gadget" },
+      { name: "4. E-Racing-Bike (Limited)", desc: "Kraft und Umweltfreundlichkeit" },
+      { name: "5. Apartment in Stuttgart", desc: "Luxusimmobilie im Zentrum" },
+      { name: "6. Elektrischer Supercar", desc: "0-100 km/h in 2,1 Sekunden" },
+      { name: "7. Solar Eco-Yacht (20m)", desc: "Emissionsfreie Seefahrt" },
+      { name: "8. Penthouse in Berlin", desc: "Panoramablick auf die Hauptstadt" },
+      { name: "9. Privates Elektro-Flugzeug", desc: "Luftfahrt der neuen Generation" },
+      { name: "10. Historisches Schloss in Bayern", desc: "Sanierte historische Residenz" },
+      { name: "11. Privatinsel mit Solarkraftwerk", desc: "Vollständige Energieautonomie" },
+      { name: "12. Formel-E Rennstall", desc: "Ein eigenes Profi-Racing-Team" },
+      { name: "13. Persönlicher Kommunikationssatellit", desc: "Weltraum-Asset im Erdorbit" },
+      { name: "14. Digitale Kunstsammlung", desc: "Seltene Meisterwerke der Krypto-Galerie" },
+      { name: "15. Giga-Yacht", desc: "Schwimmender Palast des Milliardärs" },
+      { name: "16. Konzern-Hauptsitz (Wolkenkratzer)", desc: "Das ultimative Business-Symbol" },
+      { name: "17. Weltraum-Touristenticket", desc: "Flug über die Erdatmosphäre hinaus" },
+      { name: "18. Luxus-Inselresort", desc: "Persönliches Fünf-Sterne-Resort" },
+      { name: "19. Aktienpaket europäisches Stromnetz", desc: "Kontrolle über EU-Märkte" },
+      { name: "20. Goldene Statue „Monopolist“", desc: "Höchstes Symbol des Erfolgs" }
+    ]
+  }
+};
+
+// Сбалансированная кривая стоимости на 20 часов игры
+let luxuryItems = [
+  { id: 'lux_1', cost: 1500, owned: localStorage.getItem("lux_1") === "true" },
+  { id: 'lux_2', cost: 7500, owned: localStorage.getItem("lux_2") === "true" },
+  { id: 'lux_3', cost: 25000, owned: localStorage.getItem("lux_3") === "true" },
+  { id: 'lux_4', cost: 85000, owned: localStorage.getItem("lux_4") === "true" },
+  { id: 'lux_5', cost: 250000, owned: localStorage.getItem("lux_5") === "true" },
+  { id: 'lux_6', cost: 750000, owned: localStorage.getItem("lux_6") === "true" },
+  { id: 'lux_7', cost: 2000000, owned: localStorage.getItem("lux_7") === "true" },
+  { id: 'lux_8', cost: 5500000, owned: localStorage.getItem("lux_8") === "true" },
+  { id: 'lux_9', cost: 14000000, owned: localStorage.getItem("lux_9") === "true" },
+  { id: 'lux_10', cost: 35000000, owned: localStorage.getItem("lux_10") === "true" },
+  { id: 'lux_11', cost: 85000000, owned: localStorage.getItem("lux_11") === "true" },
+  { id: 'lux_12', cost: 200000000, owned: localStorage.getItem("lux_12") === "true" },
+  { id: 'lux_13', cost: 450000000, owned: localStorage.getItem("lux_13") === "true" },
+  { id: 'lux_14', cost: 1000000000, owned: localStorage.getItem("lux_14") === "true" },
+  { id: 'lux_15', cost: 2200000000, owned: localStorage.getItem("lux_15") === "true" },
+  { id: 'lux_16', cost: 4800000000, owned: localStorage.getItem("lux_16") === "true" },
+  { id: 'lux_17', cost: 10000000000, owned: localStorage.getItem("lux_17") === "true" },
+  { id: 'lux_18', cost: 22000000000, owned: localStorage.getItem("lux_18") === "true" },
+  { id: 'lux_19', cost: 50000000000, owned: localStorage.getItem("lux_19") === "true" },
+  { id: 'lux_20', cost: 120000000000, owned: localStorage.getItem("lux_20") === "true" }
+];
+
+let money = Number(localStorage.getItem("zeitarbeitMoney") || 0);
+
+let audioCtx = null;
+function playSound(freq, type='square', duration=0.1) {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    let osc = audioCtx.createOscillator();
+    let gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch(e) {}
+}
+
+function haptic(style='light') {
+  if (soundEnabled && tg && tg.HapticFeedback) {
+    try { tg.HapticFeedback.impactOccurred(style); } catch(e){}
+  }
+}
+
+function toggleLanguage() {
+  currentLang = currentLang === "ru" ? "de" : "ru";
+  localStorage.setItem("freezzzLang", currentLang);
+  updateCollectionUI();
+}
+
+function buyLuxuryItem(index) {
+  let item = luxuryItems[index];
+  if (item.owned) return;
+
+  if (money >= item.cost) {
+    money -= item.cost;
+    item.owned = true;
+    localStorage.setItem(item.id, "true");
+    localStorage.setItem("zeitarbeitMoney", money);
+    playSound(850, 'triangle', 0.2);
+    haptic('heavy');
+    updateCollectionUI();
+  } else {
+    playSound(140, 'sawtooth', 0.2);
+  }
+}
+
+function updateCollectionUI() {
+  let t = langData[currentLang];
+  document.getElementById('menuBtnTxt').textContent = t.menu;
+  document.getElementById('licenseTxt').textContent = t.title;
+  document.getElementById('budgetLabel').textContent = t.budget;
+  document.getElementById('langBtn').textContent = currentLang === "ru" ? "🇩🇪 DE" : "🇷🇺 RU";
+
+  money = Number(localStorage.getItem("zeitarbeitMoney") || 0);
+  document.getElementById('collectionMoneyVal').textContent = money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €";
+
+  let listHtml = "";
+  luxuryItems.forEach((item, idx) => {
+    let localized = t.items[idx];
+    let canBuy = money >= item.cost;
+
+    listHtml += `
+      <div class="luxury-card ${item.owned ? 'owned' : ''}" ${!item.owned ? `onclick="buyLuxuryItem(${idx})"` : ''} style="opacity: ${item.owned || canBuy ? 1 : 0.6};">
+        <div class="luxury-info">
+          <div class="luxury-name">${localized.name}</div>
+          <div class="luxury-desc">${localized.desc}</div>
+          <div class="luxury-cost">${item.owned ? '' : `${t.itemCost \vert{}\vert{} 'Цена'}: ${item.cost.toLocaleString()} €`}</div>
+        </div>
+        <div class="luxury-action">
+          ${item.owned ? t.owned : t.buy}
+        </div>
+      </div>
+    `;
+  });
+
+  document.getElementById('luxuryList').innerHTML = listHtml;
+}
+
+updateCollectionUI();
+</script>
+</body>
+</html>
