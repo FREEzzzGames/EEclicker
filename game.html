@@ -31,13 +31,12 @@ body{
   position: relative;
 }
 
-/* ШАПКА С ДОБАВЛЕННОЙ КНОПКОЙ КОЛЛЕКЦИИ */
 .game-ui-header { 
   display: flex; justify-content: space-between; align-items: center; 
   padding: 5px 8px; background: var(--btn-bg); border: 1px solid var(--border-col); 
   border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 11px; 
 }
-.header-left { display: flex; gap: 5px; align-items: center; }
+.header-left { display: flex; gap: 4px; align-items: center; }
 
 .back-btn {
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
@@ -46,23 +45,19 @@ body{
 }
 .back-btn:active { transform: scale(0.95); background: rgba(180, 20, 20, 1); }
 
-.lang-btn, .col-btn {
+.shop-link-btn, .gallery-link-btn, .lang-btn {
   background: rgba(74, 144, 226, 0.25); border: 1px solid var(--accent-col); color: #fff;
-  padding: 3px 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 9.5px;
+  padding: 3px 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 9px;
   text-decoration: none; display: flex; align-items: center; justify-content: center;
 }
-.col-btn {
-  background: rgba(155, 89, 182, 0.3); border-color: #9b59b6; color: #f39c12;
-}
-.lang-btn:active, .col-btn:active { background: rgba(74, 144, 226, 0.5); }
+.shop-link-btn { background: rgba(155, 89, 182, 0.3); border-color: #9b59b6; color: #f39c12; }
+.gallery-link-btn { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; color: #2ecc71; }
 
-/* КОМПОЗИЦИЯ ИГРОВОГО ЭКРАНА */
 .clicker-body {
   flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
   padding: 2px 0; width: 100%; gap: 6px; overflow: hidden;
 }
 
-/* РЕСУРСЫ */
 .resources-container { display: flex; gap: 6px; width: 100%; }
 .res-box {
   flex: 1; background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px;
@@ -79,7 +74,6 @@ body{
 }
 .energy-lightning { animation: electricSpark 1.2s infinite ease-in-out; }
 
-/* ТРУБА ПОТОКА */
 .money-pipe {
   width: 100%; height: 8px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(74, 144, 226, 0.3);
   border-radius: 4px; position: relative; overflow: hidden;
@@ -95,7 +89,6 @@ body{
   100% { transform: translateX(50%); }
 }
 
-/* КНОПКА ПРОДАЖИ */
 .sell-energy-btn {
   width: 100%; background: linear-gradient(135deg, rgba(255,213,44,0.2), rgba(74,144,226,0.2));
   border: 1px solid var(--title-col); border-radius: 6px; padding: 6px; color: var(--title-col);
@@ -104,7 +97,6 @@ body{
 }
 .sell-energy-btn:active { transform: scale(0.97); }
 
-/* ПРОГРЕСС-БАР */
 .progress-bar-container {
   width: 100%; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
 }
@@ -112,7 +104,6 @@ body{
   height: 100%; background: linear-gradient(90deg, #4a90e2, #ffd52c); width: 0%; transition: width 0.2s ease;
 }
 
-/* КНОПКА ГЕНЕРАЦИИ */
 .click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 1px 0; }
 .click-target {
   width: 72px; height: 72px; background: radial-gradient(circle at 35% 35%, #ffd52c, #d39e00);
@@ -122,7 +113,6 @@ body{
 }
 .click-target:active { transform: scale(0.88); background: radial-gradient(circle at 35% 35%, #e0b800, #997500); }
 
-/* СПИСОК АПГРЕЙДОВ */
 .upgrades-list { 
   width: 100%; display: flex; flex-direction: column; gap: 5px; 
   max-height: 150px; overflow-y: auto; padding-right: 2px; 
@@ -161,10 +151,11 @@ body{
   <div class="game-ui-header">
     <div class="header-left">
       <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-      <a href="collection.html" class="col-btn">💎</a>
+      <a href="collection.html" class="shop-link-btn" id="shopBtnTxt">🛒 Магазин</a>
+      <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🖼️ Галерея</a>
       <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
     </div>
-    <div id="licenseTxt" style="color:var(--title-col); font-weight:bold; font-size: 10px;">⚡ ECKERT ELECTRO</div>
+    <div id="licenseTxt" style="color:var(--title-col); font-weight:bold; font-size: 9px;">⚡ ECKERT</div>
   </div>
 
   <div class="clicker-body">
@@ -210,7 +201,9 @@ let currentLang = localStorage.getItem("freezzzLang") || "ru";
 const langData = {
   ru: {
     menu: "⬅ МЕНЮ",
-    license: "⚡ ECKERT ELECTRO",
+    shop: "🛒 Магазин",
+    gallery: "🖼️ Галерея",
+    license: "⚡ ECKERT",
     budget: "Бюджет (€)",
     energy: "Энергия (МВт·ч)",
     sellBtn: "⚡ ПРОДАТЬ ЭНЕРГИЮ (1 МВт = 2.50 €)",
@@ -231,7 +224,9 @@ const langData = {
   },
   de: {
     menu: "⬅ MENÜ",
-    license: "⚡ ECKERT ELECTRO",
+    shop: "🛒 Shop",
+    gallery: "🖼️ Galerie",
+    license: "⚡ ECKERT",
     budget: "Budget (€)",
     energy: "Energie (MWh)",
     sellBtn: "⚡ ENERGIE VERKAUFEN (1 MWh = 2.50 €)",
@@ -262,6 +257,8 @@ function toggleLanguage() {
 function updateLanguageUI() {
   let t = langData[currentLang];
   document.getElementById('menuBtnTxt').textContent = t.menu;
+  document.getElementById('shopBtnTxt').textContent = t.shop;
+  document.getElementById('galleryBtnTxt').textContent = t.gallery;
   document.getElementById('licenseTxt').textContent = t.license;
   document.getElementById('resBudgetTitle').textContent = t.budget;
   document.getElementById('resEnergyTitle').textContent = t.energy;
@@ -440,8 +437,8 @@ function updateUI() {
   });
   
   document.getElementById('upgradesList').innerHTML = listHtml;
-  localStorage.setItem("zeitarbeitMoney", money);
-  localStorage.setItem("zeitarbeitEnergy", totalEnergyMWh);
+  localStorage.setItem("zeitarheitMoney", money);
+  localStorage.setItem("zeitarheitEnergy", totalEnergyMWh);
 }
 
 setInterval(() => {
@@ -454,8 +451,8 @@ setInterval(() => {
 }, 100);
 
 setInterval(() => {
-  localStorage.setItem("zeitarbeitMoney", money);
-  localStorage.setItem("zeitarbeitEnergy", totalEnergyMWh);
+  localStorage.setItem("zeitarheitMoney", money);
+  localStorage.setItem("zeitarheitEnergy", totalEnergyMWh);
 }, 5000);
 
 updateLanguageUI();
