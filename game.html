@@ -168,7 +168,7 @@ body{
       <a href="collection.html" class="shop-link-btn" id="shopBtnTxt">🛒 Магазин</a>
       <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🏆 Награды</a>
       <a href="leaderboard.html" class="rank-link-btn" id="rankBtnTxt">📊 Топ</a>
-      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
+      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇷🇺 RU</button>
     </div>
   </div>
 
@@ -213,7 +213,7 @@ const langData = {
     menu: "⬅ МЕНЮ", shop: "🛒 Магазин", gallery: "🏆 Награды", rank: "📊 Топ",
     budget: "Баланс (€)", energy: "Просмотры (Mio)",
     sellBtn: "💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)", tapHint: "Тапай для записи ролика!",
-    price: "Цена", noSlots: "❌ Нет свободных ПК-мест!",
+    price: "Цена", noSlots: "❌ Нет свободных рабочих мест!",
     items: [
       { name: "💻 Стол для монтажа", desc: "+3 рабочих места в студии", type: "housing" },
       { name: "🏢 Офис-студия блогеров", desc: "+10 рабочих мест в студии", type: "housing" },
@@ -229,25 +229,45 @@ const langData = {
     menu: "⬅ MENÜ", shop: "🛒 Shop", gallery: "🏆 Trophäen", rank: "📊 Top",
     budget: "Guthaben (€)", energy: "Aufrufe (Mio)",
     sellBtn: "💰 ADDSENSE AUSZAHLEN (1M = 2.50 €)", tapHint: "Tippen für Video-Upload!",
-    price: "Preis", noSlots: "❌ Keine PC-Plätze frei!",
+    price: "Preis", noSlots: "❌ Keine Arbeitsplätze frei!",
     items: [
-      { name: "🏠 Bauwagen (Unterkunft)", desc: "+3 Plätze für Personal", type: "housing" },
-      { name: "🏢 Firmenwohnheim", desc: "+10 Plätze für Personal", type: "housing" },
-      { name: "🧑‍🎓 Azubi (Praktikant)", desc: "Auto-Klicker (braucht Unterkunft)", type: "worker" },
-      { name: "👨‍🔧 Elektriker (Spezialist)", desc: "Grundmonteur (braucht Unterkunft)", type: "worker" },
-      { name: "👷‍♂️ Elektriker-Team", desc: "Trupp (braucht Unterkunft)", type: "worker" },
-      { name: "💨 Windkraftanlage", desc: "Grüne Windenergie", type: "station" },
-      { name: "☀️ Solarpark", desc: "Solarpanels (+ MWh)", type: "station" },
-      { name: "⚡ Atomkraftwerk (AKW)", desc: "Maximale Energie & Ertrag", type: "station" }
+      { name: "💻 Schnittplatz", desc: "+3 Plätze im Studio", type: "housing" },
+      { name: "🏢 Blogger-Studiobüro", desc: "+10 Plätze im Studio", type: "housing" },
+      { name: "🧑‍💻 Junior Editor", desc: "Auto-Editing (braucht Platz)", type: "worker" },
+      { name: "🎥 Kameramann / Autor", desc: "Content-Profi (braucht Platz)", type: "worker" },
+      { name: "🎬 Produzenten-Team", desc: "Medienmeister (braucht Platz)", type: "worker" },
+      { name: "🤖 Shorts/Reels Bot", desc: "Auto-Videogenerator", type: "station" },
+      { name: "🎙️ Podcast Studio", desc: "Stream-Farm (+ Aufrufe)", type: "station" },
+      { name: "🌐 Top MCN-Netzwerk", desc: "Maximale Aufrufe & Ertrag", type: "station" }
+    ]
+  },
+  en: {
+    menu: "⬅ MENU", shop: "🛒 Shop", gallery: "🏆 Awards", rank: "📊 Top",
+    budget: "Balance (€)", energy: "Views (Mio)",
+    sellBtn: "💰 CASHOUT ADDSENSE (1M = 2.50 €)", tapHint: "Tap to record video!",
+    price: "Price", noSlots: "❌ No free workspaces!",
+    items: [
+      { name: "💻 Editing Desk", desc: "+3 studio workspaces", type: "housing" },
+      { name: "🏢 Blogger Studio Office", desc: "+10 studio workspaces", type: "housing" },
+      { name: "🧑‍💻 Junior Video Editor", desc: "Auto-editing (needs workspace)", type: "worker" },
+      { name: "🎥 Scriptwriter / Cameraman", desc: "Content pro (needs workspace)", type: "worker" },
+      { name: "🎬 Producer Team", desc: "Media masters (needs workspace)", type: "worker" },
+      { name: "🤖 Shorts/Reels Bot", desc: "Auto-video generator", type: "station" },
+      { name: "🎙️ Podcast Studio", desc: "Stream farm (+ views)", type: "station" },
+      { name: "🌐 Top MCN Network", desc: "Maximum views & earnings", type: "station" }
     ]
   }
 };
 
 function toggleLanguage() {
-  currentLang = currentLang === "ru" ? "de" : "ru";
+  if (currentLang === "ru") currentLang = "de";
+  else if (currentLang === "de") currentLang = "en";
+  else currentLang = "ru";
+
   localStorage.setItem("freezzzLang", currentLang);
   updateLanguageUI(); updateUI();
 }
+
 function updateLanguageUI() {
   let t = langData[currentLang];
   document.getElementById('menuBtnTxt').textContent = t.menu;
@@ -258,6 +278,9 @@ function updateLanguageUI() {
   document.getElementById('resEnergyTitle').textContent = t.energy;
   document.getElementById('sellBtnTxt').textContent = t.sellBtn;
   document.getElementById('tapHintTxt').textContent = t.tapHint;
+  
+  let langLabels = { ru: "🇷🇺 RU", de: "🇩🇪 DE", en: "🇬🇧 EN" };
+  document.getElementById('langBtn').textContent = langLabels[currentLang];
 }
 
 let money = Number(localStorage.getItem("zeitarbeitMoney") || 0);
@@ -348,8 +371,8 @@ function updateUI() {
   let stats = calculateStats(), housing = getHousingStats(), t = langData[currentLang];
   document.getElementById('moneyTxt').textContent = money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €";
   document.getElementById('cpsTxt').textContent = `+${stats.totalEurSec.toFixed(1)} €/s`;
-  document.getElementById('energyTxt').textContent = totalEnergyMWh.toFixed(1) + "M";
-  document.getElementById('housingSubTxt').textContent = `ПК: ${housing.usedSlots}/${housing.totalSlots}`;
+  document.getElementById('energyTxt').textContent = totalEnergyMWh.toFixed(1) + (currentLang === 'ru' ? "M" : (currentLang === 'de' ? " Mio" : "M"));
+  document.getElementById('housingSubTxt').textContent = `PC: ${housing.usedSlots}/${housing.totalSlots}`;
 
   let cheapestCost = Math.min(...upgrades.map(u => u.cost));
   document.getElementById('progressFill').style.width = Math.min(100, (money / cheapestCost) * 100) + "%";
