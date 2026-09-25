@@ -3,218 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>eckert electro — Топ игроков</title>
+<title>Tube Empire — Топ каналов</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root {
-  --bg-grad: linear-gradient(135deg, #09192b 0%, #112d4e 50%, #06111c 100%);
-  --portal-bg: rgba(10, 22, 38, 0.96);
-  --border-col: rgba(255, 213, 44, 0.6);
-  --accent-col: #ffd52c;
-  --title-col: #ffd52c;
-  --btn-bg: rgba(18, 48, 80, 0.9);
+  --portal-bg: rgba(20, 10, 10, 0.96);
+  --border-col: rgba(255, 204, 0, 0.6);
+  --accent-col: #ffcc00;
+  --title-col: #ffcc00;
+  --btn-bg: rgba(40, 15, 15, 0.9);
   --glass-bg: rgba(255, 255, 255, 0.04);
-  --gold: #f1c40f;
-  --silver: #bdc3c7;
-  --bronze: #e67e22;
+  --gold: #f1c40f; --silver: #bdc3c7; --bronze: #e67e22;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:#06111c;color:#fff;font-family:monospace;overflow:hidden;}
+html,body{margin:0;width:100%;height:100%;background:#0a0505;color:#fff;font-family:monospace;overflow:hidden;}
 body{
   padding:6px;display:flex;justify-content:center;align-items:center;
-  background: var(--bg-grad); position: fixed; inset: 0;
+  background: linear-gradient(135deg, #140a0a 0%, #2b1111 50%, #0a0505 100%);
+  position: fixed; inset: 0;
 }
 .portal{
   width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
   text-align: center; display: flex; flex-direction: column; justify-content: space-between;
   padding: 8px; z-index: 10;
   background: var(--portal-bg); border: 2.5px solid var(--border-col);
-  border-radius: 16px; box-shadow: 0 0 35px rgba(255, 213, 44, 0.25);
+  border-radius: 16px; box-shadow: 0 0 35px rgba(255, 204, 0, 0.2);
   position: relative;
 }
-
-/* ПОМПЕЗНАЯ ШАПКА */
 .game-ui-header { 
   display: flex; justify-content: space-between; align-items: center; 
   padding: 5px 8px; background: var(--btn-bg); border: 1.5px solid var(--border-col); 
   border-radius: 8px; width: 100%; flex-shrink: 0; font-size: 11px; 
 }
-.header-left { display: flex; gap: 5px; align-items: center; }
-
 .back-btn {
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
-  padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold;
-  cursor: pointer; font-size: 8px; letter-spacing: -0.5px;
+  padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
 }
-.back-btn:active { transform: scale(0.95); }
-
-.lang-btn {
-  background: rgba(255, 213, 44, 0.2); border: 1.5px solid var(--accent-col); color: var(--accent-col);
-  padding: 3px 7px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 9.5px;
-}
-
-/* ЗАГОЛОВОК С ПРАЗДНИЧНЫМ СВЕЧЕНИЕМ */
 .festive-title-box {
-  background: radial-gradient(circle, rgba(255,213,44,0.15) 0%, transparent 70%);
-  border: 1px dashed rgba(255, 213, 44, 0.4); border-radius: 10px;
+  background: radial-gradient(circle, rgba(255,204,0,0.15) 0%, transparent 70%);
+  border: 1px dashed rgba(255, 204, 0, 0.4); border-radius: 10px;
   padding: 8px; margin: 2px 0; text-align: center;
 }
-.festive-title { font-size: 13px; font-weight: 900; color: var(--title-col); text-shadow: 0 0 10px rgba(255,213,44,0.8); text-transform: uppercase; }
-.festive-sub { font-size: 7.5px; color: #a1c4fd; margin-top: 2px; }
-
-/* СПИСОК ТОП-10 */
 .leaderboard-list {
   flex-grow: 1; width: 100%; display: flex; flex-direction: column; gap: 5px; 
   overflow-y: auto; padding-right: 2px; margin: 4px 0;
 }
 .leader-card {
   display: flex; justify-content: space-between; align-items: center; 
-  background: rgba(18, 48, 80, 0.85); border: 1px solid var(--border-col); 
+  background: rgba(40, 15, 15, 0.85); border: 1px solid var(--border-col); 
   border-radius: 8px; padding: 7px 10px; font-size: 10.5px; text-align: left;
 }
 .leader-card.player-row {
-  background: linear-gradient(135deg, rgba(255,213,44,0.25), rgba(18,48,80,0.95));
-  border: 2px solid var(--title-col);
-  box-shadow: 0 0 12px rgba(255,213,44,0.3);
+  background: linear-gradient(135deg, rgba(255,204,0,0.25), rgba(40,15,15,0.95));
+  border: 2px solid var(--title-col); box-shadow: 0 0 12px rgba(255,204,0,0.3);
 }
-.leader-info { display: flex; align-items: center; gap: 8px; }
-.leader-rank { font-weight: bold; font-size: 12px; width: 22px; text-align: center; }
-.rank-1 { color: var(--gold); text-shadow: 0 0 8px var(--gold); }
-.rank-2 { color: var(--silver); text-shadow: 0 0 8px var(--silver); }
-.rank-3 { color: var(--bronze); text-shadow: 0 0 8px var(--bronze); }
-
-.leader-name { font-weight: bold; color: #fff; font-size: 10.5px; }
-.leader-card.player-row .leader-name { color: var(--title-col); }
-.leader-score { font-weight: bold; color: var(--title-col); font-size: 11px; }
-
-.update-timer { font-size: 8px; color: #a1c4fd; margin-top: 2px; }
+.rank-1 { color: var(--gold); } .rank-2 { color: var(--silver); } .rank-3 { color: var(--bronze); }
 </style>
 </head>
 <body>
 
 <div class="portal">
   <div class="game-ui-header">
-    <div class="header-left">
-      <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
-    </div>
-    <div style="color:var(--title-col); font-weight:bold; font-size: 9px;">🏆 ECKERT RANKING</div>
+    <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
+    <div style="color:var(--title-col); font-weight:bold; font-size: 9px;" id="headerTitle">🏆 ТОП КАНАЛОВ</div>
   </div>
 
   <div class="festive-title-box">
-    <div class="festive-title" id="mainHeaderTitle">✨ МИРОВОЙ ТОП МАГНАТОВ ✨</div>
-    <div class="festive-sub" id="mainSubTitle">Глобальный рейтинг энергетического рынка</div>
+    <div style="font-size: 12px; font-weight: 900; color: var(--title-col);" id="mainHeaderTitle">✨ МИРОВЫЕ ТРЕНДЫ YOUTUBE ✨</div>
+    <div style="font-size: 7.5px; color: #ff8888; margin-top: 2px;" id="mainSubTitle">Глобальный рейтинг медиа-гигантов</div>
   </div>
 
   <div class="leaderboard-list" id="leaderboardList"></div>
-
-  <div class="update-timer" id="timerTxt">Обновление через: 60 сек.</div>
+  <div style="font-size: 8px; color: #ff8888;" id="timerTxt">Обновление через: 60 сек.</div>
 </div>
 
 <script>
 const tg = window.Telegram.WebApp; 
 if (tg && tg.ready) { tg.ready(); tg.expand(); }
 
-let soundEnabled = localStorage.getItem("freezzzSound") !== "false";
 let currentLang = localStorage.getItem("freezzzLang") || "ru";
 
 const langData = {
   ru: {
-    menu: "⬅ МЕНЮ",
-    title: "✨ МИРОВОЙ ТОП МАГНАТОВ ✨",
-    subtitle: "Глобальный рейтинг энергетического рынка",
-    timer: "Следующее обновление через: ",
-    sec: " сек.",
-    playerName: "Вы (ECKERT ELECTRO)"
+    menu: "⬅ МЕНЮ", title: "🏆 ТОП КАНАЛОВ",
+    festive: "✨ МИРОВЫЕ ТРЕНДЫ YOUTUBE ✨", sub: "Глобальный рейтинг медиа-гигантов",
+    timer: "Следующее обновление через: ", sec: " сек.", playerName: "Вы (TUBE EMPIRE)"
   },
   de: {
-    menu: "⬅ MENÜ",
-    title: "✨ WELT-ELITE DER MAGNATEN ✨",
-    subtitle: "Globales Ranking des Energiemarktes",
-    timer: "Nächstes Update in: ",
-    sec: " Sek.",
-    playerName: "Du (ECKERT ELECTRO)"
+    menu: "⬅ MENÜ", title: "🏆 TOP KANÄLE",
+    festive: "✨ WELTWEITE YOUTUBE TRENDS ✨", sub: "Globales Ranking der Medien-Giganten",
+    timer: "Nächstes Update in: ", sec: " Sek.", playerName: "Du (TUBE EMPIRE)"
   }
 };
 
-// Базовый пул конкурентов (мировые игроки рынка)
 let competitors = [
-  { name: "⚡ Vattenfall Europe", baseScore: 45000000, growth: 120000 },
-  { name: "☀️ E.ON Global", baseScore: 28000000, growth: 95000 },
-  { name: "🔋 RWE Power AG", baseScore: 18500000, growth: 70000 },
-  { name: "⚡ EnBW Energie", baseScore: 9500000, growth: 45000 },
-  { name: "💡 Siemens Energy", baseScore: 4200000, growth: 25000 },
-  { name: "⚡ Tesla Energy EU", baseScore: 2100000, growth: 15000 },
-  { name: "🔌 GreenVolt GmbH", baseScore: 980000, growth: 8000 },
-  { name: "⚡ NordStream Holding", baseScore: 450000, growth: 4000 },
-  { name: "💡 EcoPower Berlin", baseScore: 180000, growth: 1800 }
+  { name: "🔴 MrBeast", baseScore: 45000000, growth: 120000 },
+  { name: "🎮 PewDiePie", baseScore: 28000000, growth: 95000 },
+  { name: "🎵 T-Series", baseScore: 18500000, growth: 70000 },
+  { name: "🎬 Vlad and Niki", baseScore: 9500000, growth: 45000 },
+  { name: "⚽ Real Madrid", baseScore: 4200000, growth: 25000 },
+  { name: "🎧 Marshmello", baseScore: 2100000, growth: 15000 },
+  { name: "🛹 Ryan Kaji", baseScore: 980000, growth: 8000 },
+  { name: "🔥 Dude Perfect", baseScore: 450000, growth: 4000 },
+  { name: "🎤 Ed Sheeran", baseScore: 180000, growth: 1800 }
 ];
-
 let countdown = 60;
 
-function toggleLanguage() {
-  currentLang = currentLang === "ru" ? "de" : "ru";
-  localStorage.setItem("freezzzLang", currentLang);
-  updateLeaderboardUI();
-}
-
 function updateLeaderboardUI() {
-  let t = langData[currentLang];
+  let t = langData[currentLang], money = Number(localStorage.getItem("zeitarbeitMoney") || 0);
   document.getElementById('menuBtnTxt').textContent = t.menu;
-  document.getElementById('mainHeaderTitle').textContent = t.title;
-  document.getElementById('mainSubTitle').textContent = t.subtitle;
-  document.getElementById('langBtn').textContent = currentLang === "ru" ? "🇩🇪 DE" : "🇷🇺 RU";
+  document.getElementById('headerTitle').textContent = t.title;
+  document.getElementById('mainHeaderTitle').textContent = t.festive;
+  document.getElementById('mainSubTitle').textContent = t.sub;
 
-  // Получаем реальный капитал игрока
-  let playerMoney = Number(localStorage.getItem("zeitarbeitMoney") || 0);
-
-  // Формируем общий список участников
-  let playersList = [
-    { name: t.playerName, score: playerMoney, isPlayer: true }
-  ];
-
-  competitors.forEach(comp => {
-    // Небольшая симуляция пассивного роста конкурентов
-    comp.baseScore += Math.floor(comp.growth * (Math.random() * 0.4 + 0.8));
-    playersList.push({ name: comp.name, score: comp.baseScore, isPlayer: false });
+  let list = [{ name: t.playerName, score: money, isPlayer: true }];
+  competitors.forEach(c => {
+    c.baseScore += Math.floor(c.growth * (Math.random() * 0.4 + 0.8));
+    list.push({ name: c.name, score: c.baseScore, isPlayer: false });
   });
+  list.sort((a,b) => b.score - a.score);
 
-  // Сортируем по убыванию капитала
-  playersList.sort((a, b) => b.score - a.score);
-
-  // Берем топ 10
-  let top10 = playersList.slice(0, 10);
-
-  let listHtml = "";
-  top10.forEach((p, idx) => {
-    let rank = idx + 1;
-    let rankClass = rank === 1 ? 'rank-1' : (rank === 2 ? 'rank-2' : (rank === 3 ? 'rank-3' : ''));
+  let html = "";
+  list.slice(0, 10).forEach((p, idx) => {
+    let rank = idx + 1, rClass = rank === 1 ? 'rank-1' : (rank === 2 ? 'rank-2' : (rank === 3 ? 'rank-3' : ''));
     let rankIcon = rank === 1 ? '👑 1' : (rank === 2 ? '🥈 2' : (rank === 3 ? '🥉 3' : `#${rank}`));
-
-    listHtml += `
+    html += `
       <div class="leader-card ${p.isPlayer ? 'player-row' : ''}">
-        <div class="leader-info">
-          <div class="leader-rank ${rankClass}">${rankIcon}</div>
-          <div class="leader-name">${p.name}</div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="leader-rank ${rClass}" style="font-weight:bold; width:24px;">${rankIcon}</div>
+          <div style="font-weight:bold; color:#fff;">${p.name}</div>
         </div>
-        <div class="leader-score">${p.score.toLocaleString('ru-RU', {maximumFractionDigits: 0})} €</div>
+        <div style="font-weight:bold; color:var(--title-col);">${p.score.toLocaleString('ru-RU', {maximumFractionDigits: 0})} €</div>
       </div>
     `;
   });
-
-  document.getElementById('leaderboardList').innerHTML = listHtml;
+  document.getElementById('leaderboardList').innerHTML = html;
 }
 
-// Таймер обновления раз в минуту
 setInterval(() => {
   countdown--;
   let t = langData[currentLang];
   document.getElementById('timerTxt').textContent = t.timer + countdown + t.sec;
-
-  if (countdown <= 0) {
-    countdown = 60;
-    updateLeaderboardUI();
-  }
+  if (countdown <= 0) { countdown = 60; updateLeaderboardUI(); }
 }, 1000);
 
 updateLeaderboardUI();
