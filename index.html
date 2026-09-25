@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>eckert electro — Главное меню</title>
+<title>Tube Empire — Главное меню</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root {
-  --portal-bg: rgba(10, 22, 38, 0.88);
-  --border-col: rgba(74, 144, 226, 0.5);
-  --accent-col: #4a90e2;
-  --title-col: #ffd52c;
-  --btn-bg: rgba(18, 48, 80, 0.95);
-  --glass-bg: rgba(13, 35, 58, 0.75);
+  --portal-bg: rgba(20, 10, 10, 0.90);
+  --border-col: rgba(255, 0, 0, 0.5);
+  --accent-col: #ff0000;
+  --title-col: #ffcc00;
+  --btn-bg: rgba(40, 15, 15, 0.95);
+  --glass-bg: rgba(30, 12, 12, 0.75);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:#06111c;color:#fff;font-family:monospace;overflow:hidden;}
+html,body{margin:0;width:100%;height:100%;background:#0a0505;color:#fff;font-family:monospace;overflow:hidden;}
 body{
   padding:10px;display:flex;justify-content:center;align-items:center;
-  background: linear-gradient(rgba(6, 17, 28, 0.65), rgba(6, 17, 28, 0.85)), 
-              url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80') no-repeat center center;
+  background: linear-gradient(rgba(10, 5, 5, 0.7), rgba(10, 5, 5, 0.9)), 
+              url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80') no-repeat center center;
   background-size: cover;
   position: fixed; inset: 0;
 }
@@ -28,37 +28,37 @@ body{
   text-align: center; display: flex; flex-direction: column; justify-content: space-between;
   padding: 12px; z-index: 10;
   background: var(--portal-bg); border: 2.5px solid var(--border-col);
-  border-radius: 16px; box-shadow: 0 0 35px rgba(0, 0, 0, 0.8);
+  border-radius: 16px; box-shadow: 0 0 35px rgba(255, 0, 0, 0.3);
   backdrop-filter: blur(6px);
   position: relative; overflow-y: auto;
 }
 .menu-header { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
 .lang-btn, .sound-btn {
-  background: rgba(74, 144, 226, 0.3); border: 1.5px solid var(--accent-col); color: #fff;
+  background: rgba(255, 0, 0, 0.25); border: 1.5px solid var(--accent-col); color: #fff;
   padding: 4px 7px; border-radius: 7px; font-weight: bold; cursor: pointer; font-size: 9.5px;
 }
-.lang-btn:active, .sound-btn:active { background: rgba(74, 144, 226, 0.6); }
+.lang-btn:active, .sound-btn:active { background: rgba(255, 0, 0, 0.5); }
 
 .brand-section { display: flex; flex-direction: column; align-items: center; gap: 3px; margin: 2px 0; z-index: 2; }
 .brand-logo {
-  width: 55px; height: 55px; background: radial-gradient(circle, #252B37 0%, var(--btn-bg) 70%);
-  border: 3px solid var(--title-col); border-radius: 50%; display: flex;
+  width: 55px; height: 55px; background: radial-gradient(circle, #3a1010 0%, var(--btn-bg) 70%);
+  border: 3px solid var(--accent-col); border-radius: 50%; display: flex;
   align-items: center; justify-content: center; font-size: 28px;
-  box-shadow: 0 0 20px rgba(255,213,44,0.5);
+  box-shadow: 0 0 20px rgba(255,0,0,0.5);
   animation: pulseLogo 2s infinite ease-in-out;
 }
 @keyframes pulseLogo {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,213,44,0.4); }
-  50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,213,44,0.7); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255,0,0,0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,0,0,0.7); }
 }
 .brand-title { 
   font-size: 17px; font-weight: bold; color: var(--title-col); letter-spacing: 1.5px; 
   display: flex; align-items: center; justify-content: center; gap: 6px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
-.brand-title span.bold { font-weight: 900; font-size: 19px; color: #ffffff; text-shadow: 0 0 10px rgba(255,213,44,0.8); }
-.brand-title span.normal { font-weight: normal; color: var(--accent-col); font-size: 15px; }
-.brand-subtitle { font-size: 8px; color: #a1c4fd; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+.brand-title span.bold { font-weight: 900; font-size: 19px; color: #ff0000; text-shadow: 0 0 10px rgba(255,0,0,0.8); }
+.brand-title span.normal { font-weight: normal; color: #fff; font-size: 15px; }
+.brand-subtitle { font-size: 8px; color: #ff8888; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
 
 .player-stats-card {
   background: var(--glass-bg); border: 1.5px solid var(--border-col);
@@ -66,12 +66,12 @@ body{
   z-index: 2; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
 }
 .stat-row { display: flex; justify-content: space-between; font-size: 10px; }
-.stat-label { color: #a1c4fd; }
+.stat-label { color: #ff8888; }
 .stat-value { font-weight: bold; color: var(--title-col); }
 
 .menu-actions { display: flex; flex-direction: column; gap: 5px; width: 100%; margin: 2px 0; z-index: 2; }
 .menu-btn {
-  width: 100%; background: linear-gradient(135deg, rgba(74,144,226,0.3), rgba(18,48,80,0.8));
+  width: 100%; background: linear-gradient(135deg, rgba(255,0,0,0.25), rgba(60,15,15,0.8));
   border: 2px solid var(--accent-col); border-radius: 8px; padding: 8px;
   color: #fff; font-family: monospace; font-size: 11px; font-weight: bold;
   cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -79,13 +79,13 @@ body{
 }
 .menu-btn:active { transform: scale(0.97); }
 .menu-btn.primary {
-  background: linear-gradient(135deg, rgba(255,213,44,0.35), rgba(211,158,0,0.85));
+  background: linear-gradient(135deg, rgba(255,204,0,0.35), rgba(200,150,0,0.85));
   border-color: var(--title-col); color: var(--title-col); font-size: 12.5px;
-  box-shadow: 0 0 15px rgba(255,213,44,0.4);
+  box-shadow: 0 0 15px rgba(255,204,0,0.4);
 }
 .menu-btn.collection {
   background: linear-gradient(135deg, rgba(155, 89, 182, 0.35), rgba(142, 68, 173, 0.85));
-  border-color: #9b59b6; color: #f39c12; font-size: 11px;
+  border-color: #9b59b6; color: #ffcc00; font-size: 11px;
 }
 .menu-btn.gallery {
   background: linear-gradient(135deg, rgba(46, 204, 113, 0.35), rgba(39, 174, 96, 0.85));
@@ -93,10 +93,10 @@ body{
 }
 .menu-btn.ranking {
   background: linear-gradient(135deg, rgba(241, 196, 15, 0.35), rgba(211, 84, 0, 0.85));
-  border-color: #f1c40f; color: #ffd52c; font-size: 11px;
+  border-color: #f1c40f; color: #ffcc00; font-size: 11px;
   box-shadow: 0 0 12px rgba(241, 196, 15, 0.4);
 }
-.menu-footer { font-size: 8px; color: rgba(161, 196, 253, 0.6); z-index: 2; }
+.menu-footer { font-size: 8px; color: rgba(255, 136, 136, 0.6); z-index: 2; }
 </style>
 </head>
 <body>
@@ -108,34 +108,34 @@ body{
   </div>
 
   <div class="brand-section">
-    <div class="brand-logo">⚡</div>
+    <div class="brand-logo">▶️</div>
     <div>
       <div class="brand-title">
-        <span class="bold">ECKERT</span> <span class="normal">ELECTRO</span>
+        <span class="bold">TUBE</span> <span class="normal">EMPIRE</span>
       </div>
-      <div class="brand-subtitle" id="subtitleTxt">Energy Corporation Sim</div>
+      <div class="brand-subtitle" id="subtitleTxt">Blogger Tycoon Sim</div>
     </div>
   </div>
 
   <div class="player-stats-card">
     <div class="stat-row">
-      <span class="stat-label" id="lblCapital">Капитал:</span>
+      <span class="stat-label" id="lblCapital">Баланс:</span>
       <span class="stat-value" id="menuMoneyVal">0.00 €</span>
     </div>
     <div class="stat-row">
-      <span class="stat-label" id="lblEnergyStat">Энергобаланс:</span>
-      <span class="stat-value" id="menuEnergyVal">0.0 MWh</span>
+      <span class="stat-label" id="lblEnergyStat">Просмотры:</span>
+      <span class="stat-value" id="menuEnergyVal">0.0M</span>
     </div>
   </div>
 
   <div class="menu-actions">
-    <a href="game.html" class="menu-btn primary" id="btnPlay">⚡ РАБОТАТЬ</a>
-    <a href="collection.html" class="menu-btn collection" id="btnCollection">💎 Магазин</a>
-    <a href="gallery.html" class="menu-btn gallery" id="btnGallery">🖼️ Моя Галерея</a>
-    <a href="leaderboard.html" class="menu-btn ranking" id="btnRanking">🏆 Топ игроков</a>
+    <a href="game.html" class="menu-btn primary" id="btnPlay">🔴 ЗАПИСАТЬ РОЛИК</a>
+    <a href="collection.html" class="menu-btn collection" id="btnCollection">💎 Магазин блогера</a>
+    <a href="gallery.html" class="menu-btn gallery" id="btnGallery">🏆 Зал Наград</a>
+    <a href="leaderboard.html" class="menu-btn ranking" id="btnRanking">📊 Топ Каналов</a>
   </div>
 
-  <div class="menu-footer">eckert electro corporation v1.0</div>
+  <div class="menu-footer">tube empire corporation v1.0</div>
 </div>
 
 <script>
@@ -147,24 +147,24 @@ let currentLang = localStorage.getItem("freezzzLang") || "ru";
 
 const menuLang = {
   ru: {
-    subtitle: "Симулятор энергоконцерна",
-    capital: "Капитал:",
-    energyStat: "Энергобаланс:",
-    play: "⚡ РАБОТАТЬ",
-    collection: "💎 Магазин",
-    gallery: "🖼️ Моя Галерея",
-    ranking: "🏆 Топ игроков",
+    subtitle: "Симулятор видеоблогера",
+    capital: "Баланс:",
+    energyStat: "Просмотры:",
+    play: "🔴 ЗАПИСАТЬ РОЛИК",
+    collection: "💎 Магазин блогера",
+    gallery: "🏆 Зал Наград",
+    ranking: "📊 Топ Каналов",
     soundOn: "🔊 ЗВУК ВКЛ",
     soundOff: "🔇 ЗВУК ВЫКЛ"
   },
   de: {
-    subtitle: "Energiekonzern Simulator",
-    capital: "Kapital:",
-    energyStat: "Energiebilanz:",
-    play: "⚡ ARBEITEN",
-    collection: "💎 Shop",
-    gallery: "🖼️ Meine Galerie",
-    ranking: "🏆 Bestenliste",
+    subtitle: "Blogger Tycoon Simulator",
+    capital: "Guthaben:",
+    energyStat: "Aufrufe:",
+    play: "🔴 VIDEO AUFNEHMEN",
+    collection: "💎 Blogger Shop",
+    gallery: "🏆 Trophäenraum",
+    ranking: "📊 Top Kanäle",
     soundOn: "🔊 TON AN",
     soundOff: "🔇 TON AUS"
   }
@@ -198,7 +198,7 @@ function updateMenuUI() {
   let savedEnergy = Number(localStorage.getItem("zeitarbeitEnergy") || 0);
   
   document.getElementById('menuMoneyVal').textContent = savedMoney.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €";
-  document.getElementById('menuEnergyVal').textContent = savedEnergy.toFixed(1) + (currentLang === 'ru' ? " МВт" : " MWh");
+  document.getElementById('menuEnergyVal').textContent = savedEnergy.toFixed(1) + (currentLang === 'ru' ? " млн" : " Mio");
 }
 
 updateMenuUI();
