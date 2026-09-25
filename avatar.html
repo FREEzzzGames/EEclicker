@@ -65,38 +65,59 @@ body{
   padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
 }
 
-/* ПРЕВЬЬЮ АВАТАРА */
-.avatar-preview-container {
-  display: flex; flex-direction: column; align-items: center; gap: 4px; margin: 4px 0;
+/* КОМПАНОВКА: АВАТАР СЛЕВА, НАСТРОЙКИ СПРАВА */
+.constructor-main-layout {
+  display: flex; gap: 8px; align-items: stretch; margin: 4px 0; flex-shrink: 0;
+}
+.avatar-preview-box {
+  flex: 0 0 110px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
+  border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 8px; gap: 4px;
 }
 .constructor-preview {
-  font-size: 44px; background: var(--glass-bg); border: 2.5px solid var(--title-col);
-  border-radius: 50%; width: 75px; height: 75px; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 15px rgba(255,204,0,0.4);
+  font-size: 40px; background: radial-gradient(circle, var(--accent-col) 0%, var(--btn-bg) 70%);
+  border: 2px solid var(--title-col); border-radius: 50%; width: 62px; height: 62px;
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(255,204,0,0.4);
 }
-.avatar-title-text { font-size: 11px; font-weight: bold; color: var(--title-col); }
+.avatar-title-text { font-size: 8px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; }
 
-/* КАТЕГОРИИ И СЛОТЫ */
-.constructor-sections-box {
-  flex-grow: 1; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; padding-right: 2px; margin: 4px 0; text-align: left;
+.categories-tabs {
+  flex-grow: 1; display: flex; flex-direction: column; gap: 3px; justify-content: space-between;
 }
-.constructor-section { background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 8px; padding: 6px; }
-.constructor-label { font-size: 8.5px; color: var(--text-sub); margin-bottom: 3px; text-transform: uppercase; font-weight: bold; }
-.constructor-options { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; }
-.constructor-option-btn {
+.tab-btn {
   background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px;
-  padding: 5px 9px; font-size: 9px; color: var(--text-main); cursor: pointer; flex-shrink: 0; font-family: monospace;
-  display: flex; align-items: center; gap: 3px;
+  padding: 6px 8px; font-size: 9px; color: var(--text-main); font-family: monospace;
+  text-align: left; cursor: pointer; font-weight: bold; transition: all 0.1s;
 }
-.constructor-option-btn:active { transform: scale(0.95); }
-.constructor-option-btn.active {
-  background: var(--accent-col); border-color: var(--title-col); font-weight: bold; color: #fff; box-shadow: 0 0 8px rgba(255,0,0,0.3);
+.tab-btn:active { transform: scale(0.97); }
+.tab-btn.active {
+  background: var(--accent-col); border-color: var(--title-col); color: #fff;
+  box-shadow: 0 0 8px rgba(255,0,0,0.3);
 }
+
+/* СЛОТЫ ВЫБОРА КОНКРЕТНОГО ВАРИАНТА */
+.options-selection-box {
+  flex-grow: 1; background: var(--glass-bg); border: 1px solid var(--border-col);
+  border-radius: 10px; padding: 6px; display: flex; flex-direction: column; gap: 4px;
+  overflow-y: auto; text-align: left; margin: 2px 0; max-height: 180px;
+}
+.section-title-label { font-size: 8px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; margin-bottom: 2px; }
+.options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.option-tile {
+  background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px;
+  padding: 6px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; font-family: monospace; font-size: 16px; transition: transform 0.1s;
+}
+.option-tile:active { transform: scale(0.92); }
+.option-tile.active {
+  border: 2px solid var(--title-col); background: rgba(255,204,0,0.15); box-shadow: 0 0 8px rgba(255,204,0,0.3);
+}
+.option-name { font-size: 6.5px; color: var(--text-main); margin-top: 2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
 .save-btn {
   width: 100%; background: linear-gradient(135deg, var(--title-col), #c09a00); border: none;
-  border-radius: 8px; padding: 10px; font-weight: bold; font-size: 11px; color: #000; cursor: pointer;
-  box-shadow: 0 0 12px rgba(255,204,0,0.4); font-family: monospace; margin-top: 4px;
+  border-radius: 8px; padding: 9px; font-weight: bold; font-size: 10px; color: #000; cursor: pointer;
+  box-shadow: 0 0 12px rgba(255,204,0,0.4); font-family: monospace; flex-shrink: 0;
 }
 .save-btn:active { transform: scale(0.97); }
 </style>
@@ -109,12 +130,20 @@ body{
     <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="headerTitle">👤 КОНСТРУКТОР АВАТАРА</div>
   </div>
 
-  <div class="avatar-preview-container">
-    <div class="constructor-preview" id="modalAvatarPreview">👦</div>
-    <div class="avatar-title-text" id="previewSubTxt">Ваш образ в Tube Empire</div>
+  <!-- КОМПАНОВКА: ПРЕВЬЬЮ СЛЕВА, КАТЕГОРИИ СПРАВА -->
+  <div class="constructor-main-layout">
+    <div class="avatar-preview-box">
+      <div class="constructor-preview" id="modalAvatarPreview">👦</div>
+      <div class="avatar-title-text" id="previewSubTxt">Блогер</div>
+    </div>
+    <div class="categories-tabs" id="categoriesTabsContainer"></div>
   </div>
 
-  <div class="constructor-sections-box" id="constructorSectionsContainer"></div>
+  <!-- СЕТКА ВЫБОРА ЭЛЕМЕНТОВ ДЛЯ АКТИВНОЙ КАТЕГОРИИ -->
+  <div class="options-selection-box" id="optionsSelectionContainer">
+    <div class="section-title-label" id="activeCategoryLabel">Выберите элемент</div>
+    <div class="options-grid" id="optionsGridContainer"></div>
+  </div>
 
   <button class="save-btn" onclick="saveAndReturn()" id="saveBtnTxt">💾 СОХРАНИТЬ И ВЕРНУТЬСЯ</button>
 </div>
@@ -130,17 +159,16 @@ document.body.setAttribute('data-theme', currentTheme);
 const langData = {
   ru: {
     menu: "⬅ МЕНЮ", title: "👤 КОНСТРУКТОР АВАТАРА",
-    sub: "Ваш образ в Tube Empire", save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ",
-    labels: { gender: "Пол", head: "Голова / Убор", torso: "Торс / Одежда", legs: "Ноги / Брюки", accessory: "Аксессуар" }
+    sub: "Блогер", save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ", selectEl: "Выберите элемент",
+    categories: { gender: "Пол", head: "Голова", torso: "Торс", legs: "Ноги", accessory: "Аксессуар" }
   },
   de: {
     menu: "⬅ ZURÜCK", title: "👤 AVATAR EDITOR",
-    sub: "Ihr Look in Tube Empire", save: "💾 SPEICHERN & ZURÜCK",
-    labels: { gender: "Geschlecht", head: "Kopf / Mütze", torso: "Oberkörper", legs: "Beine", accessory: "Zubehör" }
+    sub: "Blogger", save: "💾 SPEICHERN & ZURÜCK", selectEl: "Element wählen",
+    categories: { gender: "Geschlecht", head: "Kopf", torso: "Oberkörper", legs: "Beine", accessory: "Zubehör" }
   }
 };
 
-// Справочник вариантов кастомизации (по 5 вариантов на слот)
 const avatarOptions = {
   gender: [
     { id: 'm', name: 'Парень', symbol: '👦' },
@@ -179,6 +207,7 @@ const avatarOptions = {
 let storageKey = "tube_empire_avatar_config";
 let defaultConfig = { gender: 0, head: 0, torso: 0, legs: 0, accessory: 0 };
 let currentConfig = loadConfig();
+let activeCategory = 'gender'; // Активная вкладка по умолчанию
 
 function loadConfig() {
   try {
@@ -201,35 +230,41 @@ function renderUI() {
   document.getElementById('headerTitle').textContent = t.title;
   document.getElementById('previewSubTxt').textContent = t.sub;
   document.getElementById('saveBtnTxt').textContent = t.save;
+  document.getElementById('activeCategoryLabel').textContent = `${t.selectEl} (${t.categories[activeCategory]}):`;
 
   document.getElementById('modalAvatarPreview').textContent = getAvatarString();
 
-  let container = document.getElementById('constructorSectionsContainer');
-  let html = "";
-
-  Object.keys(avatarOptions).forEach(category => {
-    let list = avatarOptions[category];
-    let currentIdx = currentConfig[category];
-    let label = t.labels[category] || category;
-
-    html += `
-      <div class="constructor-section">
-        <div class="constructor-label">${label}</div>
-        <div class="constructor-options">
-    `;
-    list.forEach((item, idx) => {
-      let activeClass = idx === currentIdx ? 'active' : '';
-      let displayIcon = item.symbol || item.icon;
-      html += `
-        <button class="constructor-option-btn ${activeClass}" onclick="selectOption('${category}', ${idx})">
-          ${displayIcon} ${item.name}
-        </button>
-      `;
-    });
-    html += `</div></div>`;
+  // Рендерим вкладки категорий справа
+  let tabsContainer = document.getElementById('categoriesTabsContainer');
+  let tabsHtml = "";
+  Object.keys(avatarOptions).forEach(cat => {
+    let isActive = cat === activeCategory ? 'active' : '';
+    tabsHtml += `<button class="tab-btn ${isActive}" onclick="setActiveCategory('${cat}')">${t.categories[cat]}</button>`;
   });
+  tabsContainer.innerHTML = tabsHtml;
 
-  container.innerHTML = html;
+  // Рендерим сетку элементов для выбранной категории
+  let gridContainer = document.getElementById('optionsGridContainer');
+  let gridHtml = "";
+  let list = avatarOptions[activeCategory];
+  let currentSelectedIndex = currentConfig[activeCategory];
+
+  list.forEach((item, idx) => {
+    let isSelected = idx === currentSelectedIndex ? 'active' : '';
+    let displayIcon = item.symbol || item.icon;
+    gridHtml += `
+      <div class="option-tile ${isSelected}" onclick="selectOption('${activeCategory}', ${idx})">
+        <div>${displayIcon}</div>
+        <div class="option-name">${item.name}</div>
+      </div>
+    `;
+  });
+  gridContainer.innerHTML = gridHtml;
+}
+
+function setActiveCategory(cat) {
+  activeCategory = cat;
+  renderUI();
 }
 
 function selectOption(category, index) {
