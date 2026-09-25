@@ -34,10 +34,10 @@ body{padding:6px;display:flex;justify-content:center;align-items:center;position
 .s-row{display:flex;justify-content:space-between;font-size:9px;}
 .s-lbl{color:var(--sub);}
 .s-val{font-weight:bold;color:var(--title);}
-.actions{display:flex;flex-direction:column;gap:3.5px;width:100%;flex-shrink:0;}
-.act-btn{width:100%;background:var(--btn);border:1.5px solid var(--accent);border-radius:7px;padding:6px;color:var(--text);font-family:monospace;font-size:10px;font-weight:bold;cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;}
+.actions{display:flex;flex-direction:column;gap:4px;width:100%;flex-shrink:0;}
+.act-btn{width:100%;background:var(--btn);border:1.5px solid var(--accent);border-radius:7px;padding:8px;color:var(--text);font-family:monospace;font-size:10.5px;font-weight:bold;cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;}
 .act-btn:active{transform:scale(.97);}
-.act-btn.primary{background:linear-gradient(135deg,rgba(255,204,0,.4),rgba(200,150,0,.85));border-color:var(--title);color:#000;font-size:11px;box-shadow:0 0 10px rgba(255,204,0,.3);}
+.act-btn.primary{background:linear-gradient(135deg,rgba(255,204,0,.4),rgba(200,150,0,.85));border-color:var(--title);color:#000;font-size:11.5px;box-shadow:0 0 10px rgba(255,204,0,.3);}
 .act-btn.lottery{background:linear-gradient(135deg,rgba(241,196,15,.35),rgba(211,84,0,.85));border-color:#f1c40f;color:#ffcc00;box-shadow:0 0 8px rgba(241,196,15,.25);}
 .footer{font-size:7px;color:var(--sub);flex-shrink:0;}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;padding:12px;opacity:0;pointer-events:none;transition:opacity .2s;}
@@ -68,7 +68,7 @@ body{padding:6px;display:flex;justify-content:center;align-items:center;position
       <div class="avatar" id="avatarDisplay">👦</div>
       <div class="p-info">
         <div class="p-name" id="nameTxt">TUBE EMPIRE PRO</div>
-        <div class="p-sub" id="subTxt">Настройка ⚙️</div>
+        <div class="p-sub" id="subTxt">Личный кабинет ⚙️</div>
       </div>
     </div>
     <div class="chat-card" onclick="openChat()">
@@ -86,8 +86,6 @@ body{padding:6px;display:flex;justify-content:center;align-items:center;position
     <a href="game.html" class="act-btn primary" id="bPlay">🔴 ЗАПИСАТЬ РОЛИК</a>
     <a href="lottery.html" class="act-btn lottery" id="bLot">🎟️ Лотерея</a>
     <a href="collection.html" class="act-btn" id="bShop">💎 Магазин блогера</a>
-    <a href="gallery.html" class="act-btn" id="bGal">🏆 Зал Наград</a>
-    <a href="leaderboard.html" class="act-btn" id="bTop">📊 Топ Каналов</a>
   </div>
 
   <div class="footer">tube empire corporation v1.0</div>
@@ -165,9 +163,9 @@ let lang = localStorage.getItem("freezzzLang") || "ru";
 let theme = localStorage.getItem("freezzzTheme") || "dark";
 
 const dict = {
-  ru: {b:"Баланс:",v:"Просмотры:",pl:"🔴 ЗАПИСАТЬ РОЛИК",lot:"🎟️ Лотерея",sh:"💎 Магазин блогера",gal:"🏆 Зал Наград",top:"📊 Топ Каналов",son:"🔊 ЗВУК ВКЛ",soff:"🔇 ЗВУК ВЫКЛ",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Глобальный",mct:"💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ",snd:"ОТПРАВИТЬ",cls:"ЗАКРЫТЬ",sub:"Настройка ⚙️",ph:"Написать...",cinfo:"Доступно раз в 10 минут.",wc:"⏳ Подождите: ",me:"Вы"},
-  de: {b:"Guthaben:",v:"Aufrufe:",pl:"🔴 VIDEO AUFNEHMEN",lot:"🎟️ Lotterie",sh:"💎 Blogger Shop",gal:"🏆 Trophäenraum",top:"📊 Top Kanäle",son:"🔊 TON AN",soff:"🔇 TON AUS",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBALER BLOGGER CHAT",snd:"SENDEN",cls:"SCHLIESSEN",sub:"Anpassen ⚙️",ph:"Nachricht...",cinfo:"Alle 10 Minuten möglich.",wc:"⏳ Warten: ",me:"Du"},
-  en: {b:"Balance:",v:"Views:",pl:"🔴 RECORD VIDEO",lot:"🎟️ Lottery",sh:"💎 Blogger Shop",gal:"🏆 Hall of Fame",top:"📊 Top Channels",son:"🔊 SOUND ON",soff:"🔇 SOUND OFF",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBAL BLOGGER CHAT",snd:"SEND",cls:"CLOSE",sub:"Settings ⚙️",ph:"Type...",cinfo:"Available once every 10 min.",wc:"⏳ Wait: ",me:"You"}
+  ru: {b:"Баланс:",v:"Просмотры:",pl:"🔴 ЗАПИСАТЬ РОЛИК",lot:"🎟️ Лотерея",sh:"💎 Магазин блогера",son:"🔊 ЗВУК ВКЛ",soff:"🔇 ЗВУК ВЫКЛ",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Глобальный",mct:"💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ",snd:"ОТПРАВИТЬ",cls:"ЗАКРЫТЬ",sub:"Кабинет ⚙️",ph:"Написать...",cinfo:"Доступно раз в 10 минут.",wc:"⏳ Подождите: ",me:"Вы"},
+  de: {b:"Guthaben:",v:"Aufrufe:",pl:"🔴 VIDEO AUFNEHMEN",lot:"🎟️ Lotterie",sh:"💎 Blogger Shop",son:"🔊 TON AN",soff:"🔇 TON AUS",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBALER BLOGGER CHAT",snd:"SENDEN",cls:"SCHLIESSEN",sub:"Kabinett ⚙️",ph:"Nachricht...",cinfo:"Alle 10 Minuten möglich.",wc:"⏳ Warten: ",me:"Du"},
+  en: {b:"Balance:",v:"Views:",pl:"🔴 RECORD VIDEO",lot:"🎟️ Lottery",sh:"💎 Blogger Shop",son:"🔊 SOUND ON",soff:"🔇 SOUND OFF",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBAL BLOGGER CHAT",snd:"SEND",cls:"CLOSE",sub:"Cabinet ⚙️",ph:"Type...",cinfo:"Available once every 10 min.",wc:"⏳ Wait: ",me:"You"}
 };
 
 function toggleLang() {
@@ -221,8 +219,6 @@ function updateUI() {
   document.getElementById('bPlay').textContent = t.pl;
   document.getElementById('bLot').textContent = t.lot;
   document.getElementById('bShop').textContent = t.sh;
-  document.getElementById('bGal').textContent = t.gal;
-  document.getElementById('bTop').textContent = t.top;
   document.getElementById('langBtn').textContent = lang==="ru"?"🇷🇺 RU":(lang==="de"?"🇩🇪 DE":"🇬🇧 EN");
   document.getElementById('soundBtn').textContent = sound ? t.son : t.soff;
   document.getElementById('chatTitle').textContent = t.ct;
