@@ -161,7 +161,7 @@ body{
 
 <div class="menu-container">
   <div class="menu-header">
-    <button class="ctrl-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
+    <button class="ctrl-btn" onclick="toggleLanguage()" id="langBtn">🇷🇺 RU</button>
     <div class="header-right">
       <button class="ctrl-btn" onclick="toggleTheme()" id="themeBtn">🌙 DARK</button>
       <button class="ctrl-btn" onclick="toggleSound()" id="soundBtn">🔊 ON</button>
@@ -182,7 +182,7 @@ body{
     <!-- ВИДЖЕТ МИНИ-ЧАТА -->
     <div class="chat-preview-card" onclick="openFullChat()">
       <div class="chat-preview-header">
-        <span id="chatWidgetTitle">💬 Глобальный</span>
+        <span id="chatWidgetTitle">💬 Global</span>
         <span>▶</span>
       </div>
       <div class="chat-mini-list" id="miniChatContainer"></div>
@@ -264,9 +264,9 @@ class GlobalChatModule {
     
     if (!localStorage.getItem(this.storageKey)) {
       const initialMessages = [
-        { sender: "MrBeast", avatar: "👑👕💵👖", text: "Снимаю видео с островом!", time: Date.now() - 3600000 },
-        { sender: "PewDiePie", avatar: "🎧🧥👖👖", text: "Привет из Японии!", time: Date.now() - 1800000 },
-        { sender: "Marshmello", avatar: "🧢👕👖👟", text: "Готовлю трек!", time: Date.now() - 600000 }
+        { sender: "MrBeast", avatar: "👑👕💵👖", text: "Recording a video with an island!", time: Date.now() - 3600000 },
+        { sender: "PewDiePie", avatar: "🎧🧥👖👖", text: "Hello everyone from Japan!", time: Date.now() - 1800000 },
+        { sender: "Marshmello", avatar: "🧢👕👖👟", text: "Preparing a new track!", time: Date.now() - 600000 }
       ];
       localStorage.setItem(this.storageKey, JSON.stringify(initialMessages));
     }
@@ -292,15 +292,15 @@ class GlobalChatModule {
   sendMessage(senderName, avatarStr, text) {
     const cooldown = this.getCooldownRemaining();
     if (cooldown > 0) {
-      return { success: false, error: `Подождите еще ${Math.ceil(cooldown / 60)} мин. перед отправкой.` };
+      return { success: false, error: `Wait before sending.` };
     }
     if (!text || text.trim() === "") {
-      return { success: false, error: "Сообщение не может быть пустым." };
+      return { success: false, error: "Empty message." };
     }
 
     const msgs = this.getMessages();
     msgs.push({
-      sender: senderName || "Блогер",
+      sender: senderName || "Blogger",
       avatar: avatarStr || "👦👤👕👖",
       text: text.trim().substring(0, 150),
       time: Date.now()
@@ -366,11 +366,37 @@ const menuLang = {
     cooldownInfo: "Nachrichten alle 10 Minuten möglich.",
     waitCooldown: "⏳ Warten Sie: ",
     playerName: "Du (TUBE EMPIRE)"
+  },
+  en: {
+    capital: "Balance:",
+    energyStat: "Views:",
+    play: "🔴 RECORD VIDEO",
+    lottery: "🎟️ Lottery",
+    collection: "💎 Blogger Shop",
+    gallery: "🏆 Hall of Fame",
+    ranking: "📊 Top Channels",
+    soundOn: "🔊 SOUND ON",
+    soundOff: "🔇 SOUND OFF",
+    themeDark: "🌙 DARK",
+    themeRose: "🌸 ROSE",
+    themeLight: "☀️ LIGHT",
+    chatTitle: "💬 Global Chat",
+    modalChatTitle: "💬 GLOBAL BLOGGER CHAT",
+    sendBtn: "SEND",
+    closeBtn: "CLOSE",
+    profileSub: "Settings ⚙️",
+    placeholder: "Type a message...",
+    cooldownInfo: "Messages available once every 10 minutes.",
+    waitCooldown: "⏳ Wait: ",
+    playerName: "You (TUBE EMPIRE)"
   }
 };
 
 function toggleLanguage() {
-  currentLang = currentLang === "ru" ? "de" : "ru";
+  if (currentLang === "ru") currentLang = "de";
+  else if (currentLang === "de") currentLang = "en";
+  else currentLang = "ru";
+
   localStorage.setItem("freezzzLang", currentLang);
   updateMenuUI();
 }
@@ -399,7 +425,7 @@ function updateMiniChatWidget() {
   const recent = window.GlobalChat.getRecentMessages(3);
   let html = "";
   if (recent.length === 0) {
-    html = `<div class="chat-mini-msg">Нет сообщений...</div>`;
+    html = `<div class="chat-mini-msg">No messages...</div>`;
   } else {
     recent.forEach(m => {
       html += `<div class="chat-mini-msg">${m.avatar || ''} <span>${m.sender}:</span> ${m.text}</div>`;
@@ -436,7 +462,7 @@ function updateFullChatWindow() {
   if (cd > 0) {
     let mins = Math.floor(cd / 60);
     let secs = cd % 60;
-    cdInfoElem.textContent = `${t.waitCooldown} ${mins} мин. ${secs} сек.`;
+    cdInfoElem.textContent = `${t.waitCooldown} ${mins}m ${secs}s`;
   } else {
     cdInfoElem.textContent = t.cooldownInfo;
   }
@@ -465,7 +491,9 @@ function updateMenuUI() {
   document.getElementById('btnCollection').textContent = t.collection;
   document.getElementById('btnGallery').textContent = t.gallery;
   document.getElementById('btnRanking').textContent = t.ranking;
-  document.getElementById('langBtn').textContent = currentLang === "ru" ? "🇩🇪 DE" : "🇷🇺 RU";
+  
+  let langLabels = { ru: "🇷🇺 RU", de: "🇩🇪 DE", en: "🇬🇧 EN" };
+  document.getElementById('langBtn').textContent = langLabels[currentLang];
   document.getElementById('soundBtn').textContent = soundEnabled ? t.soundOn : t.soundOff;
 
   document.getElementById('chatWidgetTitle').textContent = t.chatTitle;
@@ -488,13 +516,4 @@ function updateMenuUI() {
   let savedMoney = Number(localStorage.getItem("zeitarbeitMoney") || 0);
   let savedEnergy = Number(localStorage.getItem("zeitarbeitEnergy") || 0);
   
-  document.getElementById('menuMoneyVal').textContent = savedMoney.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €";
-  document.getElementById('menuEnergyVal').textContent = savedEnergy.toFixed(1) + (currentLang === 'ru' ? " млн" : " Mio");
-}
-
-applyTheme();
-updateMenuUI();
-updateMiniChatWidget();
-</script>
-</body>
-</html>
+  let viewsUnit = currentLang === 'ru' ? " м
