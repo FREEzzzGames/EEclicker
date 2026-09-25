@@ -3,517 +3,254 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Tube Empire — Главное меню</title>
+<title>Tube Empire</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-:root, [data-theme="dark"] {
-  --portal-bg: rgba(20, 10, 10, 0.94);
-  --border-col: rgba(255, 0, 0, 0.5);
-  --accent-col: #ff0000;
-  --title-col: #ffcc00;
-  --btn-bg: rgba(40, 15, 15, 0.95);
-  --glass-bg: rgba(30, 12, 12, 0.8);
-  --text-main: #fff;
-  --text-sub: #ff8888;
-  --body-bg: #0a0505;
-}
-[data-theme="rose"] {
-  --portal-bg: rgba(30, 10, 25, 0.94);
-  --border-col: rgba(233, 30, 99, 0.6);
-  --accent-col: #e91e63;
-  --title-col: #ffeb3b;
-  --btn-bg: rgba(60, 15, 40, 0.95);
-  --glass-bg: rgba(45, 12, 32, 0.85);
-  --text-main: #fff;
-  --text-sub: #ff80ab;
-  --body-bg: #150510;
-}
-[data-theme="light"] {
-  --portal-bg: rgba(245, 247, 250, 0.95);
-  --border-col: rgba(211, 47, 47, 0.4);
-  --accent-col: #d32f2f;
-  --title-col: #e65100;
-  --btn-bg: rgba(255, 255, 255, 0.95);
-  --glass-bg: rgba(230, 235, 245, 0.9);
-  --text-main: #1a1a1a;
-  --text-sub: #555555;
-  --body-bg: #e0e4ec;
-}
-
+:root,[data-theme="dark"]{--bg:rgba(20,10,10,.94);--border:rgba(255,0,0,.5);--accent:#ff0000;--title:#ffcc00;--btn:rgba(40,15,15,.95);--glass:rgba(30,12,12,.8);--text:#fff;--sub:#ff8888;--body:#0a0505;}
+[data-theme="rose"]{--bg:rgba(30,10,25,.94);--border:rgba(233,30,99,.6);--accent:#e91e63;--title:#ffeb3b;--btn:rgba(60,15,40,.95);--glass:rgba(45,12,32,.85);--text:#fff;--sub:#ff80ab;--body:#150510;}
+[data-theme="light"]{--bg:rgba(245,247,250,.95);--border:rgba(211,47,47,.4);--accent:#d32f2f;--title:#e65100;--btn:rgba(255,255,255,.95);--glass:rgba(230,235,245,.9);--text:#1a1a1a;--sub:#555;--body:#e0e4ec;}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;transition: background 0.3s;}
-body{
-  padding:6px;display:flex;justify-content:center;align-items:center;
-  position: fixed; inset: 0;
-}
-.menu-container{
-  width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
-  text-align: center; display: flex; flex-direction: column; justify-content: space-between;
-  padding: 8px; z-index: 10;
-  background: var(--portal-bg); border: 2.5px solid var(--border-col);
-  border-radius: 14px; box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(6px);
-  position: relative; overflow-y: auto;
-}
-.menu-header { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; gap: 4px; flex-shrink: 0; }
-.header-right { display: flex; gap: 4px; align-items: center; }
-
-.ctrl-btn {
-  background: var(--glass-bg); border: 1.5px solid var(--accent-col); color: var(--text-main);
-  padding: 3px 6px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 8.5px;
-  font-family: monospace;
-}
-.ctrl-btn:active { opacity: 0.7; }
-
-/* СИММЕТРИЧНАЯ ВЕРХНЯЯ ПАНЕЛЬ ДЛЯ ПРОФИЛЯ И ЧАТА */
-.top-panels-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 6px; z-index: 2; flex-shrink: 0;
-}
-
-/* КАРТОЧКА ПРОФИЛЯ В ПРЯМОУГОЛЬНОЙ РАМКЕ */
-.profile-card {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-  background: var(--glass-bg); border: 1.5px solid var(--border-col); border-radius: 10px; padding: 6px;
-  cursor: pointer; transition: transform 0.1s; height: 68px; text-align: center;
-}
-.profile-card:active { transform: scale(0.97); }
-.profile-avatar-box {
-  font-size: 18px; background: none; border: none; display: flex;
-  align-items: center; justify-content: center; line-height: 1; word-break: break-all;
-}
-.profile-info { display: flex; flex-direction: column; width: 100%; gap: 1px; }
-.profile-name { font-size: 8.5px; font-weight: bold; color: var(--title-col); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.profile-sub { font-size: 6.5px; color: var(--text-sub); }
-
-/* КОМПАКТНЫЙ ВИДЖЕТ МИНИ-ЧАТА В РАМКЕ */
-.chat-preview-card {
-  background: var(--glass-bg); border: 1.5px dashed var(--accent-col);
-  border-radius: 10px; padding: 6px; display: flex; flex-direction: column;
-  justify-content: space-between; text-align: left; cursor: pointer;
-  transition: transform 0.1s; height: 68px;
-}
-.chat-preview-card:active { transform: scale(0.97); }
-.chat-preview-header { display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-weight: bold; color: var(--title-col); }
-.chat-mini-list { display: flex; flex-direction: column; gap: 1px; }
-.chat-mini-msg { font-size: 6.5px; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.chat-mini-msg span { color: var(--text-main); font-weight: bold; }
-
-.player-stats-card {
-  background: var(--glass-bg); border: 1.5px solid var(--border-col);
-  border-radius: 8px; padding: 5px 8px; display: flex; flex-direction: column; gap: 2px; width: 100%; text-align: left; flex-shrink: 0;
-}
-.stat-row { display: flex; justify-content: space-between; font-size: 9px; }
-.stat-label { color: var(--text-sub); }
-.stat-value { font-weight: bold; color: var(--title-col); }
-
-.menu-actions { display: flex; flex-direction: column; gap: 3.5px; width: 100%; z-index: 2; flex-shrink: 0; }
-.menu-btn {
-  width: 100%; background: var(--btn-bg);
-  border: 1.5px solid var(--accent-col); border-radius: 7px; padding: 6px;
-  color: var(--text-main); font-family: monospace; font-size: 10px; font-weight: bold;
-  cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 5px;
-}
-.menu-btn:active { transform: scale(0.97); }
-.menu-btn.primary {
-  background: linear-gradient(135deg, rgba(255,204,0,0.4), rgba(200,150,0,0.85));
-  border-color: var(--title-col); color: #000; font-size: 11px;
-  box-shadow: 0 0 10px rgba(255,204,0,0.3);
-}
-.menu-btn.lottery {
-  background: linear-gradient(135deg, rgba(241, 196, 15, 0.35), rgba(211, 84, 0, 0.85));
-  border-color: #f1c40f; color: #ffcc00;
-  box-shadow: 0 0 8px rgba(241, 196, 15, 0.25);
-}
-.menu-footer { font-size: 7px; color: var(--text-sub); z-index: 2; flex-shrink: 0; }
-
-/* МОДАЛЬНОЕ ОКНО ОСНОВНОГО ЧАТА */
-.modal-overlay {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px);
-  display: flex; align-items: center; justify-content: center; z-index: 100; padding: 12px;
-  opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
-}
-.modal-overlay.active { opacity: 1; pointer-events: auto; }
-.modal-content {
-  background: var(--portal-bg); border: 2.5px solid var(--title-col); border-radius: 12px;
-  padding: 10px; text-align: center; width: 100%; max-width: 360px; height: 360px;
-  display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 0 25px rgba(255,204,0,0.4);
-}
-.chat-messages-box {
-  flex-grow: 1; background: var(--glass-bg); border: 1px solid var(--border-col);
-  border-radius: 8px; padding: 5px; overflow-y: auto; text-align: left; display: flex; flex-direction: column; gap: 5px; margin: 5px 0;
-}
-.chat-msg-item { font-size: 8px; background: rgba(0,0,0,0.2); padding: 3px 5px; border-radius: 5px; border-left: 2px solid var(--accent-col); }
-.chat-msg-sender { font-weight: bold; color: var(--title-col); margin-bottom: 1px; }
-.chat-msg-text { color: var(--text-main); word-break: break-all; }
-.chat-input-area { display: flex; gap: 4px; }
-.chat-input {
-  flex-grow: 1; background: var(--glass-bg); border: 1.5px solid var(--border-col);
-  border-radius: 6px; padding: 5px; color: var(--text-main); font-family: monospace; font-size: 8.5px;
-}
-.chat-send-btn {
-  background: var(--title-col); border: none; border-radius: 6px; padding: 5px 9px;
-  font-weight: bold; cursor: pointer; font-size: 8.5px; color: #000;
-}
-.chat-cooldown-info { font-size: 7px; color: var(--text-sub); margin-top: 2px; }
+html,body{margin:0;width:100%;height:100%;background:var(--body);color:var(--text);font-family:monospace;overflow:hidden;transition:background .3s;}
+body{padding:6px;display:flex;justify-content:center;align-items:center;position:fixed;inset:0;}
+.menu{width:100%;height:100%;max-width:420px;max-height:100vh;text-align:center;display:flex;flex-direction:column;justify-content:space-between;padding:8px;z-index:10;background:var(--bg);border:2.5px solid var(--border);border-radius:14px;box-shadow:0 0 30px rgba(0,0,0,.3);backdrop-filter:blur(6px);position:relative;overflow-y:auto;}
+.header{display:flex;justify-content:space-between;align-items:center;width:100%;gap:4px;flex-shrink:0;}
+.h-right{display:flex;gap:4px;align-items:center;}
+.btn{background:var(--glass);border:1.5px solid var(--accent);color:var(--text);padding:3px 6px;border-radius:6px;font-weight:bold;cursor:pointer;font-size:8.5px;font-family:monospace;}
+.btn:active{opacity:.7;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex-shrink:0;}
+.card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:var(--glass);border:1.5px solid var(--border);border-radius:10px;padding:6px;cursor:pointer;height:68px;text-align:center;}
+.card:active{transform:scale(.97);}
+.avatar{font-size:18px;line-height:1;word-break:break-all;}
+.p-info{width:100%;gap:1px;}
+.p-name{font-size:8.5px;font-weight:bold;color:var(--title);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.p-sub{font-size:6.5px;color:var(--sub);}
+.chat-card{background:var(--glass);border:1.5px dashed var(--accent);border-radius:10px;padding:6px;display:flex;flex-direction:column;justify-content:space-between;text-align:left;cursor:pointer;height:68px;}
+.chat-card:active{transform:scale(.97);}
+.c-head{display:flex;justify-content:space-between;align-items:center;font-size:8px;font-weight:bold;color:var(--title);}
+.c-list{display:flex;flex-direction:column;gap:1px;}
+.c-msg{font-size:6.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.c-msg span{color:var(--text);font-weight:bold;}
+.stats{background:var(--glass);border:1.5px solid var(--border);border-radius:8px;padding:5px 8px;display:flex;flex-direction:column;gap:2px;text-align:left;flex-shrink:0;}
+.s-row{display:flex;justify-content:space-between;font-size:9px;}
+.s-lbl{color:var(--sub);}
+.s-val{font-weight:bold;color:var(--title);}
+.actions{display:flex;flex-direction:column;gap:3.5px;width:100%;flex-shrink:0;}
+.act-btn{width:100%;background:var(--btn);border:1.5px solid var(--accent);border-radius:7px;padding:6px;color:var(--text);font-family:monospace;font-size:10px;font-weight:bold;cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:5px;}
+.act-btn:active{transform:scale(.97);}
+.act-btn.primary{background:linear-gradient(135deg,rgba(255,204,0,.4),rgba(200,150,0,.85));border-color:var(--title);color:#000;font-size:11px;box-shadow:0 0 10px rgba(255,204,0,.3);}
+.act-btn.lottery{background:linear-gradient(135deg,rgba(241,196,15,.35),rgba(211,84,0,.85));border-color:#f1c40f;color:#ffcc00;box-shadow:0 0 8px rgba(241,196,15,.25);}
+.footer{font-size:7px;color:var(--sub);flex-shrink:0;}
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:100;padding:12px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal.active{opacity:1;pointer-events:auto;}
+.m-content{background:var(--bg);border:2.5px solid var(--title);border-radius:12px;padding:10px;text-align:center;width:100%;max-width:360px;height:360px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 0 25px rgba(255,204,0,.4);}
+.m-msgs{flex-grow:1;background:var(--glass);border:1px solid var(--border);border-radius:8px;padding:5px;overflow-y:auto;text-align:left;display:flex;flex-direction:column;gap:5px;margin:5px 0;}
+.msg-item{font-size:8px;background:rgba(0,0,0,.2);padding:3px 5px;border-radius:5px;border-left:2px solid var(--accent);}
+.msg-s{font-weight:bold;color:var(--title);margin-bottom:1px;}
+.msg-t{color:var(--text);word-break:break-all;}
+.m-input-area{display:flex;gap:4px;}
+.m-input{flex-grow:1;background:var(--glass);border:1.5px solid var(--border);border-radius:6px;padding:5px;color:var(--text);font-family:monospace;font-size:8.5px;}
+.m-send{background:var(--title);border:none;border-radius:6px;padding:5px 9px;font-weight:bold;cursor:pointer;font-size:8.5px;color:#000;}
+.m-cd{font-size:7px;color:var(--sub);margin-top:2px;}
 </style>
 </head>
 <body data-theme="dark">
-
-<div class="menu-container">
-  <div class="menu-header">
-    <button class="ctrl-btn" onclick="toggleLanguage()" id="langBtn">🇷🇺 RU</button>
-    <div class="header-right">
-      <button class="ctrl-btn" onclick="toggleTheme()" id="themeBtn">🌙 DARK</button>
-      <button class="ctrl-btn" onclick="toggleSound()" id="soundBtn">🔊 ON</button>
+<div class="menu">
+  <div class="header">
+    <button class="btn" onclick="toggleLang()" id="langBtn">🇷🇺 RU</button>
+    <div class="h-right">
+      <button class="btn" onclick="toggleTheme()" id="themeBtn">🌙 DARK</button>
+      <button class="btn" onclick="toggleSound()" id="soundBtn">🔊 ON</button>
     </div>
   </div>
 
-  <!-- ВЕРХНИЕ СИММЕТРИЧНЫЕ ПАНЕЛИ: ПРОФИЛЬ И ЧАТ -->
-  <div class="top-panels-grid">
-    <!-- КАРТОЧКА ПРОФИЛЯ -->
-    <div class="profile-card" onclick="window.location.href='avatar.html'">
-      <div class="profile-avatar-box" id="headerAvatarDisplay">👦</div>
-      <div class="profile-info">
-        <div class="profile-name" id="profileNameTxt">TUBE EMPIRE PRO</div>
-        <div class="profile-sub" id="profileSubTxt">Настройка ⚙️</div>
+  <div class="grid2">
+    <div class="card" onclick="location.href='avatar.html'">
+      <div class="avatar" id="avatarDisplay">👦</div>
+      <div class="p-info">
+        <div class="p-name" id="nameTxt">TUBE EMPIRE PRO</div>
+        <div class="p-sub" id="subTxt">Настройка ⚙️</div>
       </div>
     </div>
-
-    <!-- ВИДЖЕТ МИНИ-ЧАТА -->
-    <div class="chat-preview-card" onclick="openFullChat()">
-      <div class="chat-preview-header">
-        <span id="chatWidgetTitle">💬 Глобальный</span>
-        <span>▶</span>
-      </div>
-      <div class="chat-mini-list" id="miniChatContainer"></div>
+    <div class="chat-card" onclick="openChat()">
+      <div class="c-head"><span id="chatTitle">💬 Глобальный</span><span>▶</span></div>
+      <div class="c-list" id="miniChat"></div>
     </div>
   </div>
 
-  <div class="player-stats-card">
-    <div class="stat-row">
-      <span class="stat-label" id="lblCapital">Баланс:</span>
-      <span class="stat-value" id="menuMoneyVal">0.00 €</span>
-    </div>
-    <div class="stat-row">
-      <span class="stat-label" id="lblEnergyStat">Просмотры:</span>
-      <span class="stat-value" id="menuEnergyVal">0.0M</span>
-    </div>
+  <div class="stats">
+    <div class="s-row"><span class="s-lbl" id="lblBal">Баланс:</span><span class="s-val" id="valBal">0.00 €</span></div>
+    <div class="s-row"><span class="s-lbl" id="lblViews">Просмотры:</span><span class="s-val" id="valViews">0.0M</span></div>
   </div>
 
-  <div class="menu-actions">
-    <a href="game.html" class="menu-btn primary" id="btnPlay">🔴 ЗАПИСАТЬ РОЛИК</a>
-    <a href="lottery.html" class="menu-btn lottery" id="btnLottery">🎟️ Лотерея</a>
-    <a href="collection.html" class="menu-btn" id="btnCollection">💎 Магазин блогера</a>
-    <a href="gallery.html" class="menu-btn" id="btnGallery">🏆 Зал Наград</a>
-    <a href="leaderboard.html" class="menu-btn" id="btnRanking">📊 Топ Каналов</a>
+  <div class="actions">
+    <a href="game.html" class="act-btn primary" id="bPlay">🔴 ЗАПИСАТЬ РОЛИК</a>
+    <a href="lottery.html" class="act-btn lottery" id="bLot">🎟️ Лотерея</a>
+    <a href="collection.html" class="act-btn" id="bShop">💎 Магазин блогера</a>
+    <a href="gallery.html" class="act-btn" id="bGal">🏆 Зал Наград</a>
+    <a href="leaderboard.html" class="act-btn" id="bTop">📊 Топ Каналов</a>
   </div>
 
-  <div class="menu-footer">tube empire corporation v1.0</div>
+  <div class="footer">tube empire corporation v1.0</div>
 </div>
 
-<!-- МОДАЛЬНОЕ ОКНО ОСНОВНОГО ЧАТА -->
-<div class="modal-overlay" id="chatModalOverlay" onclick="closeFullChat()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <div style="font-size: 10.5px; font-weight: bold; color: var(--title-col);" id="modalChatTitle">💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ</div>
-    
-    <div class="chat-messages-box" id="fullChatMessages"></div>
-
+<div class="modal" id="modalChat" onclick="closeChat()">
+  <div class="m-content" onclick="event.stopPropagation()">
+    <div style="font-size:10.5px;font-weight:bold;color:var(--title);" id="mTitle">💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ</div>
+    <div class="m-msgs" id="fullMsgs"></div>
     <div>
-      <div class="chat-input-area">
-        <input type="text" id="chatInputText" class="chat-input" placeholder="Написать в чат..." maxlength="150">
-        <button class="chat-send-btn" onclick="sendChatMessage()" id="chatSendBtnTxt">ОТПРАВИТЬ</button>
+      <div class="m-input-area">
+        <input type="text" id="chatInput" class="m-input" placeholder="Написать..." maxlength="150">
+        <button class="m-send" onclick="sendMsg()" id="mSend">ОТПРАВИТЬ</button>
       </div>
-      <div class="chat-cooldown-info" id="chatCooldownTxt">Отправка сообщений доступна раз в 10 минут.</div>
+      <div class="m-cd" id="mCd">Доступно раз в 10 минут.</div>
     </div>
-
-    <button class="ctrl-btn" style="width:100%; padding:5px; background:#333; margin-top:3px;" onclick="closeFullChat()" id="chatCloseBtnTxt">ЗАКРЫТЬ</button>
+    <button class="btn" style="width:100%;padding:5px;background:#333;margin-top:3px;" onclick="closeChat()" id="mClose">ЗАКРЫТЬ</button>
   </div>
 </div>
 
 <script>
-const tg = window.Telegram.WebApp; 
-if (tg && tg.ready) { tg.ready(); tg.expand(); }
+const tg = window.Telegram.WebApp;
+if(tg && tg.ready) { tg.ready(); tg.expand(); }
 
-function getSavedAvatarString() {
+function getAvatar() {
   try {
-    let saved = JSON.parse(localStorage.getItem("tube_empire_avatar_config"));
-    if (!saved) return "👦👤👕👖";
-    const opts = {
-      gender: [{symbol: '👦'}, {symbol: '👧'}],
-      head: [{icon: '👤'}, {icon: '🧢'}, {icon: '🎧'}, {icon: '🕶️'}, {icon: '👑'}],
-      torso: [{icon: '👕'}, {icon: '🧥'}, {icon: '👔'}, {icon: '🥼'}, {icon: '👚'}],
-      legs: [{icon: '👖'}, {icon: '🩳'}, {icon: '🏃'}, {icon: '👗'}, {icon: '🥻'}],
-      accessory: [{icon: '❌'}, {icon: '🎙️'}, {icon: '📷'}, {icon: '📱'}, {icon: '💵'}]
+    let s = JSON.parse(localStorage.getItem("tube_empire_avatar_config"));
+    if(!s) return "👦👤👕👖";
+    let o = {
+      gender: ['👦','👧'],
+      head: ['👤','🧢','🎧','🕶️','👑'],
+      torso: ['👕','🧥','👔','🥼','👚'],
+      legs: ['👖','🩳','🏃','👗','🥻'],
+      accessory: ['❌','🎙️','📷','📱','💵']
     };
-    let g = opts.gender[saved.gender || 0].symbol;
-    let h = opts.head[saved.head || 0].icon;
-    let t = opts.torso[saved.torso || 0].icon;
-    let l = opts.legs[saved.legs || 0].icon;
-    let acc = opts.accessory[saved.accessory || 0].icon;
-    return `${g}${h}${t}${l}${acc !== '❌' ? acc : ''}`;
-  } catch(e) {
-    return "👦👤👕👖";
-  }
+    let a = o.gender[s.gender||0] + o.head[s.head||0] + o.torso[s.torso||0] + o.legs[s.legs||0];
+    let acc = o.accessory[s.accessory||0];
+    return a + (acc !== '❌' ? acc : '');
+  } catch(e) { return "👦👤👕👖"; }
 }
 
-class GlobalChatModule {
+class ChatSys {
   constructor() {
-    this.storageKey = "tube_empire_global_chat";
-    this.cooldownKey = "tube_empire_chat_cooldown";
-    this.cooldownTime = 10 * 60 * 1000;
-    
-    if (!localStorage.getItem(this.storageKey)) {
-      const initialMessages = [
-        { sender: "MrBeast", avatar: "👑👕💵👖", text: "Снимаю видео с островом!", time: Date.now() - 3600000 },
-        { sender: "PewDiePie", avatar: "🎧🧥👖👖", text: "Привет из Японии!", time: Date.now() - 1800000 },
-        { sender: "Marshmello", avatar: "🧢👕👖👟", text: "Готовлю трек!", time: Date.now() - 600000 }
-      ];
-      localStorage.setItem(this.storageKey, JSON.stringify(initialMessages));
+    this.key = "tube_empire_global_chat";
+    this.cdKey = "tube_empire_chat_cooldown";
+    if(!localStorage.getItem(this.key)) {
+      localStorage.setItem(this.key, JSON.stringify([
+        {s:"MrBeast",a:"👑👕💵👖",t:"Снимаю видео с островом!"},
+        {s:"PewDiePie",a:"🎧🧥👖👖",t:"Привет из Японии!"},
+        {s:"Marshmello",a:"🧢👕👖👟", t:"Готовлю трек!"}
+      ]));
     }
   }
-
-  getMessages() {
-    try { return JSON.parse(localStorage.getItem(this.storageKey)) || []; } catch (e) { return []; }
+  get() { try { return JSON.parse(localStorage.getItem(this.key)) || []; } catch(e) { return []; } }
+  recent(n=3) { return this.get().slice(-n).reverse(); }
+  cd() {
+    let t = Number(localStorage.getItem(this.cdKey)) || 0, d = Date.now() - t;
+    return d < 600000 ? Math.ceil((600000 - d)/1000) : 0;
   }
-
-  getRecentMessages(count = 3) {
-    return this.getMessages().slice(-count).reverse();
-  }
-
-  getCooldownRemaining() {
-    const lastSend = Number(localStorage.getItem(this.cooldownKey)) || 0;
-    const elapsed = Date.now() - lastSend;
-    if (elapsed < this.cooldownTime) {
-      return Math.ceil((this.cooldownTime - elapsed) / 1000);
-    }
-    return 0;
-  }
-
-  sendMessage(senderName, avatarStr, text) {
-    const cooldown = this.getCooldownRemaining();
-    if (cooldown > 0) {
-      return { success: false, error: `Подождите еще ${Math.ceil(cooldown / 60)} мин. перед отправкой.` };
-    }
-    if (!text || text.trim() === "") {
-      return { success: false, error: "Сообщение не может быть пустым." };
-    }
-
-    const msgs = this.getMessages();
-    msgs.push({
-      sender: senderName || "Блогер",
-      avatar: avatarStr || "👦👤👕👖",
-      text: text.trim().substring(0, 150),
-      time: Date.now()
-    });
-
-    if (msgs.length > 50) msgs.shift();
-
-    localStorage.setItem(this.storageKey, JSON.stringify(msgs));
-    localStorage.setItem(this.cooldownKey, Date.now());
-    return { success: true };
+  send(name, av, txt) {
+    if(this.cd() > 0) return {ok:false};
+    if(!txt || !txt.trim()) return {ok:false};
+    let m = this.get();
+    m.push({s:name, a:av, t:txt.trim().substring(0,150), time:Date.now()});
+    if(m.length>50) m.shift();
+    localStorage.setItem(this.key, JSON.stringify(m));
+    localStorage.setItem(this.cdKey, Date.now());
+    return {ok:true};
   }
 }
+const Chat = new ChatSys();
 
-window.GlobalChat = new GlobalChatModule();
+let sound = localStorage.getItem("freezzzSound") !== "false";
+let lang = localStorage.getItem("freezzzLang") || "ru";
+let theme = localStorage.getItem("freezzzTheme") || "dark";
 
-let soundEnabled = localStorage.getItem("freezzzSound") !== "false";
-let currentLang = localStorage.getItem("freezzzLang") || "ru";
-let currentTheme = localStorage.getItem("freezzzTheme") || "dark";
-
-const menuLang = {
-  ru: {
-    capital: "Баланс:",
-    energyStat: "Просмотры:",
-    play: "🔴 ЗАПИСАТЬ РОЛИК",
-    lottery: "🎟️ Лотерея",
-    collection: "💎 Магазин блогера",
-    gallery: "🏆 Зал Наград",
-    ranking: "📊 Топ Каналов",
-    soundOn: "🔊 ЗВУК ВКЛ",
-    soundOff: "🔇 ЗВУК ВЫКЛ",
-    themeDark: "🌙 DARK",
-    themeRose: "🌸 ROSE",
-    themeLight: "☀️ LIGHT",
-    chatTitle: "💬 Глобальный",
-    modalChatTitle: "💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ",
-    sendBtn: "ОТПРАВИТЬ",
-    closeBtn: "ЗАКРЫТЬ",
-    profileSub: "Настройка ⚙️",
-    placeholder: "Написать в чат...",
-    cooldownInfo: "Отправка сообщений доступна раз в 10 минут.",
-    waitCooldown: "⏳ Подождите: ",
-    playerName: "Вы"
-  },
-  de: {
-    capital: "Guthaben:",
-    energyStat: "Aufrufe:",
-    play: "🔴 VIDEO AUFNEHMEN",
-    lottery: "🎟️ Lotterie",
-    collection: "💎 Blogger Shop",
-    gallery: "🏆 Trophäenraum",
-    ranking: "📊 Top Kanäle",
-    soundOn: "🔊 TON AN",
-    soundOff: "🔇 TON AUS",
-    themeDark: "🌙 DARK",
-    themeRose: "🌸 ROSE",
-    themeLight: "☀️ LIGHT",
-    chatTitle: "💬 Global",
-    modalChatTitle: "💬 GLOBALER BLOGGER CHAT",
-    sendBtn: "SENDEN",
-    closeBtn: "SCHLIESSEN",
-    profileSub: "Anpassen ⚙️",
-    placeholder: "Nachricht schreiben...",
-    cooldownInfo: "Nachrichten alle 10 Minuten möglich.",
-    waitCooldown: "⏳ Warten Sie: ",
-    playerName: "Du"
-  },
-  en: {
-    capital: "Balance:",
-    energyStat: "Views:",
-    play: "🔴 RECORD VIDEO",
-    lottery: "🎟️ Lottery",
-    collection: "💎 Blogger Shop",
-    gallery: "🏆 Hall of Fame",
-    ranking: "📊 Top Channels",
-    soundOn: "🔊 SOUND ON",
-    soundOff: "🔇 SOUND OFF",
-    themeDark: "🌙 DARK",
-    themeRose: "🌸 ROSE",
-    themeLight: "☀️ LIGHT",
-    chatTitle: "💬 Global",
-    modalChatTitle: "💬 GLOBAL BLOGGER CHAT",
-    sendBtn: "SEND",
-    closeBtn: "CLOSE",
-    profileSub: "Settings ⚙️",
-    placeholder: "Type a message...",
-    cooldownInfo: "Messages available once every 10 minutes.",
-    waitCooldown: "⏳ Wait: ",
-    playerName: "You"
-  }
+const dict = {
+  ru: {b:"Баланс:",v:"Просмотры:",pl:"🔴 ЗАПИСАТЬ РОЛИК",lot:"🎟️ Лотерея",sh:"💎 Магазин блогера",gal:"🏆 Зал Наград",top:"📊 Топ Каналов",son:"🔊 ЗВУК ВКЛ",soff:"🔇 ЗВУК ВЫКЛ",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Глобальный",mct:"💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ",snd:"ОТПРАВИТЬ",cls:"ЗАКРЫТЬ",sub:"Настройка ⚙️",ph:"Написать...",cinfo:"Доступно раз в 10 минут.",wc:"⏳ Подождите: ",me:"Вы"},
+  de: {b:"Guthaben:",v:"Aufrufe:",pl:"🔴 VIDEO AUFNEHMEN",lot:"🎟️ Lotterie",sh:"💎 Blogger Shop",gal:"🏆 Trophäenraum",top:"📊 Top Kanäle",son:"🔊 TON AN",soff:"🔇 TON AUS",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBALER BLOGGER CHAT",snd:"SENDEN",cls:"SCHLIESSEN",sub:"Anpassen ⚙️",ph:"Nachricht...",cinfo:"Alle 10 Minuten möglich.",wc:"⏳ Warten: ",me:"Du"},
+  en: {b:"Balance:",v:"Views:",pl:"🔴 RECORD VIDEO",lot:"🎟️ Lottery",sh:"💎 Blogger Shop",gal:"🏆 Hall of Fame",top:"📊 Top Channels",son:"🔊 SOUND ON",soff:"🔇 SOUND OFF",td:"🌙 DARK",tr:"🌸 ROSE",tl:"☀️ LIGHT",ct:"💬 Global",mct:"💬 GLOBAL BLOGGER CHAT",snd:"SEND",cls:"CLOSE",sub:"Settings ⚙️",ph:"Type...",cinfo:"Available once every 10 min.",wc:"⏳ Wait: ",me:"You"}
 };
 
-function toggleLanguage() {
-  if (currentLang === "ru") currentLang = "de";
-  else if (currentLang === "de") currentLang = "en";
-  else currentLang = "ru";
-
-  localStorage.setItem("freezzzLang", currentLang);
-  updateMenuUI();
+function toggleLang() {
+  lang = lang==="ru"?"de":(lang==="de"?"en":"ru");
+  localStorage.setItem("freezzzLang", lang);
+  updateUI();
 }
-
 function toggleSound() {
-  soundEnabled = !soundEnabled;
-  localStorage.setItem("freezzzSound", soundEnabled);
-  updateMenuUI();
+  sound = !sound;
+  localStorage.setItem("freezzzSound", sound);
+  updateUI();
 }
-
 function toggleTheme() {
-  if (currentTheme === "dark") currentTheme = "rose";
-  else if (currentTheme === "rose") currentTheme = "light";
-  else currentTheme = "dark";
-
-  localStorage.setItem("freezzzTheme", currentTheme);
-  applyTheme();
-  updateMenuUI();
+  theme = theme==="dark"?"rose":(theme==="rose"?"light":"dark");
+  localStorage.setItem("freezzzTheme", theme);
+  document.body.setAttribute('data-theme', theme);
+  updateUI();
 }
-
-function applyTheme() {
-  document.body.setAttribute('data-theme', currentTheme);
+function renderMiniChat() {
+  let r = Chat.recent(3), html = "";
+  if(r.length===0) html=`<div class="c-msg">Нет сообщений...</div>`;
+  else r.forEach(m => html+=`<div class="c-msg">${m.a||''} <span>${m.s}:</span> ${m.t}</div>`);
+  document.getElementById('miniChat').innerHTML = html;
 }
-
-function updateMiniChatWidget() {
-  const recent = window.GlobalChat.getRecentMessages(3);
-  let html = "";
-  if (recent.length === 0) {
-    html = `<div class="chat-mini-msg">Нет сообщений...</div>`;
-  } else {
-    recent.forEach(m => {
-      html += `<div class="chat-mini-msg">${m.avatar || ''} <span>${m.sender}:</span> ${m.text}</div>`;
-    });
-  }
-  document.getElementById('miniChatContainer').innerHTML = html;
+function openChat() {
+  renderFullChat();
+  document.getElementById('modalChat').classList.add('active');
 }
-
-function openFullChat() {
-  updateFullChatWindow();
-  document.getElementById('chatModalOverlay').classList.add('active');
+function closeChat() {
+  document.getElementById('modalChat').classList.remove('active');
 }
-
-function closeFullChat() {
-  document.getElementById('chatModalOverlay').classList.remove('active');
-}
-
-function updateFullChatWindow() {
-  const msgs = window.GlobalChat.getMessages();
-  let html = "";
+function renderFullChat() {
+  let msgs = Chat.get(), html = "";
   msgs.slice(-20).reverse().forEach(m => {
-    html += `
-      <div class="chat-msg-item">
-        <div class="chat-msg-sender">${m.avatar || ''} ${m.sender}</div>
-        <div class="chat-msg-text">${m.text}</div>
-      </div>
-    `;
+    html+=`<div class="msg-item"><div class="msg-s">${m.a||''} ${m.s}</div><div class="msg-t">${m.t}</div></div>`;
   });
-  document.getElementById('fullChatMessages').innerHTML = html;
-  
-  const cd = window.GlobalChat.getCooldownRemaining();
-  let t = menuLang[currentLang];
-  let cdInfoElem = document.getElementById('chatCooldownTxt');
-  if (cd > 0) {
-    let mins = Math.floor(cd / 60);
-    let secs = cd % 60;
-    cdInfoElem.textContent = `${t.waitCooldown} ${mins} мин. ${secs} сек.`;
-  } else {
-    cdInfoElem.textContent = t.cooldownInfo;
+  document.getElementById('fullMsgs').innerHTML = html;
+  let cd = Chat.cd(), t = dict[lang], cdEl = document.getElementById('mCd');
+  cdEl.textContent = cd > 0 ? `${t.wc}${Math.floor(cd/60)}м ${cd%60}с` : t.cinfo;
+}
+function sendMsg() {
+  let t = dict[lang], inp = document.getElementById('chatInput');
+  let res = Chat.send(t.me, getAvatar(), inp.value);
+  if(res.ok !== false && inp.value.trim()) { inp.value=""; renderFullChat(); renderMiniChat(); }
+  else { alert(t.cinfo); }
+}
+function updateUI() {
+  let t = dict[lang];
+  document.getElementById('lblBal').textContent = t.b;
+  document.getElementById('lblViews').textContent = t.v;
+  document.getElementById('bPlay').textContent = t.pl;
+  document.getElementById('bLot').textContent = t.lot;
+  document.getElementById('bShop').textContent = t.sh;
+  document.getElementById('bGal').textContent = t.gal;
+  document.getElementById('bTop').textContent = t.top;
+  document.getElementById('langBtn').textContent = lang==="ru"?"🇷🇺 RU":(lang==="de"?"🇩🇪 DE":"🇬🇧 EN");
+  document.getElementById('soundBtn').textContent = sound ? t.son : t.soff;
+  document.getElementById('chatTitle').textContent = t.ct;
+  document.getElementById('mTitle').textContent = t.mct;
+  document.getElementById('mSend').textContent = t.snd;
+  document.getElementById('mClose').textContent = t.cls;
+  document.getElementById('chatInput').placeholder = t.ph;
+  document.getElementById('subTxt').textContent = t.sub;
+  document.getElementById('avatarDisplay').textContent = getAvatar();
+
+  let un = "TUBE EMPIRE PRO";
+  if(tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+    un = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || un;
   }
+  document.getElementById('nameTxt').textContent = un;
+  document.getElementById('themeBtn').textContent = theme==="dark"?t.td:(theme==="rose"?t.tr:t.tl);
+
+  let money = Number(localStorage.getItem("zeitarbeitMoney") || 0);
+  let views = Number(localStorage.getItem("zeitarbeitEnergy") || 0);
+  let vUnit = lang==='ru'?" млн":(lang==='de'?" Mio":"M");
+
+  document.getElementById('valBal').textContent = money.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}) + " €";
+  document.getElementById('valViews').textContent = views.toFixed(1) + vUnit;
 }
 
-function sendChatMessage() {
-  let t = menuLang[currentLang];
-  let input = document.getElementById('chatInputText');
-  let result = window.GlobalChat.sendMessage(t.playerName, getSavedAvatarString(), input.value);
-  
-  if (result.success) {
-    input.value = "";
-    updateFullChatWindow();
-    updateMiniChatWidget();
-  } else {
-    alert(result.error);
-  }
-}
-
-function updateMenuUI() {
-  let t = menuLang[currentLang];
-  document.getElementById('lblCapital').textContent = t.capital;
-  document.getElementById('lblEnergyStat').textContent = t.energyStat;
-  document.getElementById('btnPlay').textContent = t.play;
-  document.getElementById('btnLottery').textContent = t.lottery;
-  document.getElementById('btnCollection').textContent = t.collection;
-  document.getElementById('btnGallery').textContent = t.gallery;
-  document.getElementById('btnRanking').textContent = t.ranking;
-  
-  let langLabels = { ru: "🇷🇺 RU", de: "🇩🇪 DE", en: "🇬🇧 EN" };
-  document.getElementById('langBtn').textContent = langLabels[currentLang];
-  document.getElementById('soundBtn').textContent = soundEnabled ? t.soundOn : t.soundOff;
-
-  document.getElementById('chatWidgetTitle').textContent = t.chatTitle;
-  document.getElementById('modalChatTitle').textContent = t.modalChatTitle;
-  document.getElementById('chatSendBtnTxt').textContent = t.sendBtn;
-  document.getElementById('chatCloseBtnTxt').textContent = t.closeBtn;
-  document.getElementById('chatInputText').placeholder = t.placeholder;
-  document.getElementById('profileSubTxt').textContent = t.profileSub;
-  document.getElementById('headerAvatarDisplay').textContent = getSavedAvatarString();
-
-  let username = "TUBE EMPIRE PRO";
-  if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    username = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || username;
-  }
-  document.getElementById('profileNameTxt').textContent = username;
-
-  let themeLabels = { dark: t.themeDark, rose: t.themeRose, light: t.themeLight };
-  document.getElementById('themeBtn').textContent = themeLabels[currentTheme];
-
-  let savedMoney = Number(localStorage.getItem("zeitarbeitMoney") || 0);
-  let savedEnergy = Number(localStorage.getItem("zeitarbeitEnergy") || 0);
-  
-  let viewsUnit = currentLang === 'ru' ? " мл
+document.body.setAttribute('data-theme', theme);
+updateUI();
+renderMiniChat();
+</script>
+</body>
+</html>
