@@ -64,23 +64,24 @@ body{
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
   padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
 }
+.header-username {
+  color: var(--title-col); font-weight: bold; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px;
+}
 
 /* КОМПАНОВКА: АВАТАР СЛЕВА, НАСТРОЙКИ СПРАВА */
 .constructor-main-layout {
   display: flex; gap: 8px; align-items: stretch; margin: 4px 0; flex-shrink: 0;
 }
 .avatar-preview-box {
-  flex: 0 0 120px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
+  flex: 0 0 110px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
   border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 6px; gap: 3px;
+  padding: 6px;
 }
 .constructor-preview {
-  font-size: 26px; background: radial-gradient(circle, var(--accent-col) 0%, var(--btn-bg) 70%);
-  border: 2px solid var(--title-col); border-radius: 50%; width: 62px; height: 62px;
-  display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(255,204,0,0.4);
-  line-height: 1; word-break: break-all; padding: 2px;
+  font-size: 28px; background: none; border: none; width: 62px; height: 62px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1.1; word-break: break-all; padding: 2px; text-align: center;
 }
-.avatar-title-text { font-size: 8px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; }
 
 .categories-tabs {
   flex-grow: 1; display: flex; flex-direction: column; gap: 3px; justify-content: space-between;
@@ -128,14 +129,13 @@ body{
 <div class="portal">
   <div class="game-ui-header">
     <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
-    <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="headerTitle">👤 КОНСТРУКТОР АВАТАРА</div>
+    <div class="header-username" id="headerUsername">TUBE EMPIRE</div>
   </div>
 
   <!-- КОМПАНОВКА: ПРЕВЬЮ СЛЕВА, КАТЕГОРИИ СПРАВА -->
   <div class="constructor-main-layout">
     <div class="avatar-preview-box">
       <div class="constructor-preview" id="modalAvatarPreview">👦</div>
-      <div class="avatar-title-text" id="previewSubTxt">Блогер</div>
     </div>
     <div class="categories-tabs" id="categoriesTabsContainer"></div>
   </div>
@@ -159,13 +159,15 @@ document.body.setAttribute('data-theme', currentTheme);
 
 const langData = {
   ru: {
-    menu: "⬅ МЕНЮ", title: "👤 КОНСТРУКТОР АВАТАРА",
-    sub: "Блогер", save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ", selectEl: "Выберите элемент",
+    menu: "⬅ МЕНЮ",
+    save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ", 
+    selectEl: "Выберите элемент",
     categories: { gender: "Пол", head: "Голова", torso: "Торс", legs: "Ноги", accessory: "Аксессуар" }
   },
   de: {
-    menu: "⬅ ZURÜCK", title: "👤 AVATAR EDITOR",
-    sub: "Blogger", save: "💾 SPEICHERN & ZURÜCK", selectEl: "Element wählen",
+    menu: "⬅ ZURÜCK",
+    save: "💾 SPEICHERN & ZURÜCK", 
+    selectEl: "Element wählen",
     categories: { gender: "Geschlecht", head: "Kopf", torso: "Oberkörper", legs: "Beine", accessory: "Zubehör" }
   }
 };
@@ -217,7 +219,6 @@ function loadConfig() {
   } catch (e) { return { ...defaultConfig }; }
 }
 
-// Теперь функция учитывает ВСЕ 5 слотов: Пол + Голова + Торс + Ноги + Аксессуар
 function getAvatarString() {
   let g = avatarOptions.gender[currentConfig.gender].symbol;
   let h = avatarOptions.head[currentConfig.head].icon;
@@ -230,10 +231,15 @@ function getAvatarString() {
 function renderUI() {
   let t = langData[currentLang];
   document.getElementById('menuBtnTxt').textContent = t.menu;
-  document.getElementById('headerTitle').textContent = t.title;
-  document.getElementById('previewSubTxt').textContent = t.sub;
   document.getElementById('saveBtnTxt').textContent = t.save;
   document.getElementById('activeCategoryLabel').textContent = `${t.selectEl} (${t.categories[activeCategory]}):`;
+
+  // Подтягиваем имя пользователя из контекста Telegram WebApp если доступно, иначе дефолт
+  let username = "TUBE EMPIRE";
+  if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+    username = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || "TUBE EMPIRE";
+  }
+  document.getElementById('headerUsername').textContent = username;
 
   document.getElementById('modalAvatarPreview').textContent = getAvatarString();
 
