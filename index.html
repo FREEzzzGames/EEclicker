@@ -65,22 +65,38 @@ body{
 }
 .ctrl-btn:active { opacity: 0.7; }
 
-/* УЛУЧШЕННАЯ ЭРГОНОМИЧНАЯ КАРТОЧКА ПРОФИЛЯ */
+/* СИММЕТРИЧНАЯ ВЕРХНЯЯ ПАНЕЛЬ ДЛЯ ПРОФИЛЯ И ЧАТА */
+.top-panels-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px; z-index: 2; flex-shrink: 0;
+}
+
+/* КАРТОЧКА ПРОФИЛЯ В ПРЯМОУГОЛЬНОЙ РАМКЕ */
 .profile-card {
-  display: flex; align-items: center; gap: 8px; background: var(--glass-bg);
-  border: 1.5px solid var(--border-col); border-radius: 10px; padding: 6px 8px;
-  cursor: pointer; transition: transform 0.1s; z-index: 2; flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  background: var(--glass-bg); border: 1.5px solid var(--border-col); border-radius: 10px; padding: 6px;
+  cursor: pointer; transition: transform 0.1s; height: 68px; text-align: center;
 }
-.profile-card:active { transform: scale(0.98); }
+.profile-card:active { transform: scale(0.97); }
 .profile-avatar-box {
-  width: 42px; height: 42px; background: radial-gradient(circle, var(--accent-col) 0%, var(--btn-bg) 70%);
-  border: 2px solid var(--title-col); border-radius: 50%; display: flex;
-  align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
-  overflow: hidden; text-align: center; line-height: 1; padding: 2px;
+  font-size: 18px; background: none; border: none; display: flex;
+  align-items: center; justify-content: center; line-height: 1; word-break: break-all;
 }
-.profile-info { display: flex; flex-direction: column; text-align: left; width: 100%; gap: 1px; }
-.profile-name { font-size: 9.5px; font-weight: bold; color: var(--title-col); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
-.profile-sub { font-size: 7px; color: var(--text-sub); }
+.profile-info { display: flex; flex-direction: column; width: 100%; gap: 1px; }
+.profile-name { font-size: 8.5px; font-weight: bold; color: var(--title-col); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.profile-sub { font-size: 6.5px; color: var(--text-sub); }
+
+/* КОМПАКТНЫЙ ВИДЖЕТ МИНИ-ЧАТА В РАМКЕ */
+.chat-preview-card {
+  background: var(--glass-bg); border: 1.5px dashed var(--accent-col);
+  border-radius: 10px; padding: 6px; display: flex; flex-direction: column;
+  justify-content: space-between; text-align: left; cursor: pointer;
+  transition: transform 0.1s; height: 68px;
+}
+.chat-preview-card:active { transform: scale(0.97); }
+.chat-preview-header { display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-weight: bold; color: var(--title-col); }
+.chat-mini-list { display: flex; flex-direction: column; gap: 1px; }
+.chat-mini-msg { font-size: 6.5px; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-mini-msg span { color: var(--text-main); font-weight: bold; }
 
 .player-stats-card {
   background: var(--glass-bg); border: 1.5px solid var(--border-col);
@@ -89,17 +105,6 @@ body{
 .stat-row { display: flex; justify-content: space-between; font-size: 9px; }
 .stat-label { color: var(--text-sub); }
 .stat-value { font-weight: bold; color: var(--title-col); }
-
-/* КОМПАКТНЫЙ ВИДЖЕТ МИНИ-ЧАТА */
-.chat-preview-card {
-  background: var(--glass-bg); border: 1.5px dashed var(--accent-col);
-  border-radius: 8px; padding: 4px 7px; width: 100%; text-align: left; cursor: pointer;
-  transition: transform 0.1s; z-index: 2; flex-shrink: 0;
-}
-.chat-preview-card:active { transform: scale(0.98); }
-.chat-preview-header { display: flex; justify-content: space-between; align-items: center; font-size: 8px; font-weight: bold; color: var(--title-col); margin-bottom: 2px; }
-.chat-mini-msg { font-size: 7px; color: var(--text-sub); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 1px; }
-.chat-mini-msg span { color: var(--text-main); font-weight: bold; }
 
 .menu-actions { display: flex; flex-direction: column; gap: 3.5px; width: 100%; z-index: 2; flex-shrink: 0; }
 .menu-btn {
@@ -163,12 +168,24 @@ body{
     </div>
   </div>
 
-  <!-- КАРТОЧКА ПРОФИЛЯ -->
-  <div class="profile-card" onclick="window.location.href='avatar.html'">
-    <div class="profile-avatar-box" id="headerAvatarDisplay">👦</div>
-    <div class="profile-info">
-      <div class="profile-name" id="profileNameTxt">TUBE EMPIRE PRO</div>
-      <div class="profile-sub" id="profileSubTxt">Нажмите для настройки профиля ⚙️</div>
+  <!-- ВЕРХНИЕ СИММЕТРИЧНЫЕ ПАНЕЛИ: ПРОФИЛЬ И ЧАТ -->
+  <div class="top-panels-grid">
+    <!-- КАРТОЧКА ПРОФИЛЯ -->
+    <div class="profile-card" onclick="window.location.href='avatar.html'">
+      <div class="profile-avatar-box" id="headerAvatarDisplay">👦</div>
+      <div class="profile-info">
+        <div class="profile-name" id="profileNameTxt">TUBE EMPIRE PRO</div>
+        <div class="profile-sub" id="profileSubTxt">Настройка ⚙️</div>
+      </div>
+    </div>
+
+    <!-- ВИДЖЕТ МИНИ-ЧАТА -->
+    <div class="chat-preview-card" onclick="openFullChat()">
+      <div class="chat-preview-header">
+        <span id="chatWidgetTitle">💬 Глобальный</span>
+        <span>▶</span>
+      </div>
+      <div class="chat-mini-list" id="miniChatContainer"></div>
     </div>
   </div>
 
@@ -181,15 +198,6 @@ body{
       <span class="stat-label" id="lblEnergyStat">Просмотры:</span>
       <span class="stat-value" id="menuEnergyVal">0.0M</span>
     </div>
-  </div>
-
-  <!-- ВИДЖЕТ МИНИ-ЧАТА -->
-  <div class="chat-preview-card" onclick="openFullChat()">
-    <div class="chat-preview-header">
-      <span id="chatWidgetTitle">💬 Глобальный чат</span>
-      <span>▶</span>
-    </div>
-    <div id="miniChatContainer"></div>
   </div>
 
   <div class="menu-actions">
@@ -256,9 +264,9 @@ class GlobalChatModule {
     
     if (!localStorage.getItem(this.storageKey)) {
       const initialMessages = [
-        { sender: "🔴 MrBeast", avatar: "👑👕💵👖", text: "Снимаю новое видео с островом!", time: Date.now() - 3600000 },
-        { sender: "🎮 PewDiePie", avatar: "🎧🧥👖👖", text: "Привет всем из Японии!", time: Date.now() - 1800000 },
-        { sender: "🎧 Marshmello", avatar: "🧢👕👖👟", text: "Готовлю трек для коллабы века.", time: Date.now() - 600000 }
+        { sender: "MrBeast", avatar: "👑👕💵👖", text: "Снимаю видео с островом!", time: Date.now() - 3600000 },
+        { sender: "PewDiePie", avatar: "🎧🧥👖👖", text: "Привет из Японии!", time: Date.now() - 1800000 },
+        { sender: "Marshmello", avatar: "🧢👕👖👟", text: "Готовлю трек!", time: Date.now() - 600000 }
       ];
       localStorage.setItem(this.storageKey, JSON.stringify(initialMessages));
     }
@@ -326,11 +334,11 @@ const menuLang = {
     themeDark: "🌙 DARK",
     themeRose: "🌸 ROSE",
     themeLight: "☀️ LIGHT",
-    chatTitle: "💬 Глобальный чат",
+    chatTitle: "💬 Глобальный",
     modalChatTitle: "💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ",
     sendBtn: "ОТПРАВИТЬ",
     closeBtn: "ЗАКРЫТЬ",
-    profileSub: "Нажмите для настройки профиля ⚙️",
+    profileSub: "Настройка ⚙️",
     placeholder: "Написать в чат...",
     cooldownInfo: "Отправка сообщений доступна раз в 10 минут.",
     waitCooldown: "⏳ Подождите: ",
@@ -349,11 +357,11 @@ const menuLang = {
     themeDark: "🌙 DARK",
     themeRose: "🌸 ROSE",
     themeLight: "☀️ LIGHT",
-    chatTitle: "💬 Globaler Chat",
+    chatTitle: "💬 Global",
     modalChatTitle: "💬 GLOBALER BLOGGER CHAT",
     sendBtn: "SENDEN",
     closeBtn: "SCHLIESSEN",
-    profileSub: "Klicken zum Anpassen ⚙️",
+    profileSub: "Anpassen ⚙️",
     placeholder: "Nachricht schreiben...",
     cooldownInfo: "Nachrichten alle 10 Minuten möglich.",
     waitCooldown: "⏳ Warten Sie: ",
@@ -391,7 +399,7 @@ function updateMiniChatWidget() {
   const recent = window.GlobalChat.getRecentMessages(3);
   let html = "";
   if (recent.length === 0) {
-    html = `<div class="chat-mini-msg">Пока нет сообщений...</div>`;
+    html = `<div class="chat-mini-msg">Нет сообщений...</div>`;
   } else {
     recent.forEach(m => {
       html += `<div class="chat-mini-msg">${m.avatar || ''} <span>${m.sender}:</span> ${m.text}</div>`;
@@ -468,7 +476,6 @@ function updateMenuUI() {
   document.getElementById('profileSubTxt').textContent = t.profileSub;
   document.getElementById('headerAvatarDisplay').textContent = getSavedAvatarString();
 
-  // Подтягиваем актуальное имя из Telegram профиля для шапки карточки
   let username = "TUBE EMPIRE PRO";
   if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
     username = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || username;
@@ -491,4 +498,3 @@ updateMiniChatWidget();
 </script>
 </body>
 </html>
-
