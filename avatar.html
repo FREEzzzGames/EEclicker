@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Tube Empire — Конструктор аватара</title>
+<title>Tube Empire — Личный кабинет</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root, [data-theme="dark"] {
@@ -68,56 +68,82 @@ body{
   color: var(--title-col); font-weight: bold; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px;
 }
 
+/* ВКЛАДКИ КАБИНЕТА */
+.cabinet-tabs {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin: 4px 0; flex-shrink: 0;
+}
+.cab-tab-btn {
+  background: var(--btn-bg); border: 1.5px solid var(--border-col); border-radius: 7px;
+  padding: 5px; font-size: 8.5px; color: var(--text-main); font-family: monospace;
+  font-weight: bold; cursor: pointer; text-align: center; transition: all 0.1s;
+}
+.cab-tab-btn.active {
+  background: var(--accent-col); border-color: var(--title-col); color: #fff;
+  box-shadow: 0 0 10px rgba(255,0,0,0.3);
+}
+
+.tab-content { display: none; flex-direction: column; flex-grow: 1; gap: 4px; overflow-y: auto; }
+.tab-content.active { display: flex; }
+
+/* КОНСТРУКТОР */
 .constructor-main-layout {
-  display: flex; gap: 8px; align-items: stretch; margin: 4px 0; flex-shrink: 0;
+  display: flex; gap: 8px; align-items: stretch; margin: 2px 0; flex-shrink: 0;
 }
 .avatar-preview-box {
-  flex: 0 0 110px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
+  flex: 0 0 100px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
   border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 6px;
 }
 .constructor-preview {
-  font-size: 28px; background: none; border: none; width: 62px; height: 62px;
+  font-size: 26px; background: none; border: none; width: 56px; height: 56px;
   display: flex; align-items: center; justify-content: center;
   line-height: 1.1; word-break: break-all; padding: 2px; text-align: center;
 }
-
 .categories-tabs {
-  flex-grow: 1; display: flex; flex-direction: column; gap: 3px; justify-content: space-between;
+  flex-grow: 1; display: flex; flex-direction: column; gap: 2px; justify-content: space-between;
 }
 .tab-btn {
-  background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px;
-  padding: 5px 8px; font-size: 9px; color: var(--text-main); font-family: monospace;
-  text-align: left; cursor: pointer; font-weight: bold; transition: all 0.1s;
+  background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 5px;
+  padding: 4px 6px; font-size: 8px; color: var(--text-main); font-family: monospace;
+  text-align: left; cursor: pointer; font-weight: bold;
 }
-.tab-btn:active { transform: scale(0.97); }
-.tab-btn.active {
-  background: var(--accent-col); border-color: var(--title-col); color: #fff;
-  box-shadow: 0 0 8px rgba(255,0,0,0.3);
-}
+.tab-btn.active { background: var(--accent-col); border-color: var(--title-col); color: #fff; }
 
 .options-selection-box {
   flex-grow: 1; background: var(--glass-bg); border: 1px solid var(--border-col);
   border-radius: 10px; padding: 6px; display: flex; flex-direction: column; gap: 4px;
-  overflow-y: auto; text-align: left; margin: 2px 0; max-height: 180px;
+  overflow-y: auto; text-align: left; max-height: 155px;
 }
-.section-title-label { font-size: 8px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; margin-bottom: 2px; }
+.section-title-label { font-size: 7.5px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; }
 .options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
 .option-tile {
-  background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px;
-  padding: 6px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  cursor: pointer; font-family: monospace; font-size: 16px; transition: transform 0.1s;
+  background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 5px;
+  padding: 5px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px;
 }
-.option-tile:active { transform: scale(0.92); }
-.option-tile.active {
-  border: 2px solid var(--title-col); background: rgba(255,204,0,0.15); box-shadow: 0 0 8px rgba(255,204,0,0.3);
+.option-tile.active { border: 2px solid var(--title-col); background: rgba(255,204,0,0.15); }
+.option-name { font-size: 6px; color: var(--text-main); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+/* ЗАЛ НАГРАД И ТОП КАНАЛОВ */
+.list-container {
+  display: flex; flex-direction: column; gap: 5px; flex-grow: 1; overflow-y: auto; text-align: left;
 }
-.option-name { font-size: 6.5px; color: var(--text-main); margin-top: 2px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.award-card, .rank-card {
+  background: var(--glass-bg); border: 1.5px solid var(--border-col); border-radius: 8px;
+  padding: 7px 10px; display: flex; align-items: center; justify-content: space-between;
+}
+.award-left, .rank-left { display: flex; align-items: center; gap: 8px; }
+.award-icon, .rank-pos { font-size: 20px; font-weight: bold; color: var(--title-col); }
+.award-title, .rank-name { font-size: 9px; font-weight: bold; color: var(--title-col); }
+.award-desc, .rank-sub { font-size: 7px; color: var(--text-sub); }
+.badge-status { font-size: 7.5px; padding: 2px 6px; border-radius: 6px; font-weight: bold; }
+.badge-status.unlocked { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+.badge-status.locked { background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 1px solid #e74c3c; }
 
 .save-btn {
   width: 100%; background: linear-gradient(135deg, var(--title-col), #c09a00); border: none;
-  border-radius: 8px; padding: 9px; font-weight: bold; font-size: 10px; color: #000; cursor: pointer;
-  box-shadow: 0 0 12px rgba(255,204,0,0.4); font-family: monospace; flex-shrink: 0;
+  border-radius: 8px; padding: 8px; font-weight: bold; font-size: 9.5px; color: #000; cursor: pointer;
+  box-shadow: 0 0 12px rgba(255,204,0,0.4); font-family: monospace; flex-shrink: 0; margin-top: 4px;
 }
 .save-btn:active { transform: scale(0.97); }
 </style>
@@ -130,19 +156,39 @@ body{
     <div class="header-username" id="headerUsername">TUBE EMPIRE</div>
   </div>
 
-  <div class="constructor-main-layout">
-    <div class="avatar-preview-box">
-      <div class="constructor-preview" id="modalAvatarPreview">👦</div>
+  <!-- ВКЛАДКИ КАБИНЕТА -->
+  <div class="cabinet-tabs">
+    <button class="cab-tab-btn active" onclick="switchTab('avatar')" id="tabAvatar">👤 Персонаж</button>
+    <button class="cab-tab-btn" onclick="switchTab('awards')" id="tabAwards">🏆 Награды</button>
+    <button class="cab-tab-btn" onclick="switchTab('ranking')" id="tabRanking">📊 Топ Каналов</button>
+  </div>
+
+  <!-- ВКЛАДКА 1: ПЕРСОНАЖ / АВАТАР -->
+  <div class="tab-content active" id="contentAvatar">
+    <div class="constructor-main-layout">
+      <div class="avatar-preview-box">
+        <div class="constructor-preview" id="modalAvatarPreview">👦</div>
+      </div>
+      <div class="categories-tabs" id="categoriesTabsContainer"></div>
     </div>
-    <div class="categories-tabs" id="categoriesTabsContainer"></div>
+
+    <div class="options-selection-box" id="optionsSelectionContainer">
+      <div class="section-title-label" id="activeCategoryLabel">Выберите элемент</div>
+      <div class="options-grid" id="optionsGridContainer"></div>
+    </div>
   </div>
 
-  <div class="options-selection-box" id="optionsSelectionContainer">
-    <div class="section-title-label" id="activeCategoryLabel">Выберите элемент</div>
-    <div class="options-grid" id="optionsGridContainer"></div>
+  <!-- ВКЛАДКА 2: ЗАЛ НАГРАД -->
+  <div class="tab-content" id="contentAwards">
+    <div class="list-container" id="awardsListContainer"></div>
   </div>
 
-  <button class="save-btn" onclick="saveAndReturn()" id="saveBtnTxt">💾 СОХРАНИТЬ И ВЕРНУТЬСЯ</button>
+  <!-- ВКЛАДКА 3: ТОП КАНАЛОВ -->
+  <div class="tab-content" id="contentRanking">
+    <div class="list-container" id="rankingListContainer"></div>
+  </div>
+
+  <button class="save-btn" onclick="window.location.href='index.html'" id="saveBtnTxt">💾 СОХРАНИТЬ И ВЕРНУТЬСЯ</button>
 </div>
 
 <script>
@@ -155,8 +201,8 @@ document.body.setAttribute('data-theme', currentTheme);
 
 const langData = {
   ru: {
-    menu: "⬅ МЕНЮ",
-    save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ", 
+    menu: "⬅ МЕНЮ", save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ", 
+    tabA: "👤 Персонаж", tabAw: "🏆 Награды", tabR: "📊 Топ Каналов",
     selectEl: "Выберите элемент",
     categories: { gender: "Пол", head: "Голова", torso: "Торс", legs: "Ноги", accessory: "Аксессуар" },
     items: {
@@ -164,11 +210,24 @@ const langData = {
       glasses: "Очки", crown: "Корона", tshirt: "Футболка", hoodie: "Худи", suit: "Костюм",
       jacket: "Кожанка", top: "Топ", jeans: "Джинсы", shorts: "Шорты", pants: "Спортивки",
       skirt: "Юбка", kilt: "Килт", none: "Нет", mic: "Микрофон", cam: "Камера", phone: "Телефон", money: "Купюры"
-    }
+    },
+    unlocked: "Получено", locked: "Заблокировано",
+    awards: [
+      { icon: "🥉", title: "Первые 10,000 просмотров", desc: "Наберите 10k просмотров на канале", req: 10000 },
+      { icon: "🥈", title: "Серебряная кнопка Tube", desc: "Достигните 100k просмотров", req: 100000 },
+      { icon: "🥇", title: "Золотая кнопка Tube", desc: "Соберите 1,000,000 просмотров", req: 1000000 },
+      { icon: "💎", title: "Бриллиантовый магнат", desc: "Заработайте 50,000 € баланса", req: 50000 }
+    ],
+    channels: [
+      { pos: 1, name: "MrBeast", subs: "320M", views: "54.2B" },
+      { pos: 2, name: "PewDiePie", subs: "111M", views: "29.1B" },
+      { pos: 3, name: "T-Series", subs: "260M", views: "245B" },
+      { pos: 4, name: "TUBE EMPIRE PRO (Вы)", subs: "1.2M", views: "25.4M" }
+    ]
   },
   de: {
-    menu: "⬅ ZURÜCK",
-    save: "💾 SPEICHERN & ZURÜCK", 
+    menu: "⬅ ZURÜCK", save: "💾 SPEICHERN & ZURÜCK", 
+    tabA: "👤 Charakter", tabAw: "🏆 Trophäen", tabR: "📊 Top Kanäle",
     selectEl: "Element wählen",
     categories: { gender: "Geschlecht", head: "Kopf", torso: "Oberkörper", legs: "Beine", accessory: "Zubehör" },
     items: {
@@ -176,11 +235,24 @@ const langData = {
       glasses: "Brille", crown: "Krone", tshirt: "T-Shirt", hoodie: "Hoodie", suit: "Anzug",
       jacket: "Jacke", top: "Top", jeans: "Jeans", shorts: "Shorts", pants: "Hose",
       skirt: "Rock", kilt: "Kilt", none: "Kein", mic: "Mikro", cam: "Kamera", phone: "Handy", money: "Geld"
-    }
+    },
+    unlocked: "Freigeschaltet", locked: "Gesperrt",
+    awards: [
+      { icon: "🥉", title: "Erste 10.000 Aufrufe", desc: "Erreiche 10k Aufrufe", req: 10000 },
+      { icon: "🥈", title: "Silberner Button", desc: "Erreiche 100k Aufrufe", req: 100000 },
+      { icon: "🥇", title: "Goldener Button", desc: "Erreiche 1.000.000 Aufrufe", req: 1000000 },
+      { icon: "💎", title: "Diamant-Magnat", desc: "Verdiene 50.000 € Guthaben", req: 50000 }
+    ],
+    channels: [
+      { pos: 1, name: "MrBeast", subs: "320M", views: "54.2B" },
+      { pos: 2, name: "PewDiePie", subs: "111M", views: "29.1B" },
+      { pos: 3, name: "T-Series", subs: "260M", views: "245B" },
+      { pos: 4, name: "TUBE EMPIRE PRO (Du)", subs: "1.2M", views: "25.4M" }
+    ]
   },
   en: {
-    menu: "⬅ MENU",
-    save: "💾 SAVE & RETURN", 
+    menu: "⬅ MENU", save: "💾 SAVE & RETURN", 
+    tabA: "👤 Character", tabAw: "🏆 Awards", tabR: "📊 Top Channels",
     selectEl: "Select element",
     categories: { gender: "Gender", head: "Head", torso: "Torso", legs: "Legs", accessory: "Accessory" },
     items: {
@@ -188,49 +260,36 @@ const langData = {
       glasses: "Glasses", crown: "Crown", tshirt: "T-Shirt", hoodie: "Hoodie", suit: "Suit",
       jacket: "Jacket", top: "Top", jeans: "Jeans", shorts: "Shorts", pants: "Pants",
       skirt: "Skirt", kilt: "Kilt", none: "None", mic: "Mic", cam: "Camera", phone: "Phone", money: "Cash"
-    }
+    },
+    unlocked: "Unlocked", locked: "Locked",
+    awards: [
+      { icon: "🥉", title: "First 10,000 Views", desc: "Reach 10k views on channel", req: 10000 },
+      { icon: "🥈", title: "Silver Tube Button", desc: "Reach 100k views", req: 100000 },
+      { icon: "🥇", title: "Gold Tube Button", desc: "Reach 1,000,000 views", req: 1000000 },
+      { icon: "💎", title: "Diamond Mogul", desc: "Earn 50,000 € balance", req: 50000 }
+    ],
+    channels: [
+      { pos: 1, name: "MrBeast", subs: "320M", views: "54.2B" },
+      { pos: 2, name: "PewDiePie", subs: "111M", views: "29.1B" },
+      { pos: 3, name: "T-Series", subs: "260M", views: "245B" },
+      { pos: 4, name: "TUBE EMPIRE PRO (You)", subs: "1.2M", views: "25.4M" }
+    ]
   }
 };
 
 const avatarOptions = {
-  gender: [
-    { id: 'm', symbol: '👦' },
-    { id: 'f', symbol: '👧' }
-  ],
-  head: [
-    { id: 'default', icon: '👤' },
-    { id: 'cap', icon: '🧢' },
-    { id: 'headphones', icon: '🎧' },
-    { id: 'glasses', icon: '🕶️' },
-    { id: 'crown', icon: '👑' }
-  ],
-  torso: [
-    { id: 'tshirt', icon: '👕' },
-    { id: 'hoodie', icon: '🧥' },
-    { id: 'suit', icon: '👔' },
-    { id: 'jacket', icon: '🥼' },
-    { id: 'top', icon: '👚' }
-  ],
-  legs: [
-    { id: 'jeans', icon: '👖' },
-    { id: 'shorts', icon: '🩳' },
-    { id: 'pants', icon: '🏃' },
-    { id: 'skirt', icon: '👗' },
-    { id: 'kilt', icon: '🥻' }
-  ],
-  accessory: [
-    { id: 'none', icon: '❌' },
-    { id: 'mic', icon: '🎙️' },
-    { id: 'cam', icon: '📷' },
-    { id: 'phone', icon: '📱' },
-    { id: 'money', icon: '💵' }
-  ]
+  gender: [{ id: 'm', symbol: '👦' }, { id: 'f', symbol: '👧' }],
+  head: [{ id: 'default', icon: '👤' }, { id: 'cap', icon: '🧢' }, { id: 'headphones', icon: '🎧' }, { id: 'glasses', icon: '🕶️' }, { id: 'crown', icon: '👑' }],
+  torso: [{ id: 'tshirt', icon: '👕' }, { id: 'hoodie', icon: '🧥' }, { id: 'suit', icon: '👔' }, { id: 'jacket', icon: '🥼' }, { id: 'top', icon: '👚' }],
+  legs: [{ id: 'jeans', icon: '👖' }, { id: 'shorts', icon: '🩳' }, { id: 'pants', icon: '🏃' }, { id: 'skirt', icon: '👗' }, { id: 'kilt', icon: '🥻' }],
+  accessory: [{ id: 'none', icon: '❌' }, { id: 'mic', icon: '🎙️' }, { id: 'cam', icon: '📷' }, { id: 'phone', icon: '📱' }, { id: 'money', icon: '💵' }]
 };
 
 let storageKey = "tube_empire_avatar_config";
 let defaultConfig = { gender: 0, head: 0, torso: 0, legs: 0, accessory: 0 };
 let currentConfig = loadConfig();
 let activeCategory = 'gender';
+let currentTab = 'avatar';
 
 function loadConfig() {
   try {
@@ -248,10 +307,30 @@ function getAvatarString() {
   return `${g}${h}${t}${l}${acc !== '❌' ? acc : ''}`;
 }
 
+function switchTab(tabName) {
+  currentTab = tabName;
+  document.querySelectorAll('.cab-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  
+  if (tabName === 'avatar') {
+    document.getElementById('tabAvatar').classList.add('active');
+    document.getElementById('contentAvatar').classList.add('active');
+  } else if (tabName === 'awards') {
+    document.getElementById('tabAwards').classList.add('active');
+    document.getElementById('contentAwards').classList.add('active');
+  } else if (tabName === 'ranking') {
+    document.getElementById('tabRanking').classList.add('active');
+    document.getElementById('contentRanking').classList.add('active');
+  }
+}
+
 function renderUI() {
   let t = langData[currentLang];
   document.getElementById('menuBtnTxt').textContent = t.menu;
   document.getElementById('saveBtnTxt').textContent = t.save;
+  document.getElementById('tabAvatar').textContent = t.tabA;
+  document.getElementById('tabAwards').textContent = t.tabAw;
+  document.getElementById('tabRanking').textContent = t.tabR;
   document.getElementById('activeCategoryLabel').textContent = `${t.selectEl} (${t.categories[activeCategory]}):`;
 
   let username = "TUBE EMPIRE";
@@ -259,9 +338,9 @@ function renderUI() {
     username = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || username;
   }
   document.getElementById('headerUsername').textContent = username;
-
   document.getElementById('modalAvatarPreview').textContent = getAvatarString();
 
+  // Рендер вкладок конструктора
   let tabsContainer = document.getElementById('categoriesTabsContainer');
   let tabsHtml = "";
   Object.keys(avatarOptions).forEach(cat => {
@@ -287,6 +366,46 @@ function renderUI() {
     `;
   });
   gridContainer.innerHTML = gridHtml;
+
+  // Рендер Зала Наград
+  let currentViews = Number(localStorage.getItem("zeitarbeitEnergy") || 0) * 1000000;
+  let currentMoney = Number(localStorage.getItem("zeitarbeitMoney") || 0);
+  let awardsHtml = "";
+  t.awards.forEach(aw => {
+    let unlocked = aw.req < 1000 ? (currentMoney >= aw.req) : (currentViews >= aw.req);
+    let statusClass = unlocked ? "unlocked" : "locked";
+    let statusText = unlocked ? t.unlocked : t.locked;
+    awardsHtml += `
+      <div class="award-card">
+        <div class="award-left">
+          <div class="award-icon">${aw.icon}</div>
+          <div>
+            <div class="award-title">${aw.title}</div>
+            <div class="award-desc">${aw.desc}</div>
+          </div>
+        </div>
+        <div class="badge-status ${statusClass}">${statusText}</div>
+      </div>
+    `;
+  });
+  document.getElementById('awardsListContainer').innerHTML = awardsHtml;
+
+  // Рендер Топа Каналов
+  let rankingHtml = "";
+  t.channels.forEach(ch => {
+    rankingHtml += `
+      <div class="rank-card">
+        <div class="rank-left">
+          <div class="rank-pos">#${ch.pos}</div>
+          <div>
+            <div class="rank-name">${ch.name}</div>
+            <div class="rank-sub">Subs: ${ch.subs} | Views: ${ch.views}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  document.getElementById('rankingListContainer').innerHTML = rankingHtml;
 }
 
 function setActiveCategory(cat) {
@@ -298,10 +417,6 @@ function selectOption(category, index) {
   currentConfig[category] = index;
   localStorage.setItem(storageKey, JSON.stringify(currentConfig));
   renderUI();
-}
-
-function saveAndReturn() {
-  window.location.href = "index.html";
 }
 
 renderUI();
