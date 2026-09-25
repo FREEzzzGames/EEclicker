@@ -68,7 +68,6 @@ body{
   color: var(--title-col); font-weight: bold; font-size: 9.5px; text-transform: uppercase; letter-spacing: 1px;
 }
 
-/* КОМПАНОВКА: АВАТАР СЛЕВА, НАСТРОЙКИ СПРАВА */
 .constructor-main-layout {
   display: flex; gap: 8px; align-items: stretch; margin: 4px 0; flex-shrink: 0;
 }
@@ -97,7 +96,6 @@ body{
   box-shadow: 0 0 8px rgba(255,0,0,0.3);
 }
 
-/* СЛОТЫ ВЫБОРА КОНКРЕТНОГО ВАРИАНТА */
 .options-selection-box {
   flex-grow: 1; background: var(--glass-bg); border: 1px solid var(--border-col);
   border-radius: 10px; padding: 6px; display: flex; flex-direction: column; gap: 4px;
@@ -132,7 +130,6 @@ body{
     <div class="header-username" id="headerUsername">TUBE EMPIRE</div>
   </div>
 
-  <!-- КОМПАНОВКА: ПРЕВЬЮ СЛЕВА, КАТЕГОРИИ СПРАВА -->
   <div class="constructor-main-layout">
     <div class="avatar-preview-box">
       <div class="constructor-preview" id="modalAvatarPreview">👦</div>
@@ -140,7 +137,6 @@ body{
     <div class="categories-tabs" id="categoriesTabsContainer"></div>
   </div>
 
-  <!-- СЕТКА ВЫБОРА ЭЛЕМЕНТОВ ДЛЯ АКТИВНОЙ КАТЕГОРИИ -->
   <div class="options-selection-box" id="optionsSelectionContainer">
     <div class="section-title-label" id="activeCategoryLabel">Выберите элемент</div>
     <div class="options-grid" id="optionsGridContainer"></div>
@@ -162,48 +158,72 @@ const langData = {
     menu: "⬅ МЕНЮ",
     save: "💾 СОХРАНИТЬ И ВЕРНУТЬСЯ", 
     selectEl: "Выберите элемент",
-    categories: { gender: "Пол", head: "Голова", torso: "Торс", legs: "Ноги", accessory: "Аксессуар" }
+    categories: { gender: "Пол", head: "Голова", torso: "Торс", legs: "Ноги", accessory: "Аксессуар" },
+    items: {
+      m: "Парень", f: "Девушка", default: "Обычная", cap: "Бейсболка", headphones: "Наушники",
+      glasses: "Очки", crown: "Корона", tshirt: "Футболка", hoodie: "Худи", suit: "Костюм",
+      jacket: "Кожанка", top: "Топ", jeans: "Джинсы", shorts: "Шорты", pants: "Спортивки",
+      skirt: "Юбка", kilt: "Килт", none: "Нет", mic: "Микрофон", cam: "Камера", phone: "Телефон", money: "Купюры"
+    }
   },
   de: {
     menu: "⬅ ZURÜCK",
     save: "💾 SPEICHERN & ZURÜCK", 
     selectEl: "Element wählen",
-    categories: { gender: "Geschlecht", head: "Kopf", torso: "Oberkörper", legs: "Beine", accessory: "Zubehör" }
+    categories: { gender: "Geschlecht", head: "Kopf", torso: "Oberkörper", legs: "Beine", accessory: "Zubehör" },
+    items: {
+      m: "Junge", f: "Mädchen", default: "Normal", cap: "Kappe", headphones: "Kopfhörer",
+      glasses: "Brille", crown: "Krone", tshirt: "T-Shirt", hoodie: "Hoodie", suit: "Anzug",
+      jacket: "Jacke", top: "Top", jeans: "Jeans", shorts: "Shorts", pants: "Hose",
+      skirt: "Rock", kilt: "Kilt", none: "Kein", mic: "Mikro", cam: "Kamera", phone: "Handy", money: "Geld"
+    }
+  },
+  en: {
+    menu: "⬅ MENU",
+    save: "💾 SAVE & RETURN", 
+    selectEl: "Select element",
+    categories: { gender: "Gender", head: "Head", torso: "Torso", legs: "Legs", accessory: "Accessory" },
+    items: {
+      m: "Boy", f: "Girl", default: "Default", cap: "Cap", headphones: "Headphones",
+      glasses: "Glasses", crown: "Crown", tshirt: "T-Shirt", hoodie: "Hoodie", suit: "Suit",
+      jacket: "Jacket", top: "Top", jeans: "Jeans", shorts: "Shorts", pants: "Pants",
+      skirt: "Skirt", kilt: "Kilt", none: "None", mic: "Mic", cam: "Camera", phone: "Phone", money: "Cash"
+    }
   }
 };
 
 const avatarOptions = {
   gender: [
-    { id: 'm', name: 'Парень', symbol: '👦' },
-    { id: 'f', name: 'Девушка', symbol: '👧' }
+    { id: 'm', symbol: '👦' },
+    { id: 'f', symbol: '👧' }
   ],
   head: [
-    { id: 'default', name: 'Обычная', icon: '👤' },
-    { id: 'cap', name: 'Бейсболка', icon: '🧢' },
-    { id: 'headphones', name: 'Наушники', icon: '🎧' },
-    { id: 'glasses', name: 'Очки', icon: '🕶️' },
-    { id: 'crown', name: 'Корона', icon: '👑' }
+    { id: 'default', icon: '👤' },
+    { id: 'cap', icon: '🧢' },
+    { id: 'headphones', icon: '🎧' },
+    { id: 'glasses', icon: '🕶️' },
+    { id: 'crown', icon: '👑' }
   ],
   torso: [
-    { id: 'tshirt', name: 'Футболка', icon: '👕' },
-    { id: 'hoodie', name: 'Худи', icon: '🧥' },
-    { id: 'suit', name: 'Костюм', icon: '👔' },
-    { id: 'jacket', name: 'Кожанка', icon: '🥼' },
-    { id: 'top', name: 'Топ', icon: '👚' }
+    { id: 'tshirt', icon: '👕' },
+    { id: 'hoodie', icon: '🧥' },
+    { id: 'suit', icon: '👔' },
+    { id: 'jacket', icon: '🥼' },
+    { id: 'top', icon: '👚' }
   ],
   legs: [
-    { id: 'jeans', name: 'Джинсы', icon: '👖' },
-    { id: 'shorts', name: 'Шорты', icon: '🩳' },
-    { id: 'pants', name: 'Спортивки', icon: '🏃' },
-    { id: 'skirt', name: 'Юбка', icon: '👗' },
-    { id: 'kilt', name: 'Килт', icon: '🥻' }
+    { id: 'jeans', icon: '👖' },
+    { id: 'shorts', icon: '🩳' },
+    { id: 'pants', icon: '🏃' },
+    { id: 'skirt', icon: '👗' },
+    { id: 'kilt', icon: '🥻' }
   ],
   accessory: [
-    { id: 'none', name: 'Нет', icon: '❌' },
-    { id: 'mic', name: 'Микрофон', icon: '🎙️' },
-    { id: 'cam', name: 'Камера', icon: '📷' },
-    { id: 'phone', name: 'Телефон', icon: '📱' },
-    { id: 'money', name: 'Купюры', icon: '💵' }
+    { id: 'none', icon: '❌' },
+    { id: 'mic', icon: '🎙️' },
+    { id: 'cam', icon: '📷' },
+    { id: 'phone', icon: '📱' },
+    { id: 'money', icon: '💵' }
   ]
 };
 
@@ -234,10 +254,9 @@ function renderUI() {
   document.getElementById('saveBtnTxt').textContent = t.save;
   document.getElementById('activeCategoryLabel').textContent = `${t.selectEl} (${t.categories[activeCategory]}):`;
 
-  // Подтягиваем имя пользователя из контекста Telegram WebApp если доступно, иначе дефолт
   let username = "TUBE EMPIRE";
   if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    username = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || "TUBE EMPIRE";
+    username = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || username;
   }
   document.getElementById('headerUsername').textContent = username;
 
@@ -259,10 +278,11 @@ function renderUI() {
   list.forEach((item, idx) => {
     let isSelected = idx === currentSelectedIndex ? 'active' : '';
     let displayIcon = item.symbol || item.icon;
+    let itemName = t.items[item.id] || item.id;
     gridHtml += `
       <div class="option-tile ${isSelected}" onclick="selectOption('${activeCategory}', ${idx})">
         <div>${displayIcon}</div>
-        <div class="option-name">${item.name}</div>
+        <div class="option-name">${itemName}</div>
       </div>
     `;
   });
