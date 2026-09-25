@@ -182,7 +182,7 @@ body{
     <!-- ВИДЖЕТ МИНИ-ЧАТА -->
     <div class="chat-preview-card" onclick="openFullChat()">
       <div class="chat-preview-header">
-        <span id="chatWidgetTitle">💬 Global</span>
+        <span id="chatWidgetTitle">💬 Глобальный</span>
         <span>▶</span>
       </div>
       <div class="chat-mini-list" id="miniChatContainer"></div>
@@ -264,9 +264,9 @@ class GlobalChatModule {
     
     if (!localStorage.getItem(this.storageKey)) {
       const initialMessages = [
-        { sender: "MrBeast", avatar: "👑👕💵👖", text: "Recording a video with an island!", time: Date.now() - 3600000 },
-        { sender: "PewDiePie", avatar: "🎧🧥👖👖", text: "Hello everyone from Japan!", time: Date.now() - 1800000 },
-        { sender: "Marshmello", avatar: "🧢👕👖👟", text: "Preparing a new track!", time: Date.now() - 600000 }
+        { sender: "MrBeast", avatar: "👑👕💵👖", text: "Снимаю видео с островом!", time: Date.now() - 3600000 },
+        { sender: "PewDiePie", avatar: "🎧🧥👖👖", text: "Привет из Японии!", time: Date.now() - 1800000 },
+        { sender: "Marshmello", avatar: "🧢👕👖👟", text: "Готовлю трек!", time: Date.now() - 600000 }
       ];
       localStorage.setItem(this.storageKey, JSON.stringify(initialMessages));
     }
@@ -292,15 +292,15 @@ class GlobalChatModule {
   sendMessage(senderName, avatarStr, text) {
     const cooldown = this.getCooldownRemaining();
     if (cooldown > 0) {
-      return { success: false, error: `Wait before sending.` };
+      return { success: false, error: `Подождите еще ${Math.ceil(cooldown / 60)} мин. перед отправкой.` };
     }
     if (!text || text.trim() === "") {
-      return { success: false, error: "Empty message." };
+      return { success: false, error: "Сообщение не может быть пустым." };
     }
 
     const msgs = this.getMessages();
     msgs.push({
-      sender: senderName || "Blogger",
+      sender: senderName || "Блогер",
       avatar: avatarStr || "👦👤👕👖",
       text: text.trim().substring(0, 150),
       time: Date.now()
@@ -342,7 +342,7 @@ const menuLang = {
     placeholder: "Написать в чат...",
     cooldownInfo: "Отправка сообщений доступна раз в 10 минут.",
     waitCooldown: "⏳ Подождите: ",
-    playerName: "Вы (TUBE EMPIRE)"
+    playerName: "Вы"
   },
   de: {
     capital: "Guthaben:",
@@ -365,7 +365,7 @@ const menuLang = {
     placeholder: "Nachricht schreiben...",
     cooldownInfo: "Nachrichten alle 10 Minuten möglich.",
     waitCooldown: "⏳ Warten Sie: ",
-    playerName: "Du (TUBE EMPIRE)"
+    playerName: "Du"
   },
   en: {
     capital: "Balance:",
@@ -380,7 +380,7 @@ const menuLang = {
     themeDark: "🌙 DARK",
     themeRose: "🌸 ROSE",
     themeLight: "☀️ LIGHT",
-    chatTitle: "💬 Global Chat",
+    chatTitle: "💬 Global",
     modalChatTitle: "💬 GLOBAL BLOGGER CHAT",
     sendBtn: "SEND",
     closeBtn: "CLOSE",
@@ -388,7 +388,7 @@ const menuLang = {
     placeholder: "Type a message...",
     cooldownInfo: "Messages available once every 10 minutes.",
     waitCooldown: "⏳ Wait: ",
-    playerName: "You (TUBE EMPIRE)"
+    playerName: "You"
   }
 };
 
@@ -425,7 +425,7 @@ function updateMiniChatWidget() {
   const recent = window.GlobalChat.getRecentMessages(3);
   let html = "";
   if (recent.length === 0) {
-    html = `<div class="chat-mini-msg">No messages...</div>`;
+    html = `<div class="chat-mini-msg">Нет сообщений...</div>`;
   } else {
     recent.forEach(m => {
       html += `<div class="chat-mini-msg">${m.avatar || ''} <span>${m.sender}:</span> ${m.text}</div>`;
@@ -462,7 +462,7 @@ function updateFullChatWindow() {
   if (cd > 0) {
     let mins = Math.floor(cd / 60);
     let secs = cd % 60;
-    cdInfoElem.textContent = `${t.waitCooldown} ${mins}m ${secs}s`;
+    cdInfoElem.textContent = `${t.waitCooldown} ${mins} мин. ${secs} сек.`;
   } else {
     cdInfoElem.textContent = t.cooldownInfo;
   }
@@ -516,4 +516,4 @@ function updateMenuUI() {
   let savedMoney = Number(localStorage.getItem("zeitarbeitMoney") || 0);
   let savedEnergy = Number(localStorage.getItem("zeitarbeitEnergy") || 0);
   
-  let viewsUnit = currentLang === 'ru' ? " м
+  let viewsUnit = currentLang === 'ru' ? " мл
