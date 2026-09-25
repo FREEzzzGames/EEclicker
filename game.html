@@ -31,36 +31,34 @@ body{
   position: relative;
 }
 
-/* ОПТИМИЗИРОВАННАЯ ШАПКА */
 .game-ui-header { 
   display: flex; justify-content: space-between; align-items: center; 
   padding: 4px 6px; background: var(--btn-bg); border: 1px solid var(--border-col); 
-  border-radius: 6px; width: 100%; flex-shrink: 0; font-size: 10px; 
+  border-radius: 6px; width: 100%; flex-shrink: 0; font-size: 9.5px; 
 }
-.header-left { display: flex; gap: 3px; align-items: center; }
+.header-left { display: flex; gap: 2px; align-items: center; }
 
 .back-btn {
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
   padding: 2px 4px; border-radius: 4px; text-decoration: none; font-weight: bold;
-  cursor: pointer; font-size: 7.5px; letter-spacing: -0.5px;
+  cursor: pointer; font-size: 7px; letter-spacing: -0.5px;
 }
 .back-btn:active { transform: scale(0.95); }
 
-.shop-link-btn, .gallery-link-btn, .lang-btn {
+.shop-link-btn, .gallery-link-btn, .rank-link-btn, .lang-btn {
   background: rgba(74, 144, 226, 0.25); border: 1px solid var(--accent-col); color: #fff;
-  padding: 2px 5px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 8.5px;
+  padding: 2px 4px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 8px;
   text-decoration: none; display: flex; align-items: center; justify-content: center;
 }
 .shop-link-btn { background: rgba(155, 89, 182, 0.3); border-color: #9b59b6; color: #f39c12; }
 .gallery-link-btn { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; color: #2ecc71; }
+.rank-link-btn { background: rgba(241, 196, 15, 0.3); border-color: #f1c40f; color: #ffd52c; }
 
-/* КОМПАКТНОЕ ИГРОВОЕ ПОЛЕ */
 .clicker-body {
   flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
   padding: 2px 0; width: 100%; gap: 4px; overflow: hidden;
 }
 
-/* РЕСУРСЫ С ПЛОТНЫМ БАЛАНСОМ */
 .resources-container { display: flex; gap: 4px; width: 100%; }
 .res-box {
   flex: 1; background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 6px;
@@ -77,7 +75,6 @@ body{
 }
 .energy-lightning { animation: electricSpark 1.2s infinite ease-in-out; }
 
-/* ТРУБА ПОТОКА */
 .money-pipe {
   width: 100%; height: 6px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(74, 144, 226, 0.3);
   border-radius: 3px; position: relative; overflow: hidden;
@@ -108,7 +105,6 @@ body{
   height: 100%; background: linear-gradient(90deg, #4a90e2, #ffd52c); width: 0%; transition: width 0.2s ease;
 }
 
-/* ЦЕНТРАЛЬНАЯ КНОПКА ГЕНЕРАЦИИ */
 .click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; margin: 0; }
 .click-target {
   width: 62px; height: 62px; background: radial-gradient(circle at 35% 35%, #ffd52c, #d39e00);
@@ -118,7 +114,6 @@ body{
 }
 .click-target:active { transform: scale(0.88); background: radial-gradient(circle at 35% 35%, #e0b800, #997500); }
 
-/* РАСШИРЕННЫЙ СПИСОК АПГРЕЙДОВ (БОЛЬШЕ ПРОСТРАНСТВА) */
 .upgrades-list { 
   width: 100%; display: flex; flex-direction: column; gap: 4px; 
   max-height: 190px; overflow-y: auto; padding-right: 2px; 
@@ -159,9 +154,9 @@ body{
       <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
       <a href="collection.html" class="shop-link-btn" id="shopBtnTxt">🛒 Магазин</a>
       <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🖼️ Галерея</a>
+      <a href="leaderboard.html" class="rank-link-btn" id="rankBtnTxt">🏆 Топ</a>
       <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
     </div>
-    <div id="licenseTxt" style="color:var(--title-col); font-weight:bold; font-size: 8.5px;">⚡ ECKERT</div>
   </div>
 
   <div class="clicker-body">
@@ -209,7 +204,7 @@ const langData = {
     menu: "⬅ МЕНЮ",
     shop: "🛒 Магазин",
     gallery: "🖼️ Галерея",
-    license: "⚡ ECKERT",
+    rank: "🏆 Топ",
     budget: "Бюджет (€)",
     energy: "Энергия (МВт·ч)",
     sellBtn: "⚡ ПРОДАТЬ ЭНЕРГИЮ (1 МВт = 2.50 €)",
@@ -232,7 +227,7 @@ const langData = {
     menu: "⬅ MENÜ",
     shop: "🛒 Shop",
     gallery: "🖼️ Galerie",
-    license: "⚡ ECKERT",
+    rank: "🏆 Top",
     budget: "Budget (€)",
     energy: "Energie (MWh)",
     sellBtn: "⚡ ENERGIE VERKAUFEN (1 MWh = 2.50 €)",
@@ -265,7 +260,7 @@ function updateLanguageUI() {
   document.getElementById('menuBtnTxt').textContent = t.menu;
   document.getElementById('shopBtnTxt').textContent = t.shop;
   document.getElementById('galleryBtnTxt').textContent = t.gallery;
-  document.getElementById('licenseTxt').textContent = t.license;
+  document.getElementById('rankBtnTxt').textContent = t.rank;
   document.getElementById('resBudgetTitle').textContent = t.budget;
   document.getElementById('resEnergyTitle').textContent = t.energy;
   document.getElementById('sellBtnTxt').textContent = t.sellBtn;
