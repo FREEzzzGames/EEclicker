@@ -3,31 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>eckert electro — Производство</title>
+<title>Tube Empire — Студия</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root {
-  --bg-grad: linear-gradient(135deg, #09192b 0%, #112d4e 50%, #06111c 100%);
-  --portal-bg: rgba(10, 22, 38, 0.96);
-  --border-col: rgba(74, 144, 226, 0.4);
-  --accent-col: #4a90e2;
-  --title-col: #ffd52c;
-  --btn-bg: rgba(18, 48, 80, 0.9);
+  --portal-bg: rgba(20, 10, 10, 0.96);
+  --border-col: rgba(255, 0, 0, 0.4);
+  --accent-col: #ff0000;
+  --title-col: #ffcc00;
+  --btn-bg: rgba(40, 15, 15, 0.9);
   --glass-bg: rgba(255, 255, 255, 0.03);
   --housing-col: #3498db;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:#06111c;color:#fff;font-family:monospace;overflow:hidden;}
+html,body{margin:0;width:100%;height:100%;background:#0a0505;color:#fff;font-family:monospace;overflow:hidden;}
 body{
   padding:4px;display:flex;justify-content:center;align-items:center;
-  background: var(--bg-grad); position: fixed; inset: 0;
+  background: linear-gradient(135deg, #140a0a 0%, #2b1111 50%, #0a0505 100%);
+  position: fixed; inset: 0;
 }
 .portal{
   width: 100%; height: 100%; max-width: 420px; max-height: 100vh;
   text-align: center; display: flex; flex-direction: column; justify-content: space-between;
   padding: 6px; z-index: 10;
   background: var(--portal-bg); border: 2px solid var(--border-col);
-  border-radius: 14px; box-shadow: 0 0 25px rgba(0, 0, 0, 0.85);
+  border-radius: 14px; box-shadow: 0 0 25px rgba(255, 0, 0, 0.25);
   position: relative;
 }
 
@@ -41,18 +41,18 @@ body{
 .back-btn {
   background: rgba(217, 30, 30, 0.85); border: 1px solid #ff4d4d; color: #fff;
   padding: 2px 4px; border-radius: 4px; text-decoration: none; font-weight: bold;
-  cursor: pointer; font-size: 7px; letter-spacing: -0.5px;
+  cursor: pointer; font-size: 7px;
 }
 .back-btn:active { transform: scale(0.95); }
 
 .shop-link-btn, .gallery-link-btn, .rank-link-btn, .lang-btn {
-  background: rgba(74, 144, 226, 0.25); border: 1px solid var(--accent-col); color: #fff;
+  background: rgba(255, 0, 0, 0.25); border: 1px solid var(--accent-col); color: #fff;
   padding: 2px 4px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 8px;
   text-decoration: none; display: flex; align-items: center; justify-content: center;
 }
-.shop-link-btn { background: rgba(155, 89, 182, 0.3); border-color: #9b59b6; color: #f39c12; }
-.gallery-link-btn { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; color: #2ecc71; }
-.rank-link-btn { background: rgba(241, 196, 15, 0.3); border-color: #f1c40f; color: #ffd52c; }
+.shop-link-btn { background: rgba(155, 89, 182, 0.3); border-color: #9b59b6; color: #ffcc00; }
+.gallery-link-btn { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; color: #fff; }
+.rank-link-btn { background: rgba(241, 196, 15, 0.3); border-color: #f1c40f; color: #ffcc00; }
 
 .clicker-body {
   flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
@@ -64,76 +64,65 @@ body{
   flex: 1; background: var(--glass-bg); border: 1px solid var(--border-col); border-radius: 6px;
   padding: 4px; text-align: center;
 }
-.res-title { font-size: 7px; color: #a1c4fd; text-transform: uppercase; font-weight: bold; }
-.res-val { font-size: 14px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 6px rgba(255,213,44,0.4); margin-top: 1px; }
-.res-sub { font-size: 7px; color: #a1c4fd; margin-top: 1px; }
+.res-title { font-size: 7px; color: #ff8888; text-transform: uppercase; font-weight: bold; }
+.res-val { font-size: 14px; font-weight: bold; color: var(--title-col); text-shadow: 0 0 6px rgba(255,204,0,0.4); margin-top: 1px; }
+.res-sub { font-size: 7px; color: #ff8888; margin-top: 1px; }
 
-@keyframes electricSpark {
-  0% { text-shadow: 0 0 4px #20e8ff, 0 0 8px #20e8ff; color: #6bc5ff; }
-  50% { text-shadow: 0 0 10px #ffffff, 0 0 18px #20e8ff; color: #ffffff; }
-  100% { text-shadow: 0 0 4px #20e8ff, 0 0 8px #20e8ff; color: #6bc5ff; }
+@keyframes redSpark {
+  0% { text-shadow: 0 0 4px #ff0000, 0 0 8px #ff0000; color: #ff8888; }
+  50% { text-shadow: 0 0 10px #ffffff, 0 0 18px #ff0000; color: #ffffff; }
+  100% { text-shadow: 0 0 4px #ff0000, 0 0 8px #ff0000; color: #ff8888; }
 }
-.energy-lightning { animation: electricSpark 1.2s infinite ease-in-out; }
+.views-pulse { animation: redSpark 1.2s infinite ease-in-out; }
 
 .money-pipe {
-  width: 100%; height: 6px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(74, 144, 226, 0.3);
+  width: 100%; height: 6px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 0, 0, 0.3);
   border-radius: 3px; position: relative; overflow: hidden;
 }
 .money-flow {
   position: absolute; top: 0; left: -100%; width: 200%; height: 100%;
-  background: repeating-linear-gradient(90deg, transparent, transparent 6px, #ffd52c 6px, #ffd52c 12px, #ffffff 12px, #ffffff 16px);
-  opacity: 0.75;
-  animation: flowMoney 1.5s linear infinite;
+  background: repeating-linear-gradient(90deg, transparent, transparent 6px, #ffcc00 6px, #ffcc00 12px, #ffffff 12px, #ffffff 16px);
+  opacity: 0.75; animation: flowMoney 1.5s linear infinite;
 }
-@keyframes flowMoney {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(50%); }
-}
+@keyframes flowMoney { 0% { transform: translateX(0); } 100% { transform: translateX(50%); } }
 
 .sell-energy-btn {
-  width: 100%; background: linear-gradient(135deg, rgba(255,213,44,0.2), rgba(74,144,226,0.2));
+  width: 100%; background: linear-gradient(135deg, rgba(255,204,0,0.2), rgba(255,0,0,0.2));
   border: 1px solid var(--title-col); border-radius: 6px; padding: 5px; color: var(--title-col);
   font-family: monospace; font-size: 9px; font-weight: bold; cursor: pointer; text-align: center;
-  transition: transform 0.1s; box-shadow: 0 0 5px rgba(255,213,44,0.15);
+  box-shadow: 0 0 5px rgba(255,204,0,0.15);
 }
 .sell-energy-btn:active { transform: scale(0.97); }
 
-.progress-bar-container {
-  width: 100%; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden;
-}
-.progress-bar-fill {
-  height: 100%; background: linear-gradient(90deg, #4a90e2, #ffd52c); width: 0%; transition: width 0.2s ease;
-}
+.progress-bar-container { width: 100%; height: 2px; background: rgba(255,255,255,0.1); border-radius: 2px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, #ff0000, #ffcc00); width: 0%; transition: width 0.2s ease; }
 
 .click-target-container { position: relative; display: flex; flex-direction: column; align-items: center; gap: 1px; margin: 0; }
 .click-target {
-  width: 62px; height: 62px; background: radial-gradient(circle at 35% 35%, #ffd52c, #d39e00);
+  width: 62px; height: 62px; background: radial-gradient(circle at 35% 35%, #ff3333, #b30000);
   border: 2.5px solid #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-  font-size: 28px; cursor: pointer; box-shadow: 0 0 12px rgba(255,213,44,0.4); transition: transform 0.08s ease;
-  user-select: none; z-index: 40; touch-action: manipulation;
+  font-size: 26px; cursor: pointer; box-shadow: 0 0 15px rgba(255,0,0,0.5); transition: transform 0.08s ease;
+  user-select: none; touch-action: manipulation;
 }
-.click-target:active { transform: scale(0.88); background: radial-gradient(circle at 35% 35%, #e0b800, #997500); }
+.click-target:active { transform: scale(0.88); background: radial-gradient(circle at 35% 35%, #cc0000, #800000); }
 
 .upgrades-list { 
   width: 100%; display: flex; flex-direction: column; gap: 4px; 
   max-height: 190px; overflow-y: auto; padding-right: 2px; 
 }
 .upgrade-card {
-  display: flex; justify-content: space-between; align-items: center; background: rgba(18, 48, 80, 0.85);
+  display: flex; justify-content: space-between; align-items: center; background: rgba(40, 15, 15, 0.85);
   border: 1px solid var(--border-col); border-radius: 6px; padding: 5px 8px; font-size: 9.5px; text-align: left; cursor: pointer;
-  transition: all 0.12s ease; position: relative; min-height: 40px;
+  transition: all 0.12s ease; min-height: 40px;
 }
 .upgrade-card:active { transform: scale(0.98); background: var(--btn-bg); }
 .upgrade-info { display: flex; flex-direction: column; gap: 1px; }
 .upgrade-name { color: var(--title-col); font-weight: bold; font-size: 9.5px; }
-.upgrade-desc { font-size: 7px; color: #a1c4fd; }
-.upgrade-cost { color: #6bc5ff; font-weight: bold; font-size: 8px; }
+.upgrade-desc { font-size: 7px; color: #ff8888; }
+.upgrade-cost { color: #ffcc00; font-weight: bold; font-size: 8px; }
 .upgrade-count { font-size: 10px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.5); padding: 2px 5px; border-radius: 4px; border: 1px solid var(--border-col); }
 
-.upgrade-card.housing {
-  border-color: var(--housing-col);
-  background: rgba(52, 152, 219, 0.15);
-}
+.upgrade-card.housing { border-color: var(--housing-col); background: rgba(52, 152, 219, 0.15); }
 .upgrade-card.housing .upgrade-name { color: #5dade2; }
 
 @keyframes floatUp {
@@ -141,7 +130,7 @@ body{
   100% { transform: translateY(-30px) scale(1.15); opacity: 0; }
 }
 .floating-text {
-  position: fixed; color: #ffd52c; font-size: 13px; font-weight: bold; pointer-events: none; z-index: 99999;
+  position: fixed; color: #ffcc00; font-size: 13px; font-weight: bold; pointer-events: none; z-index: 99999;
   animation: floatUp 0.35s ease-out forwards; text-shadow: 0 0 4px rgba(0,0,0,0.9);
 }
 </style>
@@ -153,8 +142,8 @@ body{
     <div class="header-left">
       <a href="index.html" class="back-btn" id="menuBtnTxt">⬅ МЕНЮ</a>
       <a href="collection.html" class="shop-link-btn" id="shopBtnTxt">🛒 Магазин</a>
-      <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🖼️ Галерея</a>
-      <a href="leaderboard.html" class="rank-link-btn" id="rankBtnTxt">🏆 Топ</a>
+      <a href="gallery.html" class="gallery-link-btn" id="galleryBtnTxt">🏆 Награды</a>
+      <a href="leaderboard.html" class="rank-link-btn" id="rankBtnTxt">📊 Топ</a>
       <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">🇩🇪 DE</button>
     </div>
   </div>
@@ -162,30 +151,26 @@ body{
   <div class="clicker-body">
     <div class="resources-container">
       <div class="res-box">
-        <div class="res-title" id="resBudgetTitle">Бюджет (€)</div>
+        <div class="res-title" id="resBudgetTitle">Баланс (€)</div>
         <div class="res-val" id="moneyTxt">0.00 €</div>
         <div class="res-sub" id="cpsTxt">+0.0 €/сек</div>
       </div>
       <div class="res-box">
-        <div class="res-title" id="resEnergyTitle">Энергия (МВт)</div>
-        <div class="res-val energy-lightning" id="energyTxt">0.0 МВт</div>
-        <div class="res-sub" id="housingSubTxt">Жилье: 0/0</div>
+        <div class="res-title" id="resEnergyTitle">Просмотры (Mio)</div>
+        <div class="res-val views-pulse" id="energyTxt">0.0M</div>
+        <div class="res-sub" id="housingSubTxt">ПК-места: 0/0</div>
       </div>
     </div>
 
-    <div class="money-pipe">
-      <div class="money-flow" id="moneyFlow"></div>
-    </div>
+    <div class="money-pipe"><div class="money-flow" id="moneyFlow"></div></div>
 
-    <button class="sell-energy-btn" id="sellBtnTxt" onclick="sellEnergy()">⚡ ПРОДАТЬ ЭНЕРГИЮ (1 МВт = 2.50 €)</button>
+    <button class="sell-energy-btn" id="sellBtnTxt" onclick="sellEnergy()">💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)</button>
 
-    <div class="progress-bar-container">
-      <div class="progress-bar-fill" id="progressFill"></div>
-    </div>
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="progressFill"></div></div>
 
     <div class="click-target-container">
-      <div class="click-target" onclick="clickEnergy(event)">⚡</div>
-      <div style="font-size: 7px; color: #a1c4fd;" id="tapHintTxt">Тапай для подачи напряжения!</div>
+      <div class="click-target" onclick="clickEnergy(event)">🔴</div>
+      <div style="font-size: 7px; color: #ff8888;" id="tapHintTxt">Тапай для записи ролика!</div>
     </div>
 
     <div class="upgrades-list" id="upgradesList"></div>
@@ -201,49 +186,35 @@ let currentLang = localStorage.getItem("freezzzLang") || "ru";
 
 const langData = {
   ru: {
-    menu: "⬅ МЕНЮ",
-    shop: "🛒 Магазин",
-    gallery: "🖼️ Галерея",
-    rank: "🏆 Топ",
-    budget: "Бюджет (€)",
-    energy: "Энергия (МВт·ч)",
-    sellBtn: "⚡ ПРОДАТЬ ЭНЕРГИЮ (1 МВт = 2.50 €)",
-    tapHint: "Тапай для подачи напряжения!",
-    price: "Цена",
-    housingSlots: "Слоты жилья",
-    noSlots: "❌ Нет жилых слотов!",
+    menu: "⬅ МЕНЮ", shop: "🛒 Магазин", gallery: "🏆 Награды", rank: "📊 Топ",
+    budget: "Баланс (€)", energy: "Просмотры (Mio)",
+    sellBtn: "💰 ВЫВЕСТИ ADDSENSE (1M = 2.50 €)", tapHint: "Тапай для записи ролика!",
+    price: "Цена", noSlots: "❌ Нет свободных ПК-мест!",
     items: [
-      { name: "🏠 Вагончик для рабочих", desc: "+3 слота для сотрудников", type: "housing" },
-      { name: "🏢 Общежитие концерна", desc: "+10 слотов для сотрудников", type: "housing" },
-      { name: "🧑‍🎓 Стажер-практикант (Azubi)", desc: "Авто-кликер (требует жилье)", type: "worker" },
-      { name: "👨‍🔧 Электрик (Специалист)", desc: "Базовый мастер (требует жилье)", type: "worker" },
-      { name: "👷‍♂️ Бригада электриков", desc: "Монтажники (требует жилье)", type: "worker" },
-      { name: "💨 Ветряная установка", desc: "Генератор зеленой энергии", type: "station" },
-      { name: "☀️ Солнечная ферма", desc: "Панели (+ выработка МВт)", type: "station" },
-      { name: "⚡ АЭС (Атомная станция)", desc: "Максимальная энергия и доход", type: "station" }
+      { name: "💻 Стол для монтажа", desc: "+3 рабочих места в студии", type: "housing" },
+      { name: "🏢 Офис-студия блогеров", desc: "+10 рабочих мест в студии", type: "housing" },
+      { name: "🧑‍💻 Начинающий клипмейкер", desc: "Авто-монтаж (требует ПК)", type: "worker" },
+      { name: "🎥 Сценарист / Оператор", desc: "Профи контента (требует ПК)", type: "worker" },
+      { name: "🎬 Продюсерская команда", desc: "Медиа-мастера (требует ПК)", type: "worker" },
+      { name: "🤖 Бот для Shorts/Reels", desc: "Авто-генерация роликов", type: "station" },
+      { name: "🎙️ Студия подкастов", desc: "Стрим-ферма (+ просмотры)", type: "station" },
+      { name: "🌐 Топовая MCN-сеть", desc: "Максимальные просмотры и доход", type: "station" }
     ]
   },
   de: {
-    menu: "⬅ MENÜ",
-    shop: "🛒 Shop",
-    gallery: "🖼️ Galerie",
-    rank: "🏆 Top",
-    budget: "Budget (€)",
-    energy: "Energie (MWh)",
-    sellBtn: "⚡ ENERGIE VERKAUFEN (1 MWh = 2.50 €)",
-    tapHint: "Tippen für Stromversorgung!",
-    price: "Preis",
-    housingSlots: "Wohnplätze",
-    noSlots: "❌ Keine Wohnplätze frei!",
+    menu: "⬅ MENÜ", shop: "🛒 Shop", gallery: "🏆 Trophäen", rank: "📊 Top",
+    budget: "Guthaben (€)", energy: "Aufrufe (Mio)",
+    sellBtn: "💰 ADDSENSE AUSZAHLEN (1M = 2.50 €)", tapHint: "Tippen für Video-Upload!",
+    price: "Preis", noSlots: "❌ Keine PC-Plätze frei!",
     items: [
-      { name: "🏠 Bauwagen (Unterkunft)", desc: "+3 Plätze für Personal", type: "housing" },
-      { name: "🏢 Firmenwohnheim", desc: "+10 Plätze für Personal", type: "housing" },
-      { name: "🧑‍🎓 Azubi (Praktikant)", desc: "Auto-Klicker (braucht Unterkunft)", type: "worker" },
-      { name: "👨‍🔧 Elektriker (Spezialist)", desc: "Grundmonteur (braucht Unterkunft)", type: "worker" },
-      { name: "👷‍♂️ Elektriker-Team", desc: "Trupp (braucht Unterkunft)", type: "worker" },
-      { name: "💨 Windkraftanlage", desc: "Grüne Windenergie", type: "station" },
-      { name: "☀️ Solarpark", desc: "Solarpanels (+ MWh)", type: "station" },
-      { name: "⚡ Atomkraftwerk (AKW)", desc: "Maximale Energie & Ertrag", type: "station" }
+      { name: "💻 Schnitt-Desk", desc: "+3 PC-Arbeitsplätze", type: "housing" },
+      { name: "🏢 Creator-Studio Büro", desc: "+10 PC-Arbeitsplätze", type: "housing" },
+      { name: "🧑‍💻 Junior Editor", desc: "Auto-Klicker (braucht PC)", type: "worker" },
+      { name: "🎥 Content Director", desc: "Profi (braucht PC)", type: "worker" },
+      { name: "🎬 Produktionsteam", desc: "Großes Team (braucht PC)", type: "worker" },
+      { name: "🤖 Shorts/Reels Bot", desc: "Automatisierter Upload", type: "station" },
+      { name: "🎙️ Podcast-Studio", desc: "Stream-Farm (+ Aufrufe)", type: "station" },
+      { name: "🌐 Top MCN-Netzwerk", desc: "Maximale Aufrufe & Ertrag", type: "station" }
     ]
   }
 };
@@ -251,10 +222,8 @@ const langData = {
 function toggleLanguage() {
   currentLang = currentLang === "ru" ? "de" : "ru";
   localStorage.setItem("freezzzLang", currentLang);
-  updateLanguageUI();
-  updateUI();
+  updateLanguageUI(); updateUI();
 }
-
 function updateLanguageUI() {
   let t = langData[currentLang];
   document.getElementById('menuBtnTxt').textContent = t.menu;
@@ -265,7 +234,6 @@ function updateLanguageUI() {
   document.getElementById('resEnergyTitle').textContent = t.energy;
   document.getElementById('sellBtnTxt').textContent = t.sellBtn;
   document.getElementById('tapHintTxt').textContent = t.tapHint;
-  document.getElementById('langBtn').textContent = currentLang === "ru" ? "🇩🇪 DE" : "🇷🇺 RU";
 }
 
 let money = Number(localStorage.getItem("zeitarbeitMoney") || 0);
@@ -288,28 +256,20 @@ function playSound(freq, type='square', duration=0.1) {
   try {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if (audioCtx.state === 'suspended') audioCtx.resume();
-    let osc = audioCtx.createOscillator();
-    let gain = audioCtx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
     gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + duration);
   } catch(e) {}
 }
-
 function haptic(style='light') {
-  if (soundEnabled && tg && tg.HapticFeedback) {
-    try { tg.HapticFeedback.impactOccurred(style); } catch(e){}
-  }
+  if (soundEnabled && tg && tg.HapticFeedback) { try { tg.HapticFeedback.impactOccurred(style); } catch(e){} }
 }
 
 function getHousingStats() {
-  let totalSlots = 0;
-  let usedSlots = 0;
+  let totalSlots = 0, usedSlots = 0;
   upgrades.forEach(up => {
     if (up.type === 'housing') totalSlots += up.count * up.housingSlots;
     if (up.type === 'worker') usedSlots += up.count;
@@ -318,115 +278,69 @@ function getHousingStats() {
 }
 
 function clickEnergy(e) {
-  money += 1;
-  totalEnergyMWh += 0.2;
-  playSound(520, 'triangle', 0.08);
-  haptic('light');
-  updateUI();
-
+  money += 1; totalEnergyMWh += 0.2;
+  playSound(520, 'triangle', 0.08); haptic('light'); updateUI();
   let pop = document.createElement('div');
-  pop.textContent = "+1 € / ⚡";
-  pop.className = "floating-text";
-  pop.style.left = (e.clientX - 15) + "px";
-  pop.style.top = (e.clientY - 25) + "px";
-  document.body.appendChild(pop);
-  setTimeout(() => pop.remove(), 350);
+  pop.textContent = "+1 € / 🔴"; pop.className = "floating-text";
+  pop.style.left = (e.clientX - 15) + "px"; pop.style.top = (e.clientY - 25) + "px";
+  document.body.appendChild(pop); setTimeout(() => pop.remove(), 350);
 }
 
 function sellEnergy() {
-  if (totalEnergyMWh < 1) {
-    playSound(150, 'sawtooth', 0.15);
-    return;
-  }
-  let earned = totalEnergyMWh * 2.50;
-  money += earned;
-  totalEnergyMWh = 0;
-  playSound(880, 'square', 0.2);
-  haptic('heavy');
-  updateUI();
+  if (totalEnergyMWh < 1) { playSound(150, 'sawtooth', 0.15); return; }
+  let earned = totalEnergyMWh * 2.50; money += earned; totalEnergyMWh = 0;
+  playSound(880, 'square', 0.2); haptic('heavy'); updateUI();
 }
 
 function buyUpgrade(index) {
-  let up = upgrades[index];
-  let housing = getHousingStats();
-
-  if (up.type === 'worker') {
-    let freeSlots = housing.totalSlots - housing.usedSlots;
-    if (freeSlots <= 0) {
-      playSound(120, 'sawtooth', 0.2);
-      haptic('heavy');
-      return;
-    }
+  let up = upgrades[index], housing = getHousingStats();
+  if (up.type === 'worker' && (housing.totalSlots - housing.usedSlots) <= 0) {
+    playSound(120, 'sawtooth', 0.2); haptic('heavy'); return;
   }
-
   if (money >= up.cost) {
-    money -= up.cost;
-    up.count++;
-    up.cost = Math.floor(up.cost * up.mult);
+    money -= up.cost; up.count++; up.cost = Math.floor(up.cost * up.mult);
     localStorage.setItem("up_" + up.id, up.count);
-    playSound(720, 'square', 0.15);
-    haptic('medium');
-    updateUI();
-  } else {
-    playSound(140, 'sawtooth', 0.2);
-  }
+    playSound(720, 'square', 0.15); haptic('medium'); updateUI();
+  } else { playSound(140, 'sawtooth', 0.2); }
 }
 
 function calculateStats() {
-  let totalEurSec = 0;
-  let totalEnergySec = 0;
-  let housing = getHousingStats();
-  
+  let totalEurSec = 0, totalEnergySec = 0, housing = getHousingStats();
   upgrades.forEach(up => {
     if (up.type === 'worker') {
-      totalEurSec += up.incomeEur * up.count;
-      totalEnergySec += up.energyMWh * up.count;
+      totalEurSec += up.incomeEur * up.count; totalEnergySec += up.energyMWh * up.count;
     } else if (up.type === 'station') {
-      let requiredWorkersTotal = (up.workersNeeded || 0) * up.count;
-      let efficiency = requiredWorkersTotal > 0 ? Math.min(1.0, housing.usedSlots / requiredWorkersTotal) : 1.0;
-      if (housing.usedSlots === 0 && requiredWorkersTotal > 0) efficiency = 0.1;
-
-      totalEurSec += (up.incomeEur * up.count) * efficiency;
-      totalEnergySec += (up.energyMWh * up.count) * efficiency;
+      let req = (up.workersNeeded || 0) * up.count;
+      let eff = req > 0 ? Math.min(1.0, housing.usedSlots / req) : 1.0;
+      if (housing.usedSlots === 0 && req > 0) eff = 0.1;
+      totalEurSec += (up.incomeEur * up.count) * eff;
+      totalEnergySec += (up.energyMWh * up.count) * eff;
     }
   });
-
   return { totalEurSec, totalEnergySec };
 }
 
 function updateUI() {
-  let stats = calculateStats();
-  let housing = getHousingStats();
-  let t = langData[currentLang];
-  
+  let stats = calculateStats(), housing = getHousingStats(), t = langData[currentLang];
   document.getElementById('moneyTxt').textContent = money.toLocaleString('ru-RU', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + " €";
   document.getElementById('cpsTxt').textContent = `+${stats.totalEurSec.toFixed(1)} €/s`;
-  
-  document.getElementById('energyTxt').textContent = totalEnergyMWh.toFixed(1) + (currentLang === 'ru' ? " МВт" : " MWh");
-  document.getElementById('housingSubTxt').textContent = `${currentLang === 'ru' ? 'Жилье' : 'Wohnen'}: ${housing.usedSlots}/${housing.totalSlots}`;
-
-  let flowSpeed = Math.max(0.3, 2.0 - (stats.totalEurSec / 20));
-  document.getElementById('moneyFlow').style.animationDuration = flowSpeed + 's';
+  document.getElementById('energyTxt').textContent = totalEnergyMWh.toFixed(1) + "M";
+  document.getElementById('housingSubTxt').textContent = `ПК: ${housing.usedSlots}/${housing.totalSlots}`;
 
   let cheapestCost = Math.min(...upgrades.map(u => u.cost));
-  let progressPercent = Math.min(100, (money / cheapestCost) * 100);
-  document.getElementById('progressFill').style.width = progressPercent + "%";
+  document.getElementById('progressFill').style.width = Math.min(100, (money / cheapestCost) * 100) + "%";
 
   let listHtml = "";
   upgrades.forEach((up, idx) => {
-    let currentCost = Math.floor(up.cost);
-    let canBuy = money >= currentCost;
-    let localizedItem = t.items[idx];
-    
+    let currentCost = Math.floor(up.cost), canBuy = money >= currentCost, localizedItem = t.items[idx];
     let subInfo = localizedItem.desc;
     if (up.type === 'worker') {
       let freeSlots = housing.totalSlots - housing.usedSlots;
       canBuy = canBuy && freeSlots > 0;
-      subInfo = freeSlots > 0 ? `+${up.incomeEur}€/s, +${up.energyMWh}MWh/s` : `<span style="color:#e74c3c">${t.noSlots}</span>`;
+      subInfo = freeSlots > 0 ? `+${up.incomeEur}€/s, +${up.energyMWh}M/s` : `<span style="color:#e74c3c">${t.noSlots}</span>`;
     }
-
     listHtml += `
-      <div class="upgrade-card ${up.type === 'housing' ? 'housing' : ''}" style="opacity: ${canBuy ? 1 : 0.6}; border-color: ${canBuy ? 'var(--title-col)' : 'var(--border-col)'};" onclick="buyUpgrade(${idx})">
+      <div class="upgrade-card ${up.type === 'housing' ? 'housing' : ''}" style="opacity: ${canBuy ? 1 : 0.6};" onclick="buyUpgrade(${idx})">
         <div class="upgrade-info">
           <div class="upgrade-name">${localizedItem.name}</div>
           <div class="upgrade-desc">${subInfo}</div>
@@ -436,7 +350,6 @@ function updateUI() {
       </div>
     `;
   });
-  
   document.getElementById('upgradesList').innerHTML = listHtml;
   localStorage.setItem("zeitarbeitMoney", money);
   localStorage.setItem("zeitarbeitEnergy", totalEnergyMWh);
@@ -445,19 +358,15 @@ function updateUI() {
 setInterval(() => {
   let stats = calculateStats();
   if (stats.totalEurSec > 0 || stats.totalEnergySec > 0) {
-    money += stats.totalEurSec / 10;
-    totalEnergyMWh += stats.totalEnergySec / 10;
-    updateUI();
+    money += stats.totalEurSec / 10; totalEnergyMWh += stats.totalEnergySec / 10; updateUI();
   }
 }, 100);
 
 setInterval(() => {
-  localStorage.setItem("zeitarbeitMoney", money);
-  localStorage.setItem("zeitarbeitEnergy", totalEnergyMWh);
+  localStorage.setItem("zeitarbeitMoney", money); localStorage.setItem("zeitarbeitEnergy", totalEnergyMWh);
 }, 5000);
 
-updateLanguageUI();
-updateUI();
+updateLanguageUI(); updateUI();
 </script>
 </body>
 </html>
