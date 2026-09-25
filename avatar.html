@@ -70,14 +70,15 @@ body{
   display: flex; gap: 8px; align-items: stretch; margin: 4px 0; flex-shrink: 0;
 }
 .avatar-preview-box {
-  flex: 0 0 110px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
+  flex: 0 0 120px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
   border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 8px; gap: 4px;
+  padding: 6px; gap: 3px;
 }
 .constructor-preview {
-  font-size: 40px; background: radial-gradient(circle, var(--accent-col) 0%, var(--btn-bg) 70%);
+  font-size: 26px; background: radial-gradient(circle, var(--accent-col) 0%, var(--btn-bg) 70%);
   border: 2px solid var(--title-col); border-radius: 50%; width: 62px; height: 62px;
   display: flex; align-items: center; justify-content: center; box-shadow: 0 0 12px rgba(255,204,0,0.4);
+  line-height: 1; word-break: break-all; padding: 2px;
 }
 .avatar-title-text { font-size: 8px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; }
 
@@ -86,7 +87,7 @@ body{
 }
 .tab-btn {
   background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 6px;
-  padding: 6px 8px; font-size: 9px; color: var(--text-main); font-family: monospace;
+  padding: 5px 8px; font-size: 9px; color: var(--text-main); font-family: monospace;
   text-align: left; cursor: pointer; font-weight: bold; transition: all 0.1s;
 }
 .tab-btn:active { transform: scale(0.97); }
@@ -130,7 +131,7 @@ body{
     <div style="color:var(--title-col); font-weight:bold; font-size: 10px;" id="headerTitle">👤 КОНСТРУКТОР АВАТАРА</div>
   </div>
 
-  <!-- КОМПАНОВКА: ПРЕВЬЬЮ СЛЕВА, КАТЕГОРИИ СПРАВА -->
+  <!-- КОМПАНОВКА: ПРЕВЬЮ СЛЕВА, КАТЕГОРИИ СПРАВА -->
   <div class="constructor-main-layout">
     <div class="avatar-preview-box">
       <div class="constructor-preview" id="modalAvatarPreview">👦</div>
@@ -207,7 +208,7 @@ const avatarOptions = {
 let storageKey = "tube_empire_avatar_config";
 let defaultConfig = { gender: 0, head: 0, torso: 0, legs: 0, accessory: 0 };
 let currentConfig = loadConfig();
-let activeCategory = 'gender'; // Активная вкладка по умолчанию
+let activeCategory = 'gender';
 
 function loadConfig() {
   try {
@@ -216,12 +217,14 @@ function loadConfig() {
   } catch (e) { return { ...defaultConfig }; }
 }
 
+// Теперь функция учитывает ВСЕ 5 слотов: Пол + Голова + Торс + Ноги + Аксессуар
 function getAvatarString() {
   let g = avatarOptions.gender[currentConfig.gender].symbol;
   let h = avatarOptions.head[currentConfig.head].icon;
   let t = avatarOptions.torso[currentConfig.torso].icon;
+  let l = avatarOptions.legs[currentConfig.legs].icon;
   let acc = avatarOptions.accessory[currentConfig.accessory].icon;
-  return `${g}${h}${t}${acc !== '❌' ? acc : ''}`;
+  return `${g}${h}${t}${l}${acc !== '❌' ? acc : ''}`;
 }
 
 function renderUI() {
@@ -234,7 +237,6 @@ function renderUI() {
 
   document.getElementById('modalAvatarPreview').textContent = getAvatarString();
 
-  // Рендерим вкладки категорий справа
   let tabsContainer = document.getElementById('categoriesTabsContainer');
   let tabsHtml = "";
   Object.keys(avatarOptions).forEach(cat => {
@@ -243,7 +245,6 @@ function renderUI() {
   });
   tabsContainer.innerHTML = tabsHtml;
 
-  // Рендерим сетку элементов для выбранной категории
   let gridContainer = document.getElementById('optionsGridContainer');
   let gridHtml = "";
   let list = avatarOptions[activeCategory];
