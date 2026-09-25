@@ -6,7 +6,7 @@
 <title>Tube Empire — Топ каналов</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-:root {
+:root, [data-theme="dark"] {
   --portal-bg: rgba(20, 10, 10, 0.96);
   --border-col: rgba(255, 204, 0, 0.6);
   --accent-col: #ffcc00;
@@ -14,12 +14,39 @@
   --btn-bg: rgba(40, 15, 15, 0.9);
   --glass-bg: rgba(255, 255, 255, 0.04);
   --gold: #f1c40f; --silver: #bdc3c7; --bronze: #e67e22;
+  --text-main: #fff;
+  --text-sub: #ff8888;
+  --body-bg: #0a0505;
 }
+[data-theme="rose"] {
+  --portal-bg: rgba(30, 10, 25, 0.96);
+  --border-col: rgba(233, 30, 99, 0.6);
+  --accent-col: #ffeb3b;
+  --title-col: #ffeb3b;
+  --btn-bg: rgba(60, 15, 40, 0.9);
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --gold: #ffeb3b; --silver: #f48fb1; --bronze: #ce93d8;
+  --text-main: #fff;
+  --text-sub: #ff80ab;
+  --body-bg: #150510;
+}
+[data-theme="light"] {
+  --portal-bg: rgba(245, 247, 250, 0.96);
+  --border-col: rgba(230, 81, 0, 0.5);
+  --accent-col: #e65100;
+  --title-col: #e65100;
+  --btn-bg: rgba(255, 255, 255, 0.9);
+  --glass-bg: rgba(230, 235, 245, 0.85);
+  --gold: #f57f17; --silver: #78909c; --bronze: #d7ccc8;
+  --text-main: #1a1a1a;
+  --text-sub: #555555;
+  --body-bg: #e0e4ec;
+}
+
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;width:100%;height:100%;background:#0a0505;color:#fff;font-family:monospace;overflow:hidden;}
+html,body{margin:0;width:100%;height:100%;background:var(--body-bg);color:var(--text-main);font-family:monospace;overflow:hidden;transition:background 0.3s;}
 body{
   padding:6px;display:flex;justify-content:center;align-items:center;
-  background: linear-gradient(135deg, #140a0a 0%, #2b1111 50%, #0a0505 100%);
   position: fixed; inset: 0;
 }
 .portal{
@@ -27,7 +54,7 @@ body{
   text-align: center; display: flex; flex-direction: column; justify-content: space-between;
   padding: 8px; z-index: 10;
   background: var(--portal-bg); border: 2.5px solid var(--border-col);
-  border-radius: 16px; box-shadow: 0 0 35px rgba(255, 204, 0, 0.2);
+  border-radius: 16px; box-shadow: 0 0 35px rgba(0, 0, 0, 0.2);
   position: relative;
 }
 .game-ui-header { 
@@ -40,8 +67,8 @@ body{
   padding: 3px 6px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer; font-size: 8px;
 }
 .festive-title-box {
-  background: radial-gradient(circle, rgba(255,204,0,0.15) 0%, transparent 70%);
-  border: 1px dashed rgba(255, 204, 0, 0.4); border-radius: 10px;
+  background: var(--glass-bg);
+  border: 1px dashed var(--border-col); border-radius: 10px;
   padding: 8px; margin: 2px 0; text-align: center;
 }
 .leaderboard-list {
@@ -50,17 +77,17 @@ body{
 }
 .leader-card {
   display: flex; justify-content: space-between; align-items: center; 
-  background: rgba(40, 15, 15, 0.85); border: 1px solid var(--border-col); 
+  background: var(--btn-bg); border: 1px solid var(--border-col); 
   border-radius: 8px; padding: 7px 10px; font-size: 10.5px; text-align: left;
 }
 .leader-card.player-row {
-  background: linear-gradient(135deg, rgba(255,204,0,0.25), rgba(40,15,15,0.95));
+  background: var(--glass-bg);
   border: 2px solid var(--title-col); box-shadow: 0 0 12px rgba(255,204,0,0.3);
 }
 .rank-1 { color: var(--gold); } .rank-2 { color: var(--silver); } .rank-3 { color: var(--bronze); }
 </style>
 </head>
-<body>
+<body data-theme="dark">
 
 <div class="portal">
   <div class="game-ui-header">
@@ -70,11 +97,11 @@ body{
 
   <div class="festive-title-box">
     <div style="font-size: 12px; font-weight: 900; color: var(--title-col);" id="mainHeaderTitle">✨ МИРОВЫЕ ТРЕНДЫ YOUTUBE ✨</div>
-    <div style="font-size: 7.5px; color: #ff8888; margin-top: 2px;" id="mainSubTitle">Глобальный рейтинг медиа-гигантов</div>
+    <div style="font-size: 7.5px; color: var(--text-sub); margin-top: 2px;" id="mainSubTitle">Глобальный рейтинг медиа-гигантов</div>
   </div>
 
   <div class="leaderboard-list" id="leaderboardList"></div>
-  <div style="font-size: 8px; color: #ff8888;" id="timerTxt">Обновление через: 60 сек.</div>
+  <div style="font-size: 8px; color: var(--text-sub);" id="timerTxt">Обновление через: 60 сек.</div>
 </div>
 
 <script>
@@ -82,6 +109,8 @@ const tg = window.Telegram.WebApp;
 if (tg && tg.ready) { tg.ready(); tg.expand(); }
 
 let currentLang = localStorage.getItem("freezzzLang") || "ru";
+let currentTheme = localStorage.getItem("freezzzTheme") || "dark";
+document.body.setAttribute('data-theme', currentTheme);
 
 const langData = {
   ru: {
@@ -131,7 +160,7 @@ function updateLeaderboardUI() {
       <div class="leader-card ${p.isPlayer ? 'player-row' : ''}">
         <div style="display:flex; align-items:center; gap:8px;">
           <div class="leader-rank ${rClass}" style="font-weight:bold; width:24px;">${rankIcon}</div>
-          <div style="font-weight:bold; color:#fff;">${p.name}</div>
+          <div style="font-weight:bold; color:var(--text-main);">${p.name}</div>
         </div>
         <div style="font-weight:bold; color:var(--title-col);">${p.score.toLocaleString('ru-RU', {maximumFractionDigits: 0})} €</div>
       </div>
