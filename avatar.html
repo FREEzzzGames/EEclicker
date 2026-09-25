@@ -86,27 +86,28 @@ body{
 .tab-content { display: none; flex-direction: column; flex-grow: 1; gap: 4px; overflow-y: auto; text-align: left; }
 .tab-content.active { display: flex; }
 
-/* КОНСТРУКТОР (компактные пропорции без перекрытий) */
+/* ИСПРАВЛЕННЫЙ КОНСТРУКТОР */
 .constructor-main-layout {
   display: flex; gap: 6px; align-items: stretch; margin: 2px 0; flex-shrink: 0;
 }
 .avatar-preview-box {
-  flex: 0 0 85px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
+  flex: 0 0 80px; background: var(--glass-bg); border: 1.5px solid var(--border-col);
   border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 4px;
+  padding: 4px; height: 125px;
 }
 .constructor-preview {
-  font-size: 22px; background: none; border: none; width: 50px; height: 50px;
-  display: flex; align-items: center; justify-content: center;
-  line-height: 1.1; word-break: break-all; text-align: center;
+  font-size: 20px; background: none; border: none; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  line-height: 1.2; word-break: break-all; text-align: center;
 }
 .categories-tabs {
-  flex-grow: 1; display: flex; flex-direction: column; gap: 2px; justify-content: space-between;
+  flex-grow: 1; display: flex; flex-direction: column; gap: 3px; justify-content: space-between; height: 125px;
 }
 .tab-btn {
   background: var(--btn-bg); border: 1px solid var(--border-col); border-radius: 5px;
-  padding: 3px 6px; font-size: 7.5px; color: var(--text-main); font-family: monospace;
+  padding: 5px 8px; font-size: 8px; color: var(--text-main); font-family: monospace;
   text-align: left; cursor: pointer; font-weight: bold; width: 100%; transition: all 0.1s;
+  display: flex; align-items: center; justify-content: space-between;
 }
 .tab-btn:active { transform: scale(0.97); }
 .tab-btn.active {
@@ -116,8 +117,8 @@ body{
 
 .options-selection-box {
   flex-grow: 1; background: var(--glass-bg); border: 1.5px solid var(--border-col);
-  border-radius: 8px; padding: 6px; display: flex; flex-direction: column; gap: 3px;
-  overflow-y: auto; text-align: left; margin: 2px 0; max-height: 180px;
+  border-radius: 8px; padding: 6px; display: flex; flex-direction: column; gap: 4px;
+  overflow-y: auto; text-align: left; margin: 2px 0; max-height: 170px;
 }
 .section-title-label { font-size: 7.5px; color: var(--text-sub); text-transform: uppercase; font-weight: bold; margin-bottom: 2px; }
 .options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
@@ -312,7 +313,7 @@ function getAvatarString() {
   let t = avatarOptions.torso[currentConfig.torso].icon;
   let l = avatarOptions.legs[currentConfig.legs].icon;
   let acc = avatarOptions.accessory[currentConfig.accessory].icon;
-  return `${g}${h}${t}${l}${acc !== '❌' ? acc : ''}`;
+  return `${g}<br>${h}<br>${t}<br>${l}<br>${acc !== '❌' ? acc : ''}`;
 }
 
 function switchTab(tabName) {
@@ -346,13 +347,13 @@ function renderUI() {
     username = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username || username;
   }
   document.getElementById('headerUsername').textContent = username;
-  document.getElementById('modalAvatarPreview').textContent = getAvatarString();
+  document.getElementById('modalAvatarPreview').innerHTML = getAvatarString();
 
   let tabsContainer = document.getElementById('categoriesTabsContainer');
   let tabsHtml = "";
   Object.keys(avatarOptions).forEach(cat => {
     let isActive = cat === activeCategory ? 'active' : '';
-    tabsHtml += `<button class="tab-btn ${isActive}" onclick="setActiveCategory('${cat}')">${t.categories[cat]}</button>`;
+    tabsHtml += `<button class="tab-btn ${isActive}" onclick="setActiveCategory('${cat}')"><span>${t.categories[cat]}</span><span>▶</span></button>`;
   });
   tabsContainer.innerHTML = tabsHtml;
 
