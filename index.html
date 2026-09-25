@@ -65,19 +65,21 @@ body{
 }
 .ctrl-btn:active { opacity: 0.7; }
 
-.brand-section { display: flex; flex-direction: column; align-items: center; gap: 2px; z-index: 2; }
-.brand-logo {
-  width: 48px; height: 48px; background: radial-gradient(circle, var(--accent-col) 0%, var(--btn-bg) 70%);
-  border: 2.5px solid var(--title-col); border-radius: 50%; display: flex;
-  align-items: center; justify-content: center; font-size: 24px;
+/* КАРТОЧКА ПРОФИЛЯ С АВАТАРОМ (ССЫЛКА НА avatar.html) */
+.profile-card {
+  display: flex; align-items: center; gap: 8px; background: var(--glass-bg);
+  border: 1.5px solid var(--border-col); border-radius: 9px; padding: 6px 9px;
+  cursor: pointer; transition: transform 0.1s; z-index: 2;
 }
-.brand-title { 
-  font-size: 15px; font-weight: bold; color: var(--title-col); letter-spacing: 1.5px; 
-  display: flex; align-items: center; justify-content: center; gap: 6px;
+.profile-card:active { transform: scale(0.98); }
+.profile-avatar-box {
+  width: 40px; height: 40px; background: radial-gradient(circle, var(--accent-col) 0%, var(--btn-bg) 70%);
+  border: 2px solid var(--title-col); border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
 }
-.brand-title span.bold { font-weight: 900; font-size: 17px; color: var(--accent-col); }
-.brand-title span.normal { font-weight: normal; color: var(--text-main); font-size: 13px; }
-.brand-subtitle { font-size: 7.5px; color: var(--text-sub); text-transform: uppercase; letter-spacing: 2px; }
+.profile-info { display: flex; flex-direction: column; text-align: left; width: 100%; gap: 2px; }
+.profile-name { font-size: 10px; font-weight: bold; color: var(--title-col); }
+.profile-sub { font-size: 7.5px; color: var(--text-sub); }
 
 .player-stats-card {
   background: var(--glass-bg); border: 1.5px solid var(--border-col);
@@ -155,13 +157,12 @@ body{
     </div>
   </div>
 
-  <div class="brand-section">
-    <div class="brand-logo">▶️</div>
-    <div>
-      <div class="brand-title">
-        <span class="bold">TUBE</span> <span class="normal">EMPIRE</span>
-      </div>
-      <div class="brand-subtitle" id="subtitleTxt">Blogger Tycoon Sim</div>
+  <!-- КАРТОЧКА ПРОФИЛЯ (ПЕРЕХОД НА avatar.html) -->
+  <div class="profile-card" onclick="window.location.href='avatar.html'">
+    <div class="profile-avatar-box" id="headerAvatarDisplay">👦</div>
+    <div class="profile-info">
+      <div class="profile-name" id="profileNameTxt">TUBE EMPIRE PRO</div>
+      <div class="profile-sub" id="profileSubTxt">Нажмите для настройки профиля ⚙️</div>
     </div>
   </div>
 
@@ -204,7 +205,7 @@ body{
 
     <div>
       <div class="chat-input-area">
-        <input type="text" id="chatInputText" class="chat-input" placeholder="Написать в чат (макс. 150 симв.)..." maxlength="150">
+        <input type="text" id="chatInputText" class="chat-input" placeholder="Написать в чат..." maxlength="150">
         <button class="chat-send-btn" onclick="sendChatMessage()" id="chatSendBtnTxt">ОТПРАВИТЬ</button>
       </div>
       <div class="chat-cooldown-info" id="chatCooldownTxt">Отправка сообщений доступна раз в 10 минут.</div>
@@ -218,7 +219,28 @@ body{
 const tg = window.Telegram.WebApp; 
 if (tg && tg.ready) { tg.ready(); tg.expand(); }
 
-// --- МОДУЛЬ ГЛОБАЛЬНОГО ЧАТА (ВСТРОЕННЫЙ ОБЪЕКТ) ---
+// --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ АВАТАРА ДЛЯ ЧАТА ---
+function getSavedAvatarString() {
+  try {
+    let saved = JSON.parse(localStorage.getItem("tube_empire_avatar_config"));
+    if (!saved) return "👦👤👕";
+    const opts = {
+      gender: [{symbol: '👦'}, {symbol: '👧'}],
+      head: [{icon: '👤'}, {icon: '🧢'}, {icon: '🎧'}, {icon: '🕶️'}, {icon: '👑'}],
+      torso: [{icon: '👕'}, {icon: '🧥'}, {icon: '👔'}, {icon: '🥼'}, {icon: '👚'}],
+      accessory: [{icon: '❌'}, {icon: '🎙️'}, {icon: '📷'}, {icon: '📱'}, {icon: '💵'}]
+    };
+    let g = opts.gender[saved.gender || 0].symbol;
+    let h = opts.head[saved.head || 0].icon;
+    let t = opts.torso[saved.torso || 0].icon;
+    let acc = opts.accessory[saved.accessory || 0].icon;
+    return `${g}${h}${t}${acc !== '❌' ? acc : ''}`;
+  } catch(e) {
+    return "👦👤👕";
+  }
+}
+
+// --- МОДУЛЬ ГЛОБАЛЬНОГО ЧАТА ---
 class GlobalChatModule {
   constructor() {
     this.storageKey = "tube_empire_global_chat";
@@ -227,9 +249,9 @@ class GlobalChatModule {
     
     if (!localStorage.getItem(this.storageKey)) {
       const initialMessages = [
-        { sender: "🔴 MrBeast", text: "Снимаю новое видео с островом, заходите!", time: Date.now() - 3600000 },
-        { sender: "🎮 PewDiePie", text: "Привет всем из Японии! Как стримы?", time: Date.now() - 1800000 },
-        { sender: "🎧 Marshmello", text: "Готовлю трек для коллабы века.", time: Date.now() - 600000 }
+        { sender: "🔴 MrBeast", avatar: "👑👕💵", text: "Снимаю новое видео с островом!", time: Date.now() - 3600000 },
+        { sender: "🎮 PewDiePie", avatar: "🎧🧥👖", text: "Привет всем из Японии!", time: Date.now() - 1800000 },
+        { sender: "🎧 Marshmello", avatar: "🧢👕👟", text: "Готовлю трек для коллабы века.", time: Date.now() - 600000 }
       ];
       localStorage.setItem(this.storageKey, JSON.stringify(initialMessages));
     }
@@ -252,7 +274,7 @@ class GlobalChatModule {
     return 0;
   }
 
-  sendMessage(senderName, text) {
+  sendMessage(senderName, avatarStr, text) {
     const cooldown = this.getCooldownRemaining();
     if (cooldown > 0) {
       return { success: false, error: `Подождите еще ${Math.ceil(cooldown / 60)} мин. перед отправкой.` };
@@ -263,7 +285,8 @@ class GlobalChatModule {
 
     const msgs = this.getMessages();
     msgs.push({
-      sender: senderName || "Анонимный блогер",
+      sender: senderName || "Блогер",
+      avatar: avatarStr || "👦👤👕",
       text: text.trim().substring(0, 150),
       time: Date.now()
     });
@@ -301,6 +324,7 @@ const menuLang = {
     modalChatTitle: "💬 ГЛОБАЛЬНЫЙ ЧАТ БЛОГЕРОВ",
     sendBtn: "ОТПРАВИТЬ",
     closeBtn: "ЗАКРЫТЬ",
+    profileSub: "Нажмите для настройки профиля ⚙️",
     placeholder: "Написать в чат (макс. 150 симв.)...",
     cooldownInfo: "Отправка сообщений доступна раз в 10 минут.",
     waitCooldown: "⏳ Подождите: ",
@@ -323,6 +347,7 @@ const menuLang = {
     modalChatTitle: "💬 GLOBALER BLOGGER CHAT",
     sendBtn: "SENDEN",
     closeBtn: "SCHLIESSEN",
+    profileSub: "Klicken zum Anpassen ⚙️",
     placeholder: "Nachricht schreiben...",
     cooldownInfo: "Nachrichten alle 10 Minuten möglich.",
     waitCooldown: "⏳ Warten Sie: ",
@@ -363,7 +388,7 @@ function updateMiniChatWidget() {
     html = `<div class="chat-mini-msg">Пока нет сообщений...</div>`;
   } else {
     recent.forEach(m => {
-      html += `<div class="chat-mini-msg"><span>${m.sender}:</span> ${m.text}</div>`;
+      html += `<div class="chat-mini-msg">${m.avatar || ''} <span>${m.sender}:</span> ${m.text}</div>`;
     });
   }
   document.getElementById('miniChatContainer').innerHTML = html;
@@ -384,7 +409,7 @@ function updateFullChatWindow() {
   msgs.slice(-20).reverse().forEach(m => {
     html += `
       <div class="chat-msg-item">
-        <div class="chat-msg-sender">${m.sender}</div>
+        <div class="chat-msg-sender">${m.avatar || ''} ${m.sender}</div>
         <div class="chat-msg-text">${m.text}</div>
       </div>
     `;
@@ -406,8 +431,7 @@ function updateFullChatWindow() {
 function sendChatMessage() {
   let t = menuLang[currentLang];
   let input = document.getElementById('chatInputText');
-  let text = input.value;
-  let result = window.GlobalChat.sendMessage(t.playerName, text);
+  let result = window.GlobalChat.sendMessage(t.playerName, getSavedAvatarString(), input.value);
   
   if (result.success) {
     input.value = "";
@@ -435,6 +459,8 @@ function updateMenuUI() {
   document.getElementById('chatSendBtnTxt').textContent = t.sendBtn;
   document.getElementById('chatCloseBtnTxt').textContent = t.closeBtn;
   document.getElementById('chatInputText').placeholder = t.placeholder;
+  document.getElementById('profileSubTxt').textContent = t.profileSub;
+  document.getElementById('headerAvatarDisplay').textContent = getSavedAvatarString();
 
   let themeLabels = { dark: t.themeDark, rose: t.themeRose, light: t.themeLight };
   document.getElementById('themeBtn').textContent = themeLabels[currentTheme];
